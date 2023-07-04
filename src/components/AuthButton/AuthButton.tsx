@@ -1,8 +1,14 @@
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import React from 'react';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import PropTypes from 'prop-types';
 import { Icon } from '../Icon';
+import { AuthButtonProps } from './types';
 
-export const AuthButton = ({ text, onPress, withIcon = false }: any) => {
+export const AuthButton = ({
+  text,
+  onPress,
+  withIcon = false,
+}: AuthButtonProps) => {
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -26,7 +32,12 @@ const styles = StyleSheet.create({
     width: 10,
     height: 10,
   },
+  buttonText: {
+    color: '#FFFFFF',
+    fontFamily: 'Montserrat',
+  },
   buttonWrapper: {
+    zIndex: 10,
     flexDirection: 'row',
     backgroundColor: '#6F73D2',
     height: 44,
@@ -35,9 +46,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 10,
     paddingHorizontal: 20,
-  },
-  buttonText: {
-    color: '#FFFFFF',
-    fontFamily: 'Montserrat',
   },
 });

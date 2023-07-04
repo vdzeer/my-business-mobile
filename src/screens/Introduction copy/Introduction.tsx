@@ -1,9 +1,8 @@
 import React, { useCallback, useRef, useState } from 'react';
 import { Alert, Image, StyleSheet, Text, View } from 'react-native';
+import { AuthButton } from '../../components/AuthButton/AuthButton';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import { IntroductionProps, Slide } from './types';
-import { useNavigation } from '@react-navigation/native';
-import { AuthButton } from '../../components';
 
 const slides: Slide[] = [
   {
@@ -25,17 +24,12 @@ const slides: Slide[] = [
 
 export const Introduction: React.FC<IntroductionProps> = () => {
   const sliderRef = useRef<AppIntroSlider>(null);
-  const navigation = useNavigation<any>();
   const [index, setIndex] = useState<number>(0);
 
   const goToNextSlide = useCallback(() => {
     sliderRef.current?.goToSlide(index + 1);
     setIndex(prev => prev + 1);
   }, [index]);
-
-  const goToAuth = () => {
-    navigation.navigate('SignIn');
-  };
 
   const renderItem = useCallback(
     ({ item }: { item: Slide }) => (
@@ -69,7 +63,7 @@ export const Introduction: React.FC<IntroductionProps> = () => {
       <View style={styles.buttonWrapper}>
         <AuthButton
           text={index === 2 ? 'Go to authorization' : 'Next'}
-          onPress={index === 2 ? goToAuth : goToNextSlide}
+          onPress={index === 2 ? () => {} : goToNextSlide}
           withIcon={index !== 2}
         />
       </View>
