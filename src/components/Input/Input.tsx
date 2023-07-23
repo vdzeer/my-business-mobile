@@ -21,7 +21,7 @@ export const Input: React.FC<InputProps> = ({
 
 const styles = StyleSheet.create({
   textInput: {
-    width: '90%',
+    width: '100%',
     height: 50,
     backgroundColor: '#D9F0FF',
     borderRadius: 10,

@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* MyBusinessPlusTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* MyBusinessPlusTests.m */; };
-		0C80B921A6F3F58F76C31292 /* libPods-MyBusinessPlus.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-MyBusinessPlus.a */; };
 		0DBF65C002F845FFBC729DC7 /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 554E28C2927A40C487620F84 /* Montserrat-Bold.ttf */; };
+		0F678C20AE3251E6F6708BDE /* libPods-MyBusinessPlus-MyBusinessPlusTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F8892543EDD22E6D312D5C0 /* libPods-MyBusinessPlus-MyBusinessPlusTests.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -17,9 +17,9 @@
 		23BE0BDEF6984D43BDD954E6 /* Montserrat-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C91888FBB1E5474CB7C4D792 /* Montserrat-Thin.ttf */; };
 		2463309E893340E6A7C1C421 /* Montserrat-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 770A4B3932F0418AAA5AA452 /* Montserrat-ExtraBold.ttf */; };
 		29D07EF7B25047288B0DEB14 /* Montserrat-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B7DDADD42F3E4513A7D7913F /* Montserrat-Light.ttf */; };
+		5746C2A0466FF938AA06FE55 /* libPods-MyBusinessPlus.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F55A931E52660C993471D58E /* libPods-MyBusinessPlus.a */; };
 		600E54F1F0AC47DBA89B97F3 /* Montserrat-ExtraLightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E8C5958483EB4BB1AEA465F8 /* Montserrat-ExtraLightItalic.ttf */; };
 		75A22368A0164ACAA2A24473 /* Montserrat-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EA39D2F83451425BA1E414BB /* Montserrat-Italic.ttf */; };
-		7699B88040F8A987B510C191 /* libPods-MyBusinessPlus-MyBusinessPlusTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-MyBusinessPlus-MyBusinessPlusTests.a */; };
 		776E838CC7B542FA8CFD6E78 /* Montserrat-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 24EB30BB551D4D6C9FA679D3 /* Montserrat-LightItalic.ttf */; };
 		7E0D329EDE7F452BAE92BC3A /* Montserrat-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1929E488A7FD4B138FA70218 /* Montserrat-SemiBold.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
@@ -56,30 +56,30 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = MyBusinessPlus/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = MyBusinessPlus/main.m; sourceTree = "<group>"; };
 		1929E488A7FD4B138FA70218 /* Montserrat-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-SemiBold.ttf"; path = "../src/assets/fonts/Montserrat-SemiBold.ttf"; sourceTree = "<group>"; };
-		19F6CBCC0A4E27FBF8BF4A61 /* libPods-MyBusinessPlus-MyBusinessPlusTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MyBusinessPlus-MyBusinessPlusTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1F8892543EDD22E6D312D5C0 /* libPods-MyBusinessPlus-MyBusinessPlusTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MyBusinessPlus-MyBusinessPlusTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		24EB30BB551D4D6C9FA679D3 /* Montserrat-LightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-LightItalic.ttf"; path = "../src/assets/fonts/Montserrat-LightItalic.ttf"; sourceTree = "<group>"; };
-		3B4392A12AC88292D35C810B /* Pods-MyBusinessPlus.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyBusinessPlus.debug.xcconfig"; path = "Target Support Files/Pods-MyBusinessPlus/Pods-MyBusinessPlus.debug.xcconfig"; sourceTree = "<group>"; };
 		415C24090E5140978F1C5A76 /* Montserrat-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Medium.ttf"; path = "../src/assets/fonts/Montserrat-Medium.ttf"; sourceTree = "<group>"; };
 		554E28C2927A40C487620F84 /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Bold.ttf"; path = "../src/assets/fonts/Montserrat-Bold.ttf"; sourceTree = "<group>"; };
-		5709B34CF0A7D63546082F79 /* Pods-MyBusinessPlus.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyBusinessPlus.release.xcconfig"; path = "Target Support Files/Pods-MyBusinessPlus/Pods-MyBusinessPlus.release.xcconfig"; sourceTree = "<group>"; };
-		5B7EB9410499542E8C5724F5 /* Pods-MyBusinessPlus-MyBusinessPlusTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyBusinessPlus-MyBusinessPlusTests.debug.xcconfig"; path = "Target Support Files/Pods-MyBusinessPlus-MyBusinessPlusTests/Pods-MyBusinessPlus-MyBusinessPlusTests.debug.xcconfig"; sourceTree = "<group>"; };
-		5DCACB8F33CDC322A6C60F78 /* libPods-MyBusinessPlus.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MyBusinessPlus.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5C2225A9855C7FED4830AD65 /* Pods-MyBusinessPlus-MyBusinessPlusTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyBusinessPlus-MyBusinessPlusTests.release.xcconfig"; path = "Target Support Files/Pods-MyBusinessPlus-MyBusinessPlusTests/Pods-MyBusinessPlus-MyBusinessPlusTests.release.xcconfig"; sourceTree = "<group>"; };
 		6318E8918BA0470C8EDE60BC /* Montserrat-BlackItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-BlackItalic.ttf"; path = "../src/assets/fonts/Montserrat-BlackItalic.ttf"; sourceTree = "<group>"; };
+		638E320BC644238556201777 /* Pods-MyBusinessPlus-MyBusinessPlusTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyBusinessPlus-MyBusinessPlusTests.debug.xcconfig"; path = "Target Support Files/Pods-MyBusinessPlus-MyBusinessPlusTests/Pods-MyBusinessPlus-MyBusinessPlusTests.debug.xcconfig"; sourceTree = "<group>"; };
 		6D46455B322B452A967919F8 /* Montserrat-SemiBoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-SemiBoldItalic.ttf"; path = "../src/assets/fonts/Montserrat-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
 		770A4B3932F0418AAA5AA452 /* Montserrat-ExtraBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-ExtraBold.ttf"; path = "../src/assets/fonts/Montserrat-ExtraBold.ttf"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = MyBusinessPlus/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		848EB9B72F8D473FAD6CB8B1 /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Regular.ttf"; path = "../src/assets/fonts/Montserrat-Regular.ttf"; sourceTree = "<group>"; };
-		89C6BE57DB24E9ADA2F236DE /* Pods-MyBusinessPlus-MyBusinessPlusTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyBusinessPlus-MyBusinessPlusTests.release.xcconfig"; path = "Target Support Files/Pods-MyBusinessPlus-MyBusinessPlusTests/Pods-MyBusinessPlus-MyBusinessPlusTests.release.xcconfig"; sourceTree = "<group>"; };
+		98DD4CB0154B79C23ABEB4F2 /* Pods-MyBusinessPlus.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyBusinessPlus.release.xcconfig"; path = "Target Support Files/Pods-MyBusinessPlus/Pods-MyBusinessPlus.release.xcconfig"; sourceTree = "<group>"; };
 		AE2D08BBC3E54208AA179AC7 /* Montserrat-MediumItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-MediumItalic.ttf"; path = "../src/assets/fonts/Montserrat-MediumItalic.ttf"; sourceTree = "<group>"; };
 		B7DDADD42F3E4513A7D7913F /* Montserrat-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Light.ttf"; path = "../src/assets/fonts/Montserrat-Light.ttf"; sourceTree = "<group>"; };
 		C91888FBB1E5474CB7C4D792 /* Montserrat-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Thin.ttf"; path = "../src/assets/fonts/Montserrat-Thin.ttf"; sourceTree = "<group>"; };
 		CE8A263A5ABF430CA31AAD3A /* Montserrat-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-BoldItalic.ttf"; path = "../src/assets/fonts/Montserrat-BoldItalic.ttf"; sourceTree = "<group>"; };
+		CF8B0AFD5F6AD4BC50F5D25B /* Pods-MyBusinessPlus.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyBusinessPlus.debug.xcconfig"; path = "Target Support Files/Pods-MyBusinessPlus/Pods-MyBusinessPlus.debug.xcconfig"; sourceTree = "<group>"; };
 		DDEE1A5391EB497C8684BCC4 /* Montserrat-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Black.ttf"; path = "../src/assets/fonts/Montserrat-Black.ttf"; sourceTree = "<group>"; };
 		DE47A84815FF4E5E8D046BD5 /* Montserrat-ExtraLight.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-ExtraLight.ttf"; path = "../src/assets/fonts/Montserrat-ExtraLight.ttf"; sourceTree = "<group>"; };
 		E8993E94CEEA4A27919A2E83 /* Montserrat-ExtraBoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-ExtraBoldItalic.ttf"; path = "../src/assets/fonts/Montserrat-ExtraBoldItalic.ttf"; sourceTree = "<group>"; };
 		E8C5958483EB4BB1AEA465F8 /* Montserrat-ExtraLightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-ExtraLightItalic.ttf"; path = "../src/assets/fonts/Montserrat-ExtraLightItalic.ttf"; sourceTree = "<group>"; };
 		EA39D2F83451425BA1E414BB /* Montserrat-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Italic.ttf"; path = "../src/assets/fonts/Montserrat-Italic.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		F55A931E52660C993471D58E /* libPods-MyBusinessPlus.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MyBusinessPlus.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,7 +87,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7699B88040F8A987B510C191 /* libPods-MyBusinessPlus-MyBusinessPlusTests.a in Frameworks */,
+				0F678C20AE3251E6F6708BDE /* libPods-MyBusinessPlus-MyBusinessPlusTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -95,7 +95,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0C80B921A6F3F58F76C31292 /* libPods-MyBusinessPlus.a in Frameworks */,
+				5746C2A0466FF938AA06FE55 /* libPods-MyBusinessPlus.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -136,8 +136,8 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				5DCACB8F33CDC322A6C60F78 /* libPods-MyBusinessPlus.a */,
-				19F6CBCC0A4E27FBF8BF4A61 /* libPods-MyBusinessPlus-MyBusinessPlusTests.a */,
+				F55A931E52660C993471D58E /* libPods-MyBusinessPlus.a */,
+				1F8892543EDD22E6D312D5C0 /* libPods-MyBusinessPlus-MyBusinessPlusTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -203,10 +203,10 @@
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				3B4392A12AC88292D35C810B /* Pods-MyBusinessPlus.debug.xcconfig */,
-				5709B34CF0A7D63546082F79 /* Pods-MyBusinessPlus.release.xcconfig */,
-				5B7EB9410499542E8C5724F5 /* Pods-MyBusinessPlus-MyBusinessPlusTests.debug.xcconfig */,
-				89C6BE57DB24E9ADA2F236DE /* Pods-MyBusinessPlus-MyBusinessPlusTests.release.xcconfig */,
+				CF8B0AFD5F6AD4BC50F5D25B /* Pods-MyBusinessPlus.debug.xcconfig */,
+				98DD4CB0154B79C23ABEB4F2 /* Pods-MyBusinessPlus.release.xcconfig */,
+				638E320BC644238556201777 /* Pods-MyBusinessPlus-MyBusinessPlusTests.debug.xcconfig */,
+				5C2225A9855C7FED4830AD65 /* Pods-MyBusinessPlus-MyBusinessPlusTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -218,12 +218,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "MyBusinessPlusTests" */;
 			buildPhases = (
-				A55EABD7B0C7F3A422A6CC61 /* [CP] Check Pods Manifest.lock */,
+				E03CA69C20D0A6088CC9C498 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				C59DA0FBD6956966B86A3779 /* [CP] Embed Pods Frameworks */,
-				F6A41C54EA430FDDC6A6ED99 /* [CP] Copy Pods Resources */,
+				05FFE344C8FDEBDA2683C55B /* [CP] Embed Pods Frameworks */,
+				D276D2554E47D84F57974C33 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -239,14 +239,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "MyBusinessPlus" */;
 			buildPhases = (
-				C38B50BA6285516D6DCD4F65 /* [CP] Check Pods Manifest.lock */,
+				DAA6C8A5D3F1B12A2A738212 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				00EEFC60759A1932668264C0 /* [CP] Embed Pods Frameworks */,
-				E235C05ADACE081382539298 /* [CP] Copy Pods Resources */,
+				9F7C1BC0C0275D2B9A6BC72F /* [CP] Embed Pods Frameworks */,
+				8AEFB98368BB8D7164DB66CB /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -347,7 +347,41 @@
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"../node_modules/react-native/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"../node_modules/react-native/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n";
 		};
-		00EEFC60759A1932668264C0 /* [CP] Embed Pods Frameworks */ = {
+		05FFE344C8FDEBDA2683C55B /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MyBusinessPlus-MyBusinessPlusTests/Pods-MyBusinessPlus-MyBusinessPlusTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MyBusinessPlus-MyBusinessPlusTests/Pods-MyBusinessPlus-MyBusinessPlusTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MyBusinessPlus-MyBusinessPlusTests/Pods-MyBusinessPlus-MyBusinessPlusTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8AEFB98368BB8D7164DB66CB /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MyBusinessPlus/Pods-MyBusinessPlus-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MyBusinessPlus/Pods-MyBusinessPlus-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MyBusinessPlus/Pods-MyBusinessPlus-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9F7C1BC0C0275D2B9A6BC72F /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -364,29 +398,24 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MyBusinessPlus/Pods-MyBusinessPlus-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		A55EABD7B0C7F3A422A6CC61 /* [CP] Check Pods Manifest.lock */ = {
+		D276D2554E47D84F57974C33 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MyBusinessPlus-MyBusinessPlusTests/Pods-MyBusinessPlus-MyBusinessPlusTests-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
+			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-MyBusinessPlus-MyBusinessPlusTests-checkManifestLockResult.txt",
+				"${PODS_ROOT}/Target Support Files/Pods-MyBusinessPlus-MyBusinessPlusTests/Pods-MyBusinessPlus-MyBusinessPlusTests-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MyBusinessPlus-MyBusinessPlusTests/Pods-MyBusinessPlus-MyBusinessPlusTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C38B50BA6285516D6DCD4F65 /* [CP] Check Pods Manifest.lock */ = {
+		DAA6C8A5D3F1B12A2A738212 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -408,55 +437,26 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C59DA0FBD6956966B86A3779 /* [CP] Embed Pods Frameworks */ = {
+		E03CA69C20D0A6088CC9C498 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MyBusinessPlus-MyBusinessPlusTests/Pods-MyBusinessPlus-MyBusinessPlusTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			name = "[CP] Embed Pods Frameworks";
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MyBusinessPlus-MyBusinessPlusTests/Pods-MyBusinessPlus-MyBusinessPlusTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MyBusinessPlus-MyBusinessPlusTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MyBusinessPlus-MyBusinessPlusTests/Pods-MyBusinessPlus-MyBusinessPlusTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E235C05ADACE081382539298 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MyBusinessPlus/Pods-MyBusinessPlus-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MyBusinessPlus/Pods-MyBusinessPlus-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MyBusinessPlus/Pods-MyBusinessPlus-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F6A41C54EA430FDDC6A6ED99 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MyBusinessPlus-MyBusinessPlusTests/Pods-MyBusinessPlus-MyBusinessPlusTests-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MyBusinessPlus-MyBusinessPlusTests/Pods-MyBusinessPlus-MyBusinessPlusTests-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MyBusinessPlus-MyBusinessPlusTests/Pods-MyBusinessPlus-MyBusinessPlusTests-resources.sh\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
@@ -511,7 +511,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5B7EB9410499542E8C5724F5 /* Pods-MyBusinessPlus-MyBusinessPlusTests.debug.xcconfig */;
+			baseConfigurationReference = 638E320BC644238556201777 /* Pods-MyBusinessPlus-MyBusinessPlusTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -538,7 +538,7 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 89C6BE57DB24E9ADA2F236DE /* Pods-MyBusinessPlus-MyBusinessPlusTests.release.xcconfig */;
+			baseConfigurationReference = 5C2225A9855C7FED4830AD65 /* Pods-MyBusinessPlus-MyBusinessPlusTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
@@ -562,7 +562,7 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3B4392A12AC88292D35C810B /* Pods-MyBusinessPlus.debug.xcconfig */;
+			baseConfigurationReference = CF8B0AFD5F6AD4BC50F5D25B /* Pods-MyBusinessPlus.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -596,7 +596,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5709B34CF0A7D63546082F79 /* Pods-MyBusinessPlus.release.xcconfig */;
+			baseConfigurationReference = 98DD4CB0154B79C23ABEB4F2 /* Pods-MyBusinessPlus.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;

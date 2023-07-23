@@ -25,12 +25,13 @@ export const Button: React.FC<ButtonProps> = ({
             justifyContent: withIcon ? 'space-between' : 'center',
             width: mode === 'large' ? 250 : 150,
             backgroundColor: mode === 'lite' ? 'transparent' : '#83C9F4',
+            paddingHorizontal: mode === 'lite' ? 0 : 15,
           },
         ]}>
         <Text style={styles.buttonText}>{text}</Text>
         {withIcon && (
           <View style={styles.iconWrapper}>
-            <Icon name="arrowRight" />
+            <Icon name="arrowRightBlack" />
           </View>
         )}
       </TouchableOpacity>
@@ -46,6 +47,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,
+    flexDirection: 'row',
+    paddingHorizontal: 15,
   },
   iconWrapper: {
     width: 10,

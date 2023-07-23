@@ -1,0 +1,91 @@
+import { createSlice } from '@reduxjs/toolkit';
+import {
+  createBusinessInventory,
+  deleteBusinessInventory,
+  getBusinessInventory,
+  updateBusinessInventory,
+} from '../api';
+import { Alert } from 'react-native';
+
+const initialState = {
+  isLoading: false,
+  inventory: null,
+};
+
+const slice = createSlice({
+  name: 'inventory',
+  initialState,
+  reducers: {
+    setLoading(state) {
+      state.isLoading = true;
+    },
+    setLoadingFalse(state) {
+      state.isLoading = false;
+    },
+
+    setCurrentInventory(state, action) {
+      state.isLoading = false;
+      state.inventory = action.payload;
+    },
+    addOneInventory(state, action) {
+      state.isLoading = false;
+      state.inventory = [...state.inventory, action.payload];
+    },
+    replaceOneInventory(state, action) {
+      state.isLoading = false;
+      state.inventory = [
+        ...state.inventory.map(item =>
+          item._id === action.payload._id ? action.payload : item,
+        ),
+      ];
+    },
+  },
+});
+
+export default slice.reducer;
+
+export const getInventoryList =
+  (data, onSuccess, onError) => async dispatch => {
+    dispatch(slice.actions.setLoading());
+
+    getBusinessInventory(data)
+      .then(res => {
+        dispatch(slice.actions.setCurrentInventory(res.data.data));
+      })
+      .then(onSuccess)
+      .catch(error => console.log(error));
+  };
+
+export const createInventory = (data, onSuccess, onError) => async dispatch => {
+  dispatch(slice.actions.setLoading());
+  createBusinessInventory(data)
+    .then(async res => {
+      const response = await res.json();
+      dispatch(slice.actions.addOneInventory(response.data));
+    })
+    .then(onSuccess)
+    .catch(error => console.log(error));
+};
+
+export const updateInventory = (data, onSuccess, onError) => async dispatch => {
+  dispatch(slice.actions.setLoading());
+  updateBusinessInventory(data)
+    .then(async res => {
+      const response = await res.json();
+
+      // dispatch(slice.actions.replaceOneInventory(response.data));
+    })
+    .then(onSuccess)
+    .catch(error => console.log(error));
+};
+
+export const deleteInventory = (data, onSuccess, onError) => async dispatch => {
+  dispatch(slice.actions.setLoading());
+  deleteBusinessInventory(data)
+    .then(res => {
+      console.log(res);
+      // dispatch(slice.actions.addBusiness(res.data));
+    })
+    .then(onSuccess)
+    .catch(error => console.log(error));
+};

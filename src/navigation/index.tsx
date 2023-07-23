@@ -1,15 +1,22 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 
 import { AuthRouter } from './AuthRouter';
 import { NavigationContainer } from '@react-navigation/native';
 import { HomeRouter } from './HomeRouter';
+import { useSelector } from 'react-redux';
+import { Alert } from 'react-native';
+import { setTokenInstance } from '../store/axios';
 
 export const Application: FC = () => {
-  const authorization = false;
+  const { token } = useSelector((store: any) => store.auth);
+
+  useEffect(() => {
+    token && setTokenInstance(token);
+  }, [token]);
   return (
     <>
       <NavigationContainer>
-        {authorization ? <HomeRouter /> : <AuthRouter />}
+        {token ? <HomeRouter /> : <AuthRouter />}
       </NavigationContainer>
     </>
   );
