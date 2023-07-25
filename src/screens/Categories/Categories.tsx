@@ -19,7 +19,7 @@ import {
   Input,
 } from '../../components';
 import { useNavigation } from '@react-navigation/native';
-import { PromocodesProps } from './types';
+import { CategoriesProps } from './types';
 import { PromocodeCard } from './components/SupplierCard';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -34,8 +34,13 @@ import {
   getPromocodesList,
   updatePromocode,
 } from '../../store/slices/promocodes';
+import {
+  createCategory,
+  deleteCategory,
+  updateCategory,
+} from '../../store/slices/products';
 
-export const Promocodes: React.FC<PromocodesProps> = () => {
+export const Categories: React.FC<CategoriesProps> = () => {
   const navigation = useNavigation<any>();
   const dispatch = useDispatch();
 
@@ -43,34 +48,30 @@ export const Promocodes: React.FC<PromocodesProps> = () => {
   const [edit, setEdit] = useState(false);
   const [item, setItem] = useState<any>(null);
 
-  const [code, setCode] = useState('');
-  const [percent, setPercent] = useState('');
-  const [amount, setAmount] = useState('');
+  const [name, setName] = useState('');
 
-  const { promocodes } = useSelector((store: any) => store.promocode);
+  const { categories } = useSelector((store: any) => store.products);
   const { currentBusiness } = useSelector((store: any) => store.business);
 
-  const [promocodesList, setPromocodesList] = useState<any>(null);
+  const [categoriesList, setCategoriesList] = useState<any>(null);
 
   useEffect(() => {
-    setPromocodesList(promocodes);
-  }, [promocodes]);
+    setCategoriesList(categories);
+  }, [categories]);
 
   return (
     <SafeAreaView style={styles.area}>
       <View style={styles.container}>
-        <Header />
+        <Header withGoBack />
         <Divider height={20} />
         <View style={styles.headerWrapper}>
-          <Text style={styles.titleText}>Business promocodes</Text>
+          <Text style={styles.titleText}>Edit categories</Text>
           <ActionButton
             iconName="plus"
             onPress={() => {
               setOpen(true);
               setEdit(false);
-              setCode('');
-              setPercent('');
-              setAmount('');
+              setName('');
             }}
             size="large"
           />
@@ -78,20 +79,18 @@ export const Promocodes: React.FC<PromocodesProps> = () => {
         <Divider height={20} />
 
         <FlatList
-          data={promocodesList ?? []}
+          data={categoriesList ?? []}
           renderItem={({ item }) => (
             <PromocodeCard
-              name={item.promocode}
-              phone={item.salePercent + '%'}
+              name={item?.name}
+              phone={''}
               onDelete={() => {
-                dispatch(deletePromocode(item?._id) as any);
+                dispatch(deleteCategory(item?._id) as any);
               }}
               onEdit={() => {
                 setItem(item);
                 setEdit(true);
-                setCode(item.promocode);
-                setPercent(item.salePercent + '');
-                setAmount(item.useAmount + '');
+                setName(item.name);
                 setOpen(true);
               }}
             />
@@ -101,54 +100,37 @@ export const Promocodes: React.FC<PromocodesProps> = () => {
       </View>
       <BottomSheet
         open={open}
-        snapPoints={['40%']}
+        snapPoints={['20%']}
         onDismiss={() => {
           setOpen(false);
         }}>
-        <Input placeholder="Promocode" value={code} onChange={setCode} />
+        <Input placeholder="Name" value={name} onChange={setName} />
         <Divider height={20} />
 
-        <Input
-          placeholder="Sale percent"
-          value={percent}
-          onChange={setPercent}
-        />
-        <Divider height={20} />
-
-        <Input placeholder="Use amount" value={amount} onChange={setAmount} />
-        <Divider height={30} />
         <Button
           text={edit ? 'Update' : 'Submit'}
           mode="large"
           onPress={() => {
             if (edit) {
+              const formData = new FormData();
+
+              formData.append('name', name);
+              formData.append('categoryId', item?._id);
+
               dispatch(
-                updatePromocode(
-                  {
-                    promocode: code,
-                    useAmount: amount,
-                    salePercent: percent,
-                    businessId: currentBusiness?._id,
-                    promocodeId: item?._id,
-                  },
-                  () => {
-                    setOpen(false);
-                  },
-                ) as any,
+                updateCategory(formData, () => {
+                  setOpen(false);
+                }) as any,
               );
             } else {
+              const formData = new FormData();
+
+              formData.append('name', name);
+              formData.append('businessId', currentBusiness?._id);
               dispatch(
-                createPromocode(
-                  {
-                    promocode: code,
-                    useAmount: amount,
-                    salePercent: percent,
-                    businessId: currentBusiness?._id,
-                  },
-                  () => {
-                    setOpen(false);
-                  },
-                ) as any,
+                createCategory(formData, () => {
+                  setOpen(false);
+                }) as any,
               );
             }
             setItem(null);

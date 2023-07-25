@@ -39,6 +39,12 @@ const slice = createSlice({
         ),
       ];
     },
+    deleteOnePromocode(state, action) {
+      state.isLoading = false;
+      state.promocodes = state.promocodes.filter(
+        item => item._id !== action.payload,
+      );
+    },
   },
 });
 
@@ -70,8 +76,7 @@ export const updatePromocode = (data, onSuccess, onError) => async dispatch => {
   dispatch(slice.actions.setLoading());
   updateBusinessPromocode(data)
     .then(res => {
-      console.log(res.data);
-      // dispatch(slice.actions.replaceOneSupplier(response.data));
+      dispatch(slice.actions.replaceOnePromocode(res.data.data));
     })
     .then(onSuccess)
     .catch(error => console.log(error));
@@ -81,8 +86,7 @@ export const deletePromocode = (data, onSuccess, onError) => async dispatch => {
   dispatch(slice.actions.setLoading());
   deleteBusinessPromocode(data)
     .then(res => {
-      console.log(res.data);
-      // dispatch(slice.actions.addSupplier(res.data));
+      dispatch(slice.actions.deleteOnePromocode(data));
     })
     .then(onSuccess)
     .catch(error => console.log(error));

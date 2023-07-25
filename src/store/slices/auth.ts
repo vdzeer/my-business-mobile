@@ -1,6 +1,6 @@
 import { setTokenInstance } from './../axios';
 import { createSlice } from '@reduxjs/toolkit';
-import { signIn, signUp } from '../api';
+import { getMeUser, signIn, signUp, updateMeUser } from '../api';
 
 const initialState = {
   isLoading: false,
@@ -35,6 +35,10 @@ const slice = createSlice({
       state.profile = null;
       state.token = null;
     },
+    updateProfile(state, action) {
+      state.isLoading = false;
+      state.profile = action.payload;
+    },
   },
 });
 
@@ -53,6 +57,32 @@ export const login =
             user: res.data.data,
           }),
         );
+      })
+      .then(onSuccess)
+      .catch(error => console.log(error.response.data));
+  };
+
+export const getMe =
+  (data?: any, onSuccess?: any, onError?: any) => async (dispatch: any) => {
+    dispatch(slice.actions.setLoading());
+
+    getMeUser()
+      .then(res => {
+        console.log(res);
+        dispatch(slice.actions.updateProfile(res.data.data));
+      })
+      .then(onSuccess)
+      .catch(error => console.log(error.response.data));
+  };
+
+export const updateUser =
+  (data?: any, onSuccess?: any, onError?: any) => async (dispatch: any) => {
+    dispatch(slice.actions.setLoading());
+
+    updateMeUser(data)
+      .then(async res => {
+        const response = await res.json();
+        dispatch(slice.actions.updateProfile(response.data));
       })
       .then(onSuccess)
       .catch(error => console.log(error.response.data));

@@ -6,16 +6,25 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { HeaderProps } from './types';
 import { Icon } from '../Icon';
 import { useNavigation } from '@react-navigation/native';
 import { Divider } from '../Divider';
 import { useSelector } from 'react-redux';
+import { Image } from 'react-native';
+import { image_url } from '../../store/config';
 
-export const Header: React.FC<HeaderProps> = () => {
+export const Header: React.FC<HeaderProps> = ({ withGoBack }) => {
   const navigation = useNavigation<any>();
   const { currentBusiness } = useSelector((store: any) => store.business);
+  const [name, setName] = useState('');
+  const [image, setImage] = useState('');
+
+  useEffect(() => {
+    setName(currentBusiness?.name);
+    setImage(currentBusiness?.image ?? '');
+  }, [currentBusiness]);
 
   return (
     <>
@@ -23,10 +32,14 @@ export const Header: React.FC<HeaderProps> = () => {
         <TouchableOpacity
           style={styles.itemsWrapper}
           onPress={() => {
-            navigation.openDrawer();
+            withGoBack ? navigation.goBack() : navigation.openDrawer();
           }}>
-          <View style={styles.iconWrapper}>
-            <Icon name="drawer" />
+          <View style={[styles.iconWrapper, { padding: withGoBack ? 10 : 0 }]}>
+            {withGoBack ? (
+              <Icon name="arrowLeftBlack" />
+            ) : (
+              <Icon name="drawer" />
+            )}
           </View>
         </TouchableOpacity>
 
@@ -39,15 +52,13 @@ export const Header: React.FC<HeaderProps> = () => {
 
         <View style={[styles.itemsWrapper, { alignItems: 'flex-end' }]}>
           <View style={styles.nameWrapper}>
-            <Text style={styles.nameText}>{currentBusiness.name}</Text>
+            <Text style={styles.nameText}>{name}</Text>
             <Divider width={10} />
-            <View
-              style={{
-                width: 40,
-                height: 40,
-                borderRadius: 20,
-                backgroundColor: '#000000',
-              }}></View>
+            {image ? (
+              <Image source={{ uri: image_url + image }} style={styles.image} />
+            ) : (
+              <View style={styles.image}></View>
+            )}
           </View>
         </View>
       </View>
@@ -56,6 +67,12 @@ export const Header: React.FC<HeaderProps> = () => {
 };
 
 const styles = StyleSheet.create({
+  image: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: '#000000',
+  },
   nameText: {
     fontFamily: 'Montserrat',
     fontSize: 12,

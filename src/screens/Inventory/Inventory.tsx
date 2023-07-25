@@ -32,7 +32,6 @@ export const Inventory: React.FC<InventoryProps> = () => {
   const dispatch = useDispatch();
 
   const { inventory } = useSelector((store: any) => store.inventory);
-  const { currentBusiness } = useSelector((store: any) => store.business);
 
   const [inventoryList, setInventroyList] = useState<any>(null);
   useEffect(() => {
@@ -61,17 +60,13 @@ export const Inventory: React.FC<InventoryProps> = () => {
           renderItem={({ item }) => (
             <ProductCard
               title={item.name}
-              image="asd"
+              image={item?.image ?? ''}
               price={item?.amount}
               onEdit={() => {
                 navigation.navigate('CreateInventory', { ...item, edit: true });
               }}
               onDelete={() => {
-                dispatch(
-                  deleteInventory(item?._id, () => {
-                    dispatch(getInventoryList(currentBusiness?._id) as any);
-                  }) as any,
-                );
+                dispatch(deleteInventory(item?._id) as any);
               }}
             />
           )}

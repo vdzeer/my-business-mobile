@@ -2,6 +2,8 @@ import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { ActionButton, Divider, Icon } from '../../../components';
 import { ProductCardProps } from './types';
+import { Image } from 'react-native';
+import { image_url } from '../../../store/config';
 
 export const ProductCard = ({
   title,
@@ -13,13 +15,14 @@ export const ProductCard = ({
   return (
     <View style={styles.cardWrapper}>
       <View style={styles.contentWrapper}>
-        <View
-          style={{
-            width: 36,
-            height: 36,
-            borderRadius: 20,
-            backgroundColor: 'black',
-          }}></View>
+        {image ? (
+          <>
+            <Image source={{ uri: image_url + image }} style={styles.image} />
+          </>
+        ) : (
+          <View style={styles.image}></View>
+        )}
+
         <Divider width={20} />
         <Text style={styles.cardText}>{title}</Text>
       </View>
@@ -37,6 +40,12 @@ export const ProductCard = ({
 };
 
 const styles = StyleSheet.create({
+  image: {
+    width: 36,
+    height: 36,
+    borderRadius: 20,
+    backgroundColor: 'black',
+  },
   addButton: {
     width: 34,
     height: 34,

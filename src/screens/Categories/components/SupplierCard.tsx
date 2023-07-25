@@ -1,55 +1,32 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { ActionButton, Divider, Icon } from '../../../components';
-import { ProductCardProps } from './types';
-import { Image } from 'react-native';
-import { image_url } from '../../../store/config';
+import { PromocodeCardProps } from './types';
 
-export const ProductCard = ({
-  title,
-  price,
-  onAdd,
-  image,
-  onRemove,
-  total,
-}: ProductCardProps) => {
+export const PromocodeCard = ({
+  name,
+  phone,
+  onEdit,
+  onDelete,
+}: PromocodeCardProps) => {
   return (
     <View style={styles.cardWrapper}>
       <View style={styles.contentWrapper}>
-        {image ? (
-          <>
-            <Image source={{ uri: image_url + image }} style={styles.image} />
-          </>
-        ) : (
-          <View style={styles.image}></View>
-        )}
-        <Divider width={10} />
-        <Text style={styles.cardText}>{title}</Text>
+        <Text style={styles.cardText}>{name}</Text>
       </View>
-
       <View style={styles.contentWrapper2}>
-        <Text style={styles.cardText}>{price}</Text>
-        <Divider width={15} />
+        <Divider width={20} />
 
-        <ActionButton iconName="plus" onPress={onAdd} size="small" />
-        <Divider width={5} />
+        <ActionButton onPress={onEdit} iconName="edit" size="large" />
 
-        <Text style={styles.cardText}>{total}</Text>
-
-        <Divider width={5} />
-        <ActionButton iconName="minus" onPress={onRemove} size="small" />
+        <Divider width={10} />
+        <ActionButton onPress={onDelete} iconName="delete" size="large" />
       </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  image: {
-    width: 36,
-    height: 36,
-    borderRadius: 20,
-    backgroundColor: 'black',
-  },
   addButton: {
     width: 34,
     height: 34,
@@ -61,9 +38,6 @@ const styles = StyleSheet.create({
   },
 
   contentWrapper: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
     width: '50%',
   },
   contentWrapper2: {
@@ -73,6 +47,13 @@ const styles = StyleSheet.create({
     width: '50%',
   },
   cardText: { fontFamily: 'Montserrat', fontWeight: '500' },
+  cardDesc: {
+    fontFamily: 'Montserrat',
+    fontWeight: '500',
+    fontSize: 12,
+    opacity: 0.4,
+  },
+
   cardWrapper: {
     height: 60,
     backgroundColor: '#D9F0FF',

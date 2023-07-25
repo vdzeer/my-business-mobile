@@ -6,6 +6,7 @@ import {
   Basket,
   BusinessList,
   BusinessSettings,
+  Categories,
   CreateBusiness,
   CreateInventory,
   CreateProduct,
@@ -179,11 +180,8 @@ const SideBar = () => (
         },
       }}>
       <Drawer.Screen name="NewOrder" component={NewOrder} />
-      <Drawer.Screen name="Basket" component={Basket} />
       <Drawer.Screen name="Products" component={Products} />
-      <Drawer.Screen name="CreateProduct" component={CreateProduct} />
       <Drawer.Screen name="Inventory" component={Inventory} />
-      <Drawer.Screen name="CreateInventory" component={CreateInventory} />
       <Drawer.Screen name="Suppliers" component={Suppliers} />
       <Drawer.Screen name="Workers" component={Workers} />
       <Drawer.Screen name="Analytics" component={Analytics} />
@@ -202,6 +200,11 @@ export const HomeRouter: FC = () => {
       initialRouteName="BusinessList"
       screenOptions={{ headerShown: false }}>
       <HomeStack.Screen name={'CreateBusiness'} component={CreateBusiness} />
+      <Drawer.Screen name="CreateProduct" component={CreateProduct} />
+      <Drawer.Screen name="CreateInventory" component={CreateInventory} />
+      <Drawer.Screen name="Basket" component={Basket} />
+      <Drawer.Screen name="Categories" component={Categories} />
+
       <HomeStack.Screen name={'BusinessList'} component={BusinessList} />
       <HomeStack.Screen name={'Business'} component={SideBar} />
     </HomeStack.Navigator>

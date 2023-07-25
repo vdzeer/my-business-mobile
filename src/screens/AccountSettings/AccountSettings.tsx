@@ -21,37 +21,49 @@ import {
 } from '../../components';
 import { useNavigation } from '@react-navigation/native';
 import { AccountSettingsProps } from './types';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateUser } from '../../store/slices/auth';
 
 export const AccountSettings: React.FC<AccountSettingsProps> = () => {
   const navigation = useNavigation<any>();
+  const dispatch = useDispatch();
+
   const onPressDismiss = () => {
     Keyboard.dismiss();
   };
 
-  const renderItem = ({ item }: any) => <></>;
+  const { profile, token } = useSelector((store: any) => store.auth);
+
+  const [name, setName] = useState(profile?.name ?? '');
+  const [email, setEmail] = useState(profile?.email ?? '');
+
+  const [photo, setPhoto] = useState<any>('');
+
   return (
     <SafeAreaView style={styles.area}>
       <TouchableWithoutFeedback onPress={onPressDismiss}>
         <View style={styles.container}>
           <Header />
           <Divider height={20} />
-          <Text style={styles.titleText}>Welcome, Zahkar pes</Text>
+          <Text style={styles.titleText}>{`Welcome, ${name}`}</Text>
           <Divider height={30} />
           <Text style={styles.descText}>
             Here you can change your plan and update your own details
           </Text>
           <Divider height={40} />
 
-          <ImageInput />
+          <ImageInput onSelect={setPhoto} />
           <Divider height={20} />
 
-          <Input placeholder="Name" />
+          <Input placeholder="Name" value={name} onChange={setName} />
           <Divider height={20} />
 
-          <Input placeholder="Last name" />
-          <Divider height={20} />
-
-          <Input placeholder="Email" />
+          <Input
+            placeholder="Email"
+            value={email}
+            onChange={setEmail}
+            editable={false}
+          />
           <Divider height={20} />
 
           <Input placeholder="Password" />
@@ -79,7 +91,19 @@ export const AccountSettings: React.FC<AccountSettingsProps> = () => {
             <Button
               text="Update"
               onPress={() => {
-                navigation.navigate('NewOrder');
+                const formData = new FormData();
+                formData.append('name', name);
+                photo.path &&
+                  formData.append('image', {
+                    name: photo.filename,
+                    type: photo.mime ?? 'image/jpeg',
+                    uri: photo.path,
+                  });
+                dispatch(
+                  updateUser(formData, () => {
+                    navigation.navigate('NewOrder');
+                  }) as any,
+                );
               }}
             />
           </View>

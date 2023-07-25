@@ -7,6 +7,7 @@ import {
   signUp,
   updateOwnBusiness,
 } from '../api';
+import { getMe } from './auth';
 
 const initialState = {
   isLoading: false,
@@ -34,7 +35,11 @@ const slice = createSlice({
     },
     addBusiness(state, action) {
       state.isLoading = false;
-      state.business = action.payload;
+      state.business = [...state.business, action.payload];
+    },
+    updateCurrentBusiness(state, action) {
+      state.isLoading = false;
+      state.currentBusiness = action.payload;
     },
   },
 });
@@ -45,19 +50,18 @@ export const createBusiness = (data, onSuccess, onError) => async dispatch => {
   dispatch(slice.actions.setLoading());
   createOwnBusiness(data)
     .then(res => {
-      console.log(res);
-      // dispatch(slice.actions.addBusiness(res.data));
+      dispatch(getMe('', onSuccess));
     })
-    .then(onSuccess)
     .catch(error => console.log(error));
 };
 
 export const updateBusiness = (data, onSuccess, onError) => async dispatch => {
   dispatch(slice.actions.setLoading());
   updateOwnBusiness(data)
-    .then(res => {
-      console.log(res);
-      // dispatch(slice.actions.addBusiness(res.data));
+    .then(async res => {
+      const response = await res.json();
+
+      dispatch(slice.actions.updateCurrentBusiness(response.data));
     })
     .then(onSuccess)
     .catch(error => console.log(error));
@@ -75,8 +79,8 @@ export const deleteBusiness = (data, onSuccess, onError) => async dispatch => {
   dispatch(slice.actions.setLoading());
   deleteOwnBusiness(data)
     .then(res => {
-      console.log(res);
-      // dispatch(slice.actions.addBusiness(res.data));
+      console.log('resss', res);
+      dispatch(getMe());
     })
     .then(onSuccess)
     .catch(error => console.log(error));

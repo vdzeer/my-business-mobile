@@ -10,6 +10,18 @@ export const signUp = data =>
     headers: { Authorization: null },
   });
 
+export const getMeUser = () => axiosInstance.get(`/user-api/user/me`);
+
+export const updateMeUser = data => {
+  return fetch(BASE_API_URL + `/user-api/user/update`, {
+    method: 'PUT',
+    body: data,
+    headers: {
+      Authorization: axiosInstance.defaults.headers.common.Authorization,
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+};
 export const createOwnBusiness = data => {
   return fetch(BASE_API_URL + `/business-api/business/create`, {
     method: 'POST',
@@ -35,7 +47,9 @@ export const loginOwnBusiness = data => {
   return axiosInstance.post(`/business-api/business/login`, data);
 };
 export const deleteOwnBusiness = data => {
-  axiosInstance.delete(`/business-api/business/delete`);
+  return axiosInstance.delete(`/business-api/business/delete`, {
+    data: { businessId: data },
+  });
 };
 
 export const getBusinessInventory = data => {
@@ -74,6 +88,10 @@ export const getBusinessProduct = data => {
   return axiosInstance.get(`/business-api/product/get-all?businessId=${data}`);
 };
 
+export const getBusinessCategories = data => {
+  return axiosInstance.get(`/business-api/category/get-all/${data}`);
+};
+
 export const createBusinessProduct = data => {
   return fetch(BASE_API_URL + `/business-api/product/create`, {
     method: 'POST',
@@ -99,6 +117,34 @@ export const updateBusinessProduct = data => {
 export const deleteBusinessProduct = data => {
   return axiosInstance.delete(`/business-api/product/delete`, {
     data: { productId: data },
+  });
+};
+
+export const createBusinessCategory = data => {
+  return fetch(BASE_API_URL + `/business-api/category/create`, {
+    method: 'POST',
+    body: data,
+    headers: {
+      Authorization: axiosInstance.defaults.headers.common.Authorization,
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+};
+
+export const updateBusinessCategory = data => {
+  return fetch(BASE_API_URL + `/business-api/category/update`, {
+    method: 'PUT',
+    body: data,
+    headers: {
+      Authorization: axiosInstance.defaults.headers.common.Authorization,
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+};
+
+export const deleteBusinessCategory = data => {
+  return axiosInstance.delete(`/business-api/category/delete`, {
+    data: { categoryId: data },
   });
 };
 

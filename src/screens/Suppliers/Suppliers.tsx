@@ -49,7 +49,6 @@ export const Suppliers: React.FC<SuppliersProps> = () => {
     setSuppliersList(suppliers);
   }, [suppliers]);
 
-  console.log(suppliers);
   return (
     <SafeAreaView style={styles.area}>
       <View style={styles.container}>
@@ -77,11 +76,7 @@ export const Suppliers: React.FC<SuppliersProps> = () => {
               name={item.name}
               phone={item.contact}
               onDelete={() => {
-                dispatch(
-                  deleteSupplier(item?._id, () =>
-                    dispatch(getSuppliersList(currentBusiness?._id) as any),
-                  ) as any,
-                );
+                dispatch(deleteSupplier(item?._id) as any);
               }}
               onEdit={() => {
                 setItem(item);
@@ -119,8 +114,7 @@ export const Suppliers: React.FC<SuppliersProps> = () => {
                     supplierId: item?._id,
                   },
                   () => {
-                    dispatch(getSuppliersList(currentBusiness?._id) as any),
-                      setOpen(false);
+                    setOpen(false);
                   },
                 ) as any,
               );

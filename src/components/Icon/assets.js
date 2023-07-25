@@ -11,6 +11,8 @@ export { default as Edit } from '../../assets/icons/edit.svg';
 export { default as Delete } from '../../assets/icons/delete.svg';
 export { default as AddPhoto } from '../../assets/icons/addPhoto.svg';
 export { default as ArrowLeft } from '../../assets/icons/arrowLeft.svg';
+export { default as ArrowLeftBlack } from '../../assets/icons/arrowLeftBlack.svg';
+
 export { default as Drawer } from '../../assets/icons/drawer.svg';
 
 export { default as NewOrder } from '../../assets/icons/NewOrder.svg';

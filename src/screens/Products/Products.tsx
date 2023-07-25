@@ -10,6 +10,7 @@ import {
   View,
 } from 'react-native';
 import {
+  ActionButton,
   BottomSheet,
   Button,
   Divider,
@@ -35,39 +36,38 @@ export const Products: React.FC<ProductsProps> = () => {
   useEffect(() => {
     setProductList(products);
   }, [products]);
+  console.log(products[products.length - 1]);
 
   return (
     <SafeAreaView style={styles.area}>
       <View style={styles.container}>
         <Header />
         <Divider height={20} />
-        <Text style={styles.titleText}>Products</Text>
-        <Divider height={20} />
-        <View style={styles.createbuttonWrapper}>
-          <Button
+        <View style={styles.headerWrapper}>
+          <Text style={styles.titleText}>Products</Text>
+          <ActionButton
+            iconName="plus"
             onPress={() => {
               navigation.navigate('CreateProduct');
             }}
-            text="Create new product"
-            mode="large"
+            size="large"
           />
         </View>
+
+        <Divider height={20} />
+
         <FlatList
           data={productList ?? []}
           renderItem={({ item }) => (
             <ProductCard
               title={item?.name}
-              image="asd"
+              image={item?.image ?? ''}
               price={item?.price}
               onEdit={() => {
                 navigation.navigate('CreateProduct', { ...item, edit: true });
               }}
               onDelete={() => {
-                dispatch(
-                  deleteProduct(item?._id, () => {
-                    dispatch(getProductsList(currentBusiness?._id) as any);
-                  }) as any,
-                );
+                dispatch(deleteProduct(item?._id) as any);
               }}
             />
           )}
@@ -87,6 +87,11 @@ export const Products: React.FC<ProductsProps> = () => {
 };
 
 const styles = StyleSheet.create({
+  headerWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
   createbuttonWrapper: { alignSelf: 'center' },
   area: { flex: 1 },
   container: { paddingHorizontal: 15 },

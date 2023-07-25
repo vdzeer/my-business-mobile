@@ -9,11 +9,20 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import { BottomSheet, Button, Divider, Icon, Input } from '../../components';
+import {
+  ActionButton,
+  BottomSheet,
+  Button,
+  Divider,
+  Icon,
+  Input,
+} from '../../components';
 import { useNavigation } from '@react-navigation/native';
 import { BusinessListProps } from './types';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginBusiness } from '../../store/slices/business';
+import { getMe } from '../../store/slices/auth';
+import axiosInstance from '../../store/axios';
 
 export const BusinessList: React.FC<BusinessListProps> = () => {
   const navigation = useNavigation<any>();
@@ -28,11 +37,16 @@ export const BusinessList: React.FC<BusinessListProps> = () => {
     Keyboard.dismiss();
   };
 
-  const { profile } = useSelector((store: any) => store.auth);
+  const { profile, token } = useSelector((store: any) => store.auth);
+  useEffect(() => {
+    !profile?.businesses?.length && navigation.navigate('CreateBusiness');
+  }, [profile.businesses]);
 
   useEffect(() => {
-    !profile.businesses.length && navigation.navigate('CreateBusiness');
-  }, [profile.businesses]);
+    setTimeout(() => {
+      dispatch(getMe());
+    }, 1000);
+  }, [token]);
 
   const renderItem = ({ item }: any) => (
     <TouchableOpacity
@@ -46,6 +60,18 @@ export const BusinessList: React.FC<BusinessListProps> = () => {
   );
   return (
     <SafeAreaView style={styles.area}>
+      <View style={styles.headerWrapper}>
+        <Text style={styles.titleText}>My business</Text>
+        <ActionButton
+          iconName="plus"
+          onPress={() => {
+            navigation.navigate('CreateBusiness');
+          }}
+          size="large"
+        />
+      </View>
+      <Divider height={20} />
+
       <TouchableWithoutFeedback onPress={onPressDismiss}>
         <FlatList
           data={profile.businesses ?? []}
@@ -72,6 +98,7 @@ export const BusinessList: React.FC<BusinessListProps> = () => {
                   password,
                 },
                 () => {
+                  setOpen(false);
                   navigation.navigate('Business');
                 },
               ),
@@ -84,6 +111,19 @@ export const BusinessList: React.FC<BusinessListProps> = () => {
 };
 
 const styles = StyleSheet.create({
+  headerWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 15,
+    paddingTop: 20,
+  },
+  titleText: {
+    fontFamily: 'Montserrat',
+    fontSize: 28,
+    fontWeight: '600',
+    color: '#000000',
+  },
   area: { flex: 1 },
   list: { paddingHorizontal: 15, paddingTop: 20 },
   listItem: {

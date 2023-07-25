@@ -15,8 +15,12 @@ import { ImageInputProps } from './types';
 import { Icon } from '../Icon';
 import { Divider } from '../Divider';
 import ImageCropPicker from 'react-native-image-crop-picker';
+import { image_url } from '../../store/config';
 
-export const ImageInput: React.FC<ImageInputProps> = ({ onSelect }) => {
+export const ImageInput: React.FC<ImageInputProps> = ({
+  onSelect,
+  imageUrl,
+}) => {
   const [image, setImage] = useState('');
   const onSelectPhoto = async () => {
     setTimeout(() => {
@@ -38,16 +42,24 @@ export const ImageInput: React.FC<ImageInputProps> = ({ onSelect }) => {
         onPress={() => {
           onSelectPhoto();
         }}>
-        <View style={[styles.iconWrapper, { padding: image ? 0 : 10 }]}>
+        <View
+          style={[styles.iconWrapper, { padding: image || imageUrl ? 0 : 10 }]}>
           {image ? (
             <Image source={{ uri: image }} style={styles.imageStyles} />
+          ) : imageUrl ? (
+            <Image
+              source={{ uri: image_url + imageUrl }}
+              style={styles.imageStyles}
+            />
           ) : (
             <Icon name="addPhoto" />
           )}
         </View>
         <Divider width={15} />
 
-        <Text style={styles.text}>Attach your image</Text>
+        <Text style={styles.text}>
+          {image || imageUrl ? 'Change image' : 'Attach your image'}
+        </Text>
       </TouchableOpacity>
     </>
   );

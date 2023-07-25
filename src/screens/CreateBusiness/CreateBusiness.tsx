@@ -9,7 +9,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import { Button, Divider, Icon, Input } from '../../components';
+import { Button, Divider, Icon, ImageInput, Input } from '../../components';
 import { useNavigation } from '@react-navigation/native';
 import { CreateBusinessProps } from './types';
 import DeviceInfo from 'react-native-device-info';
@@ -25,7 +25,7 @@ export const CreateBusiness: React.FC<CreateBusinessProps> = () => {
 
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
-  // const [image, setImage] = useState<any>('');
+  const [photo, setPhoto] = useState<any>('');
 
   return (
     <SafeAreaView style={styles.area}>
@@ -38,6 +38,9 @@ export const CreateBusiness: React.FC<CreateBusinessProps> = () => {
           <Input placeholder="Name" onChange={setName} />
           <Divider height={20} />
           <Input placeholder="Password" onChange={setPassword} />
+          <Divider height={20} />
+          <ImageInput onSelect={setPhoto} />
+
           <Divider height={40} />
 
           <View style={styles.buttonsWrapper}>
@@ -47,21 +50,21 @@ export const CreateBusiness: React.FC<CreateBusinessProps> = () => {
                 const formData = new FormData();
                 formData.append('name', name);
                 formData.append('password', password);
-                // formData.append('image', {
-                //   name: image.fileName,
-                //   type: image.type,
-                //   uri: image.uri,
-                // });
+                photo.path &&
+                  formData.append('image', {
+                    name: photo.filename,
+                    type: photo.mime ?? 'image/jpeg',
+                    uri: photo.path,
+                  });
 
                 dispatch(
-                  //@ts-ignore
                   createBusiness(
                     formData,
                     () => {
                       navigation.navigate('BusinessList');
                     },
                     () => {},
-                  ),
+                  ) as any,
                 );
               }}
             />

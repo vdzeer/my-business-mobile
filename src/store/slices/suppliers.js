@@ -39,6 +39,12 @@ const slice = createSlice({
         ),
       ];
     },
+    deleteOneSupplier(state, action) {
+      state.isLoading = false;
+      state.suppliers = state.suppliers.filter(
+        item => item._id !== action.payload,
+      );
+    },
   },
 });
 
@@ -70,7 +76,7 @@ export const updateSupplier = (data, onSuccess, onError) => async dispatch => {
   dispatch(slice.actions.setLoading());
   updateBusinessSupplier(data)
     .then(res => {
-      // dispatch(slice.actions.replaceOneSupplier(response.data));
+      dispatch(slice.actions.replaceOneSupplier(res.data.data));
     })
     .then(onSuccess)
     .catch(error => console.log(error));
@@ -80,8 +86,7 @@ export const deleteSupplier = (data, onSuccess, onError) => async dispatch => {
   dispatch(slice.actions.setLoading());
   deleteBusinessSupplier(data)
     .then(res => {
-      console.log(res);
-      // dispatch(slice.actions.addSupplier(res.data));
+      dispatch(slice.actions.deleteOneSupplier(data));
     })
     .then(onSuccess)
     .catch(error => console.log(error));

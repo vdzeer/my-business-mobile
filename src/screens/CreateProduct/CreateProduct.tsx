@@ -3,6 +3,7 @@ import {
   FlatList,
   Keyboard,
   SafeAreaView,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -36,31 +37,28 @@ export const CreateProduct: React.FC<CreateProductProps> = () => {
 
   const { params } = useRoute<any>();
   const { currentBusiness } = useSelector((store: any) => store.business);
+  const { categories } = useSelector((store: any) => store.products);
 
-  const [name, setName] = useState('');
-  const [price, setPrice] = useState('');
-  const [self, setSelf] = useState('');
-  useEffect(() => {
-    if (params?.edit) {
-      setName(params?.name);
-      setPrice(params?.price + '');
-      setSelf(params?.selfPrice + '');
-    } else {
-      setName('');
-      setPrice('');
-      setSelf('');
-    }
-  }, [params]);
-
+  const [name, setName] = useState(params?.name ?? '');
+  const [price, setPrice] = useState(params?.price ? params?.price + '' : '');
+  const [self, setSelf] = useState(
+    params?.selfPrice ? params?.selfPrice + '' : '',
+  );
+  const [category, setCategory] = useState<any>({
+    _id: params?.categoryId ?? '',
+  });
   const [photo, setPhoto] = useState<any>('');
+  const [imageUrl, setImageUrl] = useState<any>(params?.image ?? '');
+
+  console.log(category);
 
   return (
     <SafeAreaView style={styles.area}>
       <TouchableWithoutFeedback onPress={onPressDismiss}>
         <View style={styles.container}>
-          <Header />
+          <Header withGoBack />
           <Divider height={20} />
-          <ImageInput onSelect={setPhoto} />
+          <ImageInput onSelect={setPhoto} imageUrl={imageUrl} />
           <Divider height={20} />
 
           <Input placeholder="Name" value={name} onChange={setName} />
@@ -71,7 +69,39 @@ export const CreateProduct: React.FC<CreateProductProps> = () => {
           <Divider height={20} />
           <Input placeholder="Items of inventory" />
           <Divider height={20} />
-          <Input placeholder="Category" />
+          <Text style={styles.labelText}>Category</Text>
+          <Divider height={15} />
+          <View style={{ height: 35 }}>
+            <ScrollView
+              horizontal
+              contentContainerStyle={styles.categoryScroll}>
+              {categories.map((el: any) => (
+                <>
+                  <TouchableOpacity
+                    onPress={() => {
+                      setCategory(el);
+                    }}
+                    style={[
+                      styles.categoryItem,
+                      {
+                        backgroundColor:
+                          el._id === category?._id ? '#83C9F4' : '#D9F0FF',
+                      },
+                    ]}>
+                    <Text style={styles.categoryText}>{el?.name}</Text>
+                  </TouchableOpacity>
+                  <Divider width={5} />
+                </>
+              ))}
+            </ScrollView>
+          </View>
+          <Divider height={15} />
+          <Button
+            text="Edit categories"
+            onPress={() => {
+              navigation.navigate('Categories');
+            }}
+          />
 
           <View style={styles.buttonWrapper}>
             <Button
@@ -82,18 +112,21 @@ export const CreateProduct: React.FC<CreateProductProps> = () => {
                 formData.append('price', price);
                 formData.append('selfPrice', self);
                 formData.append('businessId', currentBusiness?._id);
+                category?._id && formData.append('categoryId', category?._id);
 
-                formData.append('image', {
-                  name: photo.filename,
-                  type: photo.mime ?? 'image/jpeg',
-                  uri: photo.path,
-                });
+                params?._id && formData.append('productId', params?._id);
+
+                photo.path &&
+                  formData.append('image', {
+                    name: photo.filename,
+                    type: photo.mime ?? 'image/jpeg',
+                    uri: photo.path,
+                  });
                 if (params?.edit) {
                   dispatch(
                     updateProducts(
                       formData,
                       () => {
-                        dispatch(getProductsList(currentBusiness?._id) as any);
                         navigation.navigate('Products');
                       },
                       () => {},
@@ -120,6 +153,23 @@ export const CreateProduct: React.FC<CreateProductProps> = () => {
 };
 
 const styles = StyleSheet.create({
+  categoryText: { fontFamily: 'Montserrat' },
+  categoryItem: {
+    paddingHorizontal: 15,
+    paddingVertical: 5,
+    borderRadius: 50,
+
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  categoryScroll: {
+    height: 35,
+    width: '100%',
+  },
+  labelText: {
+    fontFamily: 'Montserrat',
+    fontSize: 16,
+  },
   createbuttonWrapper: { alignSelf: 'center' },
   area: { flex: 1 },
   container: { paddingHorizontal: 15, height: '100%' },

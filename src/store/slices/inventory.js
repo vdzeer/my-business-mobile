@@ -39,6 +39,12 @@ const slice = createSlice({
         ),
       ];
     },
+    deleteOneInventory(state, action) {
+      state.isLoading = false;
+      state.inventory = state.inventory.filter(
+        item => item._id !== action.payload,
+      );
+    },
   },
 });
 
@@ -72,8 +78,7 @@ export const updateInventory = (data, onSuccess, onError) => async dispatch => {
   updateBusinessInventory(data)
     .then(async res => {
       const response = await res.json();
-
-      // dispatch(slice.actions.replaceOneInventory(response.data));
+      dispatch(slice.actions.replaceOneInventory(response.data));
     })
     .then(onSuccess)
     .catch(error => console.log(error));
@@ -83,8 +88,7 @@ export const deleteInventory = (data, onSuccess, onError) => async dispatch => {
   dispatch(slice.actions.setLoading());
   deleteBusinessInventory(data)
     .then(res => {
-      console.log(res);
-      // dispatch(slice.actions.addBusiness(res.data));
+      dispatch(slice.actions.deleteOneInventory(data));
     })
     .then(onSuccess)
     .catch(error => console.log(error));

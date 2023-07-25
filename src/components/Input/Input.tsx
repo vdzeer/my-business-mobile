@@ -5,15 +5,17 @@ import { InputProps } from './types';
 export const Input: React.FC<InputProps> = ({
   placeholder,
   value,
-  onChange,
+  onChange: onChangeText,
+  ...props
 }) => {
   return (
     <>
       <TextInput
         placeholder={placeholder}
         value={value}
-        onChangeText={text => onChange && onChange(text)}
+        onChangeText={text => onChangeText && onChangeText(text)}
         style={styles.textInput}
+        {...props}
       />
     </>
   );

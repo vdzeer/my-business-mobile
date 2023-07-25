@@ -2,18 +2,21 @@ import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { ActionButton, Divider, Icon } from '../../../components';
 import { OrderHistoryProps } from './types';
+import moment from 'moment';
 
-export const OrderHistoryCard = ({ name, date }: OrderHistoryProps) => {
+export const OrderHistoryCard = ({ name, date, price }: OrderHistoryProps) => {
   return (
     <View style={styles.cardWrapper}>
       <View style={styles.contentWrapper}>
         <Text style={styles.cardText}>{name}</Text>
         <Divider height={10} />
 
-        <Text style={styles.cardDesc}>{new Date().toDateString()}</Text>
+        <Text style={styles.cardDesc}>
+          {moment(date).format('YYYY/MM/DD hh:mm')}
+        </Text>
       </View>
       <View style={styles.contentWrapper2}>
-        <Text style={styles.priceText}>Price</Text>
+        <Text style={styles.priceText}>{price}</Text>
       </View>
     </View>
   );

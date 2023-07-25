@@ -13,6 +13,7 @@ import {
   BottomSheet,
   Button,
   Divider,
+  Header,
   Icon,
   ImageInput,
   Input,
@@ -38,27 +39,25 @@ export const CreateInventory: React.FC<CreateInventoryProps> = () => {
     Keyboard.dismiss();
   };
 
-  const [name, setName] = useState('');
-  const [amount, setAmount] = useState('');
-  const [lower, setLower] = useState('');
-  useEffect(() => {
-    if (params?.edit) {
-      setName(params?.name);
-      setAmount(params?.amount + '');
-      setLower(params?.lowerRange + '');
-    } else {
-      setName('');
-      setAmount('');
-      setLower('');
-    }
-  }, [params]);
-
+  const [name, setName] = useState(params?.name ?? '');
+  const [amount, setAmount] = useState(
+    params?.amount ? params?.amount + '' : '',
+  );
+  const [lower, setLower] = useState(
+    params?.lowerRange ? params?.lowerRange + '' : '',
+  );
   const [photo, setPhoto] = useState<any>('');
+  const [imageUrl, setImageUrl] = useState<any>(params?.image ?? '');
+
+  console.log(params);
 
   return (
     <SafeAreaView style={styles.area}>
       <TouchableWithoutFeedback onPress={onPressDismiss}>
         <View style={styles.container}>
+          <Header withGoBack />
+          <Divider height={40} />
+
           <Text style={styles.titleText}>
             {params?.edit
               ? 'Update your inventory '
@@ -66,7 +65,7 @@ export const CreateInventory: React.FC<CreateInventoryProps> = () => {
           </Text>
           <Divider height={40} />
 
-          <ImageInput />
+          <ImageInput onSelect={setPhoto} imageUrl={imageUrl} />
           <Divider height={20} />
 
           <Input placeholder="Name" onChange={setName} value={name} />
@@ -86,17 +85,19 @@ export const CreateInventory: React.FC<CreateInventoryProps> = () => {
                 formData.append('amount', amount);
                 formData.append('businessId', currentBusiness?._id);
 
-                // formData.append('image', {
-                //   name: image.fileName,
-                //   type: image.type,
-                //   uri: image.uri,
-                // });
+                params?._id && formData.append('inventoryId', params?._id);
+
+                photo.path &&
+                  formData.append('image', {
+                    name: photo.filename,
+                    type: photo.mime ?? 'image/jpeg',
+                    uri: photo.path,
+                  });
                 if (params?.edit) {
                   dispatch(
                     updateInventory(
                       formData,
                       () => {
-                        dispatch(getInventoryList(currentBusiness?._id) as any);
                         navigation.navigate('Inventory');
                       },
                       () => {},

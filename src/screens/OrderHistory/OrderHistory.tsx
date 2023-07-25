@@ -34,6 +34,7 @@ export const OrderHistory: React.FC<OrderHistoryProps> = () => {
   useEffect(() => {
     setOrderList(orders);
   }, [orders]);
+  console.log('a', orders[0]);
 
   return (
     <SafeAreaView style={styles.area}>
@@ -48,7 +49,13 @@ export const OrderHistory: React.FC<OrderHistoryProps> = () => {
         <FlatList
           data={orderList}
           renderItem={({ item }) => (
-            <OrderHistoryCard name={item.name} date={item.phone} />
+            <OrderHistoryCard
+              name={
+                item.payType.slice(0, 1).toUpperCase() + item.payType.slice(1)
+              }
+              date={item.date}
+              price={item?.totalPrice}
+            />
           )}
           style={styles.list}
         />

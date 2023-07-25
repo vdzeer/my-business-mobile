@@ -49,7 +49,7 @@ export const Basket: React.FC<BasketProps> = () => {
   return (
     <SafeAreaView style={styles.area}>
       <View style={styles.container}>
-        <Header />
+        <Header withGoBack />
         <Divider height={20} />
         <Text style={styles.titleText}>Your items</Text>
         <FlatList
@@ -59,6 +59,7 @@ export const Basket: React.FC<BasketProps> = () => {
               title={item?.name}
               total={item?.total}
               price={item?.price}
+              image={item?.image ?? ''}
               onAdd={() => {
                 dispatch(addToBasket(item) as any);
               }}

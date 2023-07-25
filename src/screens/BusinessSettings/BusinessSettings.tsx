@@ -21,14 +21,24 @@ import {
 } from '../../components';
 import { useNavigation } from '@react-navigation/native';
 import { BusinessSettingsProps } from './types';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteBusiness, updateBusiness } from '../../store/slices/business';
 
 export const BusinessSettings: React.FC<BusinessSettingsProps> = () => {
   const navigation = useNavigation<any>();
+  const dispatch = useDispatch<any>();
+
   const onPressDismiss = () => {
     Keyboard.dismiss();
   };
 
-  const renderItem = ({ item }: any) => <></>;
+  const { currentBusiness } = useSelector((store: any) => store.business);
+
+  const [name, setName] = useState<any>(currentBusiness?.name);
+
+  const [photo, setPhoto] = useState<any>('');
+  const [imageUrl, setImageUrl] = useState<any>(currentBusiness?.image ?? '');
+
   return (
     <SafeAreaView style={styles.area}>
       <TouchableWithoutFeedback onPress={onPressDismiss}>
@@ -42,19 +52,42 @@ export const BusinessSettings: React.FC<BusinessSettingsProps> = () => {
           </Text>
           <Divider height={40} />
 
-          <ImageInput />
+          <ImageInput onSelect={setPhoto} imageUrl={imageUrl} />
           <Divider height={20} />
 
-          <Input placeholder="Name" />
+          <Input placeholder="Name" value={name} onChange={setName} />
 
           <View style={styles.buttonWrapper}>
             <Button
               text="Submit"
               onPress={() => {
-                navigation.navigate('NewOrder');
+                const formData = new FormData();
+                formData.append('name', name);
+                formData.append('businessId', currentBusiness?._id);
+                photo.path &&
+                  formData.append('image', {
+                    name: photo.filename,
+                    type: photo.mime ?? 'image/jpeg',
+                    uri: photo.path,
+                  });
+                dispatch(
+                  updateBusiness(formData, () => {
+                    navigation.navigate('NewOrder');
+                  }),
+                );
               }}
             />
-            <ActionButton iconName="delete" onPress={() => {}} size="large" />
+            <ActionButton
+              iconName="delete"
+              onPress={() => {
+                dispatch(
+                  deleteBusiness(currentBusiness?._id, () => {
+                    navigation.navigate('BusinessList');
+                  }),
+                );
+              }}
+              size="large"
+            />
           </View>
         </View>
       </TouchableWithoutFeedback>
