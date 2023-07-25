@@ -24,6 +24,7 @@
 		7E0D329EDE7F452BAE92BC3A /* Montserrat-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1929E488A7FD4B138FA70218 /* Montserrat-SemiBold.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		A5E56B6F751F4E4892558A96 /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 848EB9B72F8D473FAD6CB8B1 /* Montserrat-Regular.ttf */; };
+		B09D88A72A70348500F1874F /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = B09D88A62A70348400F1874F /* logo.png */; };
 		BA23190A62E8441D8686B5B8 /* Montserrat-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 415C24090E5140978F1C5A76 /* Montserrat-Medium.ttf */; };
 		C0104910B10B4EE7A85C08AE /* Montserrat-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0AF948ACA6D547B9A8F8F98B /* Montserrat-ThinItalic.ttf */; };
 		CFB2B0254BF141A4BF9382B0 /* Montserrat-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6D46455B322B452A967919F8 /* Montserrat-SemiBoldItalic.ttf */; };
@@ -69,6 +70,7 @@
 		848EB9B72F8D473FAD6CB8B1 /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Regular.ttf"; path = "../src/assets/fonts/Montserrat-Regular.ttf"; sourceTree = "<group>"; };
 		98DD4CB0154B79C23ABEB4F2 /* Pods-MyBusinessPlus.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyBusinessPlus.release.xcconfig"; path = "Target Support Files/Pods-MyBusinessPlus/Pods-MyBusinessPlus.release.xcconfig"; sourceTree = "<group>"; };
 		AE2D08BBC3E54208AA179AC7 /* Montserrat-MediumItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-MediumItalic.ttf"; path = "../src/assets/fonts/Montserrat-MediumItalic.ttf"; sourceTree = "<group>"; };
+		B09D88A62A70348400F1874F /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		B7DDADD42F3E4513A7D7913F /* Montserrat-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Light.ttf"; path = "../src/assets/fonts/Montserrat-Light.ttf"; sourceTree = "<group>"; };
 		C91888FBB1E5474CB7C4D792 /* Montserrat-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Thin.ttf"; path = "../src/assets/fonts/Montserrat-Thin.ttf"; sourceTree = "<group>"; };
 		CE8A263A5ABF430CA31AAD3A /* Montserrat-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-BoldItalic.ttf"; path = "../src/assets/fonts/Montserrat-BoldItalic.ttf"; sourceTree = "<group>"; };
@@ -127,6 +129,7 @@
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
+				B09D88A62A70348400F1874F /* logo.png */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
 			name = MyBusinessPlus;
@@ -315,6 +318,7 @@
 				1E97CD7BAD844E9898086389 /* Montserrat-ExtraLight.ttf in Resources */,
 				600E54F1F0AC47DBA89B97F3 /* Montserrat-ExtraLightItalic.ttf in Resources */,
 				75A22368A0164ACAA2A24473 /* Montserrat-Italic.ttf in Resources */,
+				B09D88A72A70348500F1874F /* logo.png in Resources */,
 				29D07EF7B25047288B0DEB14 /* Montserrat-Light.ttf in Resources */,
 				776E838CC7B542FA8CFD6E78 /* Montserrat-LightItalic.ttf in Resources */,
 				BA23190A62E8441D8686B5B8 /* Montserrat-Medium.ttf in Resources */,
@@ -564,6 +568,7 @@
 			baseConfigurationReference = CF8B0AFD5F6AD4BC50F5D25B /* Pods-MyBusinessPlus.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = RV38A3JNTT;
@@ -598,6 +603,7 @@
 			baseConfigurationReference = 98DD4CB0154B79C23ABEB4F2 /* Pods-MyBusinessPlus.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = RV38A3JNTT;

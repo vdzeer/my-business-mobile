@@ -7,6 +7,8 @@ import { useSelector } from 'react-redux';
 import { Alert } from 'react-native';
 import { setTokenInstance } from '../store/axios';
 
+import SplashScreen from 'react-native-splash-screen';
+
 const linking = {
   prefixes: ['mybusinesslink://'],
   config: {
@@ -25,6 +27,12 @@ export const Application: FC = () => {
   useEffect(() => {
     token && setTokenInstance(token);
   }, [token]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      SplashScreen.hide();
+    }, 1000);
+  }, []);
 
   return (
     <>
