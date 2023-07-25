@@ -13,6 +13,7 @@ import {
   NewOrder,
   OrderHistory,
   Products,
+  Promocodes,
   Subscriptions,
   Suppliers,
   Workers,
@@ -82,6 +83,12 @@ const CustomDrawerContent = ({ navigation, state }: any) => {
         state={state}
         screenName="Suppliers"
         label="Suppliers"
+      />
+      <CustomDrawerItem
+        navigation={navigation}
+        state={state}
+        screenName="Promocodes"
+        label="Promocodes"
       />
       <CustomDrawerItem
         navigation={navigation}
@@ -184,6 +191,7 @@ const SideBar = () => (
       <Drawer.Screen name="BusinessSettings" component={BusinessSettings} />
       <Drawer.Screen name="AccountSettings" component={AccountSettings} />
       <Drawer.Screen name="Subscriptions" component={Subscriptions} />
+      <Drawer.Screen name="Promocodes" component={Promocodes} />
     </Drawer.Navigator>
   </View>
 );

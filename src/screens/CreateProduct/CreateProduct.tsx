@@ -53,13 +53,14 @@ export const CreateProduct: React.FC<CreateProductProps> = () => {
   }, [params]);
 
   const [photo, setPhoto] = useState<any>('');
+
   return (
     <SafeAreaView style={styles.area}>
       <TouchableWithoutFeedback onPress={onPressDismiss}>
         <View style={styles.container}>
           <Header />
           <Divider height={20} />
-          <ImageInput />
+          <ImageInput onSelect={setPhoto} />
           <Divider height={20} />
 
           <Input placeholder="Name" value={name} onChange={setName} />
@@ -82,11 +83,11 @@ export const CreateProduct: React.FC<CreateProductProps> = () => {
                 formData.append('selfPrice', self);
                 formData.append('businessId', currentBusiness?._id);
 
-                // formData.append('image', {
-                //   name: image.fileName,
-                //   type: image.type,
-                //   uri: image.uri,
-                // });
+                formData.append('image', {
+                  name: photo.filename,
+                  type: photo.mime ?? 'image/jpeg',
+                  uri: photo.path,
+                });
                 if (params?.edit) {
                   dispatch(
                     updateProducts(

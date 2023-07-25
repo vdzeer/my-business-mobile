@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   FlatList,
   Keyboard,
@@ -22,11 +22,18 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { OrderHistoryProps } from './types';
 import { OrderHistoryCard } from './components/OrderHistoryCard';
+import { useSelector } from 'react-redux';
 
 export const OrderHistory: React.FC<OrderHistoryProps> = () => {
   const navigation = useNavigation<any>();
 
-  const [open, setOpen] = useState(false);
+  const { currentBasket, orders } = useSelector((store: any) => store.orders);
+
+  const [orderList, setOrderList] = useState<any>(null);
+
+  useEffect(() => {
+    setOrderList(orders);
+  }, [orders]);
 
   return (
     <SafeAreaView style={styles.area}>
@@ -35,49 +42,17 @@ export const OrderHistory: React.FC<OrderHistoryProps> = () => {
         <Divider height={20} />
         <View style={styles.headerWrapper}>
           <Text style={styles.titleText}>Order history</Text>
-          <ActionButton
-            iconName="plus"
-            onPress={() => {
-              setOpen(true);
-            }}
-            size="large"
-          />
         </View>
         <Divider height={20} />
 
         <FlatList
-          data={[
-            { name: 'Zakhar', phone: 'Kurska' },
-            { name: 'Zakhar', phone: 'Kurska' },
-          ]}
+          data={orderList}
           renderItem={({ item }) => (
-            <OrderHistoryCard name={item.name} image={item.phone} />
+            <OrderHistoryCard name={item.name} date={item.phone} />
           )}
           style={styles.list}
         />
       </View>
-      <BottomSheet
-        open={open}
-        snapPoints={['40%']}
-        onDismiss={() => {
-          setOpen(false);
-        }}>
-        <ImageInput />
-        <Divider height={20} />
-
-        <Input placeholder="Name" />
-        <Divider height={20} />
-
-        <Input placeholder="Email" />
-        <Divider height={30} />
-        <Button
-          text="Submit"
-          mode="large"
-          onPress={() => {
-            setOpen(false);
-          }}
-        />
-      </BottomSheet>
     </SafeAreaView>
   );
 };

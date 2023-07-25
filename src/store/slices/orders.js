@@ -22,6 +22,13 @@ const slice = createSlice({
     setLoadingFalse(state) {
       state.isLoading = false;
     },
+    clearBasket(state) {
+      state.currentBasket = [];
+    },
+    setCurrentOrders(state, action) {
+      state.isLoading = false;
+      state.orders = action.payload;
+    },
 
     addOneProduct(state, action) {
       state.isLoading = false;
@@ -87,7 +94,7 @@ export const getOrdersList = (data, onSuccess, onError) => async dispatch => {
 
   getBusinessOrders(data)
     .then(res => {
-      // dispatch(slice.actions.setCurrentProducts(res.data.data));
+      dispatch(slice.actions.setCurrentOrders(res.data.data));
     })
     .then(onSuccess)
     .catch(error => console.log(error.response));
@@ -97,7 +104,7 @@ export const createOrder = (data, onSuccess, onError) => async dispatch => {
   dispatch(slice.actions.setLoading());
   createBusinessOrder(data)
     .then(res => {
-      dispatch(slice.actions.addOneProduct(res.data));
+      dispatch(slice.actions.clearBasket());
     })
     .then(onSuccess)
     .catch(error => console.log(error));

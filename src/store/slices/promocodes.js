@@ -70,6 +70,7 @@ export const updatePromocode = (data, onSuccess, onError) => async dispatch => {
   dispatch(slice.actions.setLoading());
   updateBusinessPromocode(data)
     .then(res => {
+      console.log(res.data);
       // dispatch(slice.actions.replaceOneSupplier(response.data));
     })
     .then(onSuccess)
@@ -80,7 +81,7 @@ export const deletePromocode = (data, onSuccess, onError) => async dispatch => {
   dispatch(slice.actions.setLoading());
   deleteBusinessPromocode(data)
     .then(res => {
-      console.log(res);
+      console.log(res.data);
       // dispatch(slice.actions.addSupplier(res.data));
     })
     .then(onSuccess)

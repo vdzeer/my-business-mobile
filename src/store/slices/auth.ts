@@ -49,13 +49,13 @@ export const login =
         console.log(res);
         dispatch(
           slice.actions.loginSuccess({
-            token: res.data.token,
+            token: res.data.accessToken,
             user: res.data.data,
           }),
         );
       })
       .then(onSuccess)
-      .catch(error => console.log(error));
+      .catch(error => console.log(error.response.data));
   };
 
 export const register =

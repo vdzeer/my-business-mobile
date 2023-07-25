@@ -16,7 +16,7 @@ import { Icon } from '../Icon';
 import { Divider } from '../Divider';
 import ImageCropPicker from 'react-native-image-crop-picker';
 
-export const ImageInput: React.FC<any> = ({}) => {
+export const ImageInput: React.FC<ImageInputProps> = ({ onSelect }) => {
   const [image, setImage] = useState('');
   const onSelectPhoto = async () => {
     setTimeout(() => {
@@ -25,6 +25,7 @@ export const ImageInput: React.FC<any> = ({}) => {
         height: 400,
         cropping: true,
       }).then(res => {
+        onSelect(res);
         setImage(res.path);
       });
     }, 500);

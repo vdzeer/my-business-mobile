@@ -23,3 +23,4 @@ export { default as OrderHistory } from '../../assets/icons/OrderHistory.svg';
 export { default as BusinessSettings } from '../../assets/icons/BusinessSettings.svg';
 export { default as AccountSettings } from '../../assets/icons/AccountSettings.svg';
 export { default as Logout } from '../../assets/icons/Logout.svg';
+export { default as Promocodes } from '../../assets/icons/Promocodes.svg';

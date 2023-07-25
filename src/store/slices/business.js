@@ -69,7 +69,7 @@ export const loginBusiness = (data, onSuccess, onError) => async dispatch => {
       dispatch(slice.actions.setCurrentBusiness(res.data.data));
     })
     .then(onSuccess)
-    .catch(error => console.log(error));
+    .catch(error => console.log(error.response.data));
 };
 export const deleteBusiness = (data, onSuccess, onError) => async dispatch => {
   dispatch(slice.actions.setLoading());

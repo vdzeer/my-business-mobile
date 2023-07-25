@@ -61,7 +61,8 @@ export const createProduct = (data, onSuccess, onError) => async dispatch => {
   createBusinessProduct(data)
     .then(async res => {
       const response = await res.json();
-      dispatch(slice.actions.addOneProduct(response.data));
+      console.log(response);
+      // dispatch(slice.actions.addOneProduct(response.data));
     })
     .then(onSuccess)
     .catch(error => console.log(error));

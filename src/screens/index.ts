@@ -16,3 +16,4 @@ export * from './OrderHistory';
 export * from './BusinessSettings';
 export * from './AccountSettings';
 export * from './Subscriptions';
+export * from './Promocodes';

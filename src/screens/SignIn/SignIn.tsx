@@ -46,7 +46,7 @@ export const SignIn: React.FC<SignInProps> = () => {
                     //@ts-ignore
                     login({
                       email: 'vdzerniuk@gmail.com',
-                      password: 'qwerty',
+                      password: '123456',
                     }),
                   )
                 : dispatch(

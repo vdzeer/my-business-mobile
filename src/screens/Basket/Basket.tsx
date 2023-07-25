@@ -31,7 +31,7 @@ export const Basket: React.FC<BasketProps> = () => {
   const navigation = useNavigation<any>();
   const dispatch = useDispatch();
 
-  const { currentBasket } = useSelector((store: any) => store.orders);
+  const { currentBasket, orders } = useSelector((store: any) => store.orders);
   const { currentBusiness } = useSelector((store: any) => store.business);
 
   const [basket, setBasket] = useState<any>([]);
@@ -91,17 +91,18 @@ export const Basket: React.FC<BasketProps> = () => {
             text="Confirm"
             onPress={() => {
               dispatch(
-                createOrder({
-                  businessId: currentBusiness?._id,
-                  payType: 'cash',
-                  //how to do with multiple items of total >1 ???
-                  products: [
-                    '64b7d35f33a2e97b3602b836',
-                    '64b84c47981ccd1509c6be9f',
-                  ],
-                }) as any,
+                createOrder(
+                  {
+                    businessId: currentBusiness?._id,
+                    payType: 'cash',
+                    //how to do with multiple items of total >1 ???
+                    products: basket.map((el: any) => el._id),
+                  },
+                  () => {
+                    navigation.goBack();
+                  },
+                ) as any,
               );
-              navigation.goBack();
             }}
           />
         </View>

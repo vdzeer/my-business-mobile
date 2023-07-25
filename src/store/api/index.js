@@ -121,15 +121,15 @@ export const deleteBusinessSupplier = data => {
 };
 
 export const getBusinessOrders = data => {
-  return axiosInstance.get(`/business-api/supplier/get-all/${data}`);
+  return axiosInstance.get(`/business-api/order/get-all/${data}`);
 };
 
 export const createBusinessOrder = data => {
-  return axiosInstance.post(`/business-api/supplier/create`, data);
+  return axiosInstance.post(`/business-api/order/create`, data);
 };
 
 export const deleteBusinessOrder = data => {
-  return axiosInstance.delete(`/business-api/supplier/delete`, {
+  return axiosInstance.delete(`/business-api/order/delete`, {
     data: { supplierId: data },
   });
 };

@@ -1,19 +1,29 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { ActionButton, Divider, Icon } from '../../../components';
-import { OrderHistoryProps } from './types';
+import { PromocodeCardProps } from './types';
 
-export const OrderHistoryCard = ({ name, date }: OrderHistoryProps) => {
+export const PromocodeCard = ({
+  name,
+  phone,
+  onEdit,
+  onDelete,
+}: PromocodeCardProps) => {
   return (
     <View style={styles.cardWrapper}>
       <View style={styles.contentWrapper}>
         <Text style={styles.cardText}>{name}</Text>
         <Divider height={10} />
 
-        <Text style={styles.cardDesc}>{new Date().toDateString()}</Text>
+        <Text style={styles.cardDesc}>{phone}</Text>
       </View>
       <View style={styles.contentWrapper2}>
-        <Text style={styles.priceText}>Price</Text>
+        <Divider width={20} />
+
+        <ActionButton onPress={onEdit} iconName="edit" size="large" />
+
+        <Divider width={10} />
+        <ActionButton onPress={onDelete} iconName="delete" size="large" />
       </View>
     </View>
   );
@@ -40,8 +50,6 @@ const styles = StyleSheet.create({
     width: '50%',
   },
   cardText: { fontFamily: 'Montserrat', fontWeight: '500' },
-  priceText: { fontFamily: 'Montserrat', fontWeight: '700', fontSize: 16 },
-
   cardDesc: {
     fontFamily: 'Montserrat',
     fontWeight: '500',

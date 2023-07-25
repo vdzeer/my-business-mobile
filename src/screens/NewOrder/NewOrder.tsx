@@ -24,7 +24,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getInventoryList } from '../../store/slices/inventory';
 import { getProductsList } from '../../store/slices/products';
 import { getSuppliersList } from '../../store/slices/suppliers';
-import { addToBasket } from '../../store/slices/orders';
+import { addToBasket, getOrdersList } from '../../store/slices/orders';
+import { getPromocodesList } from '../../store/slices/promocodes';
 
 export const NewOrder: React.FC<NewOrderProps> = () => {
   const navigation = useNavigation<any>();
@@ -33,6 +34,7 @@ export const NewOrder: React.FC<NewOrderProps> = () => {
 
   const { currentBusiness } = useSelector((store: any) => store.business);
   const { products } = useSelector((store: any) => store.products);
+  const { orders } = useSelector((store: any) => store.orders);
 
   const [productList, setProductList] = useState<any>(null);
 
@@ -40,12 +42,13 @@ export const NewOrder: React.FC<NewOrderProps> = () => {
     dispatch(getInventoryList(currentBusiness?._id) as any);
     dispatch(getProductsList(currentBusiness?._id) as any);
     dispatch(getSuppliersList(currentBusiness?._id) as any);
+    dispatch(getPromocodesList(currentBusiness?._id) as any);
+    dispatch(getOrdersList(currentBusiness?._id) as any);
   }, []);
 
   useEffect(() => {
     setProductList(products);
   }, [products]);
-  console.log(productList);
 
   return (
     <SafeAreaView style={styles.area}>
