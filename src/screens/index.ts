@@ -18,3 +18,4 @@ export * from './AccountSettings';
 export * from './Subscriptions';
 export * from './Promocodes';
 export * from './Categories';
+export * from './ResetPassword';

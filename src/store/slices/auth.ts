@@ -1,6 +1,15 @@
 import { setTokenInstance } from './../axios';
 import { createSlice } from '@reduxjs/toolkit';
-import { getMeUser, signIn, signUp, updateMeUser } from '../api';
+import {
+  getMeUser,
+  signIn,
+  signUp,
+  updateMeUser,
+  appleApi,
+  forgot,
+  googleApi,
+  resetPasswordApi,
+} from '../api';
 
 const initialState = {
   isLoading: false,
@@ -75,6 +84,24 @@ export const getMe =
       .catch(error => console.log(error.response.data));
   };
 
+export const google =
+  (data: any, onSuccess: any, onError: any) => async (dispatch: any) => {
+    dispatch(slice.actions.setLoading());
+
+    googleApi(data)
+      .then(res => {
+        console.log(res);
+        dispatch(
+          slice.actions.loginSuccess({
+            token: res.data.accessToken,
+            user: res.data.data,
+          }),
+        );
+      })
+      .then(onSuccess)
+      .catch(error => console.log(error.response.data));
+  };
+
 export const updateUser =
   (data?: any, onSuccess?: any, onError?: any) => async (dispatch: any) => {
     dispatch(slice.actions.setLoading());
@@ -84,6 +111,42 @@ export const updateUser =
         const response = await res.json();
         dispatch(slice.actions.updateProfile(response.data));
       })
+      .then(onSuccess)
+      .catch(error => console.log(error.response.data));
+  };
+
+export const apple =
+  (data: any, onSuccess: any, onError: any) => async (dispatch: any) => {
+    dispatch(slice.actions.setLoading());
+
+    appleApi(data)
+      .then(res => {
+        console.log(res);
+        dispatch(
+          slice.actions.loginSuccess({
+            token: res.data.accessToken,
+            user: res.data.data,
+          }),
+        );
+      })
+      .then(onSuccess)
+      .catch(error => console.log(error.response.data));
+  };
+
+export const forgotPassword =
+  (data: any, onSuccess: any, onError: any) => async (dispatch: any) => {
+    dispatch(slice.actions.setLoading());
+
+    forgot(data)
+      .then(onSuccess)
+      .catch(error => console.log(error.response.data));
+  };
+
+export const resetPassword =
+  (data: any, onSuccess: any, onError: any) => async (dispatch: any) => {
+    dispatch(slice.actions.setLoading());
+
+    resetPasswordApi(data)
       .then(onSuccess)
       .catch(error => console.log(error.response.data));
   };
