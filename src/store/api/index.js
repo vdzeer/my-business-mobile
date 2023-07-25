@@ -5,6 +5,27 @@ export const signIn = data =>
   axiosInstance.post(`/user-api/auth/login`, data, {
     headers: { Authorization: null },
   });
+
+export const googleApi = data =>
+  axiosInstance.post(`/user-api/auth/google`, data, {
+    headers: { Authorization: null },
+  });
+
+export const appleApi = data =>
+  axiosInstance.post(`/user-api/auth/apple`, data, {
+    headers: { Authorization: null },
+  });
+
+export const forgot = data =>
+  axiosInstance.post(`/user-api/user/forget-password`, data, {
+    headers: { Authorization: null },
+  });
+
+export const resetPasswordApi = data =>
+  axiosInstance.post(`/user-api/user/reset-password`, data, {
+    headers: { Authorization: null },
+  });
+
 export const signUp = data =>
   axiosInstance.post(`/user-api/auth/registration`, data, {
     headers: { Authorization: null },

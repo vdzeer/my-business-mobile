@@ -1,7 +1,13 @@
 import { setTokenInstance } from './../axios';
 import { createSlice } from '@reduxjs/toolkit';
-import { signIn, signUp } from '../api';
-
+import {
+  appleApi,
+  forgot,
+  googleApi,
+  resetPasswordApi,
+  signIn,
+  signUp,
+} from '../api';
 const initialState = {
   isLoading: false,
   profile: null,
@@ -54,6 +60,60 @@ export const login =
           }),
         );
       })
+      .then(onSuccess)
+      .catch(error => console.log(error.response.data));
+  };
+
+export const google =
+  (data: any, onSuccess: any, onError: any) => async (dispatch: any) => {
+    dispatch(slice.actions.setLoading());
+
+    googleApi(data)
+      .then(res => {
+        console.log(res);
+        dispatch(
+          slice.actions.loginSuccess({
+            token: res.data.accessToken,
+            user: res.data.data,
+          }),
+        );
+      })
+      .then(onSuccess)
+      .catch(error => console.log(error.response.data));
+  };
+
+export const apple =
+  (data: any, onSuccess: any, onError: any) => async (dispatch: any) => {
+    dispatch(slice.actions.setLoading());
+
+    appleApi(data)
+      .then(res => {
+        console.log(res);
+        dispatch(
+          slice.actions.loginSuccess({
+            token: res.data.accessToken,
+            user: res.data.data,
+          }),
+        );
+      })
+      .then(onSuccess)
+      .catch(error => console.log(error.response.data));
+  };
+
+export const forgotPassword =
+  (data: any, onSuccess: any, onError: any) => async (dispatch: any) => {
+    dispatch(slice.actions.setLoading());
+
+    forgot(data)
+      .then(onSuccess)
+      .catch(error => console.log(error.response.data));
+  };
+
+export const resetPassword =
+  (data: any, onSuccess: any, onError: any) => async (dispatch: any) => {
+    dispatch(slice.actions.setLoading());
+
+    resetPasswordApi(data)
       .then(onSuccess)
       .catch(error => console.log(error.response.data));
   };

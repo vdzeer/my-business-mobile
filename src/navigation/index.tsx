@@ -7,15 +7,28 @@ import { useSelector } from 'react-redux';
 import { Alert } from 'react-native';
 import { setTokenInstance } from '../store/axios';
 
+const linking = {
+  prefixes: ['mybusinesslink://'],
+  config: {
+    initialRouteName: 'ResetPassword',
+    screens: {
+      ResetPassword: {
+        path: 'token/:token/:email',
+      },
+    },
+  },
+};
+
 export const Application: FC = () => {
   const { token } = useSelector((store: any) => store.auth);
 
   useEffect(() => {
     token && setTokenInstance(token);
   }, [token]);
+
   return (
     <>
-      <NavigationContainer>
+      <NavigationContainer linking={linking}>
         {token ? <HomeRouter /> : <AuthRouter />}
       </NavigationContainer>
     </>

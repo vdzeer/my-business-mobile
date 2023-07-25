@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import {
   Keyboard,
   StyleSheet,
@@ -13,7 +13,10 @@ import { SocialButton } from './components/SocialButton';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { signIn } from '../../store/api';
-import { login, register } from '../../store/slices/auth';
+import { google, login, register, apple } from '../../store/slices/auth';
+
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { appleAuth } from '@invertase/react-native-apple-authentication';
 
 export const SignIn: React.FC<SignInProps> = () => {
   const dispatch = useDispatch();
@@ -76,9 +79,54 @@ export const SignIn: React.FC<SignInProps> = () => {
         <Divider height={20} />
 
         <View style={styles.socialButtonsWrapper}>
-          <SocialButton icon="google" onPress={() => {}} />
+          <SocialButton
+            icon="google"
+            onPress={() => {
+              GoogleSignin.configure({
+                iosClientId:
+                  '358498520193-q97bfmd28em84qlp4snol4ou039ck7qt.apps.googleusercontent.com',
+              });
+
+              GoogleSignin.hasPlayServices().then(hasPlayService => {
+                if (hasPlayService) {
+                  GoogleSignin.signIn()
+                    .then(userInfo => {
+                      dispatch(
+                        //@ts-ignore
+                        google({
+                          code: userInfo.idToken,
+                        }),
+                      );
+                    })
+                    .catch(e => {
+                      console.log('ERROR IS: ' + JSON.stringify(e));
+                    });
+                }
+              });
+            }}
+          />
           <Divider width={20} />
-          <SocialButton icon="apple" onPress={() => {}} />
+          <SocialButton
+            icon="apple"
+            onPress={async () => {
+              const appleAuthRequestResponse = await appleAuth.performRequest({
+                requestedOperation: appleAuth.Operation.LOGIN,
+                requestedScopes: [
+                  appleAuth.Scope.EMAIL,
+                  appleAuth.Scope.FULL_NAME,
+                ],
+              });
+
+              if (appleAuthRequestResponse.authorizationCode) {
+                dispatch(
+                  //@ts-ignore
+                  apple({
+                    code: appleAuthRequestResponse.authorizationCode,
+                  }),
+                );
+              }
+            }}
+          />
         </View>
         <Divider height={20} />
         {stage && (

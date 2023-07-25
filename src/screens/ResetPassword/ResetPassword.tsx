@@ -11,14 +11,19 @@ import {
 import { ForgotPasswordProps } from './types';
 import { Button, Divider, Icon, Input } from '../../components';
 import { useNavigation } from '@react-navigation/native';
-import { forgotPassword } from '../../store/slices/auth';
 import { useDispatch } from 'react-redux';
+import { resetPassword } from '../../store/slices/auth';
 
-export const ForgotPassword: React.FC<ForgotPasswordProps> = () => {
+export const ResetPassword: React.FC<ForgotPasswordProps> = ({
+  route,
+}: any) => {
   const navigation = useNavigation<any>();
   const dispatch = useDispatch();
 
-  const [email, setEmail] = useState('');
+  const params = route.params || {};
+  const { token, email } = params;
+
+  const [password, setPassword] = useState('');
 
   const onPressDismiss = () => {
     Keyboard.dismiss();
@@ -27,32 +32,30 @@ export const ForgotPassword: React.FC<ForgotPasswordProps> = () => {
     <SafeAreaView style={styles.area}>
       <TouchableWithoutFeedback onPress={onPressDismiss}>
         <View style={styles.container}>
-          <Text style={styles.titleText}>FORGOT PASSWORD?</Text>
-          <Divider height={40} />
-          <Text style={styles.descriptionText}>
-            Don’t worry you can restore it now using form below
-          </Text>
+          <Text style={styles.titleText}>RESET PASSWORD</Text>
           <Divider height={60} />
 
           <Input
-            placeholder="Email"
-            value={email}
-            onChange={v => setEmail(v)}
+            placeholder="New Password"
+            value={password}
+            onChange={v => setPassword(v)}
           />
           <Divider height={20} />
 
           <View style={styles.buttonsWrapper}>
             <Button
-              text="Restore"
+              text="SAVE"
               onPress={() => {
                 dispatch(
                   //@ts-ignore
-                  forgotPassword(
+                  resetPassword(
                     {
+                      newPassword: password,
                       email,
+                      token,
                     },
                     () => {
-                      navigation.goBack();
+                      navigation.navigate('SignIn');
                     },
                   ),
                 );
@@ -62,7 +65,7 @@ export const ForgotPassword: React.FC<ForgotPasswordProps> = () => {
               text="Back"
               withIcon
               onPress={() => {
-                navigation.goBack();
+                navigation.navigate('SignIn');
               }}
             />
           </View>
