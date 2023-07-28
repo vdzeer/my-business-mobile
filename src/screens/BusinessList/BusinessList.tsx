@@ -59,6 +59,11 @@ export const BusinessList: React.FC<BusinessListProps> = () => {
       <Text style={styles.listText}>{item.name}</Text>
     </TouchableOpacity>
   );
+
+  console.log('====================================');
+  console.log(profile);
+  console.log('====================================');
+
   return (
     <SafeAreaView style={styles.area}>
       <View style={styles.headerWrapper}>

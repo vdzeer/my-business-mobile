@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   FlatList,
   Keyboard,
   SafeAreaView,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -21,14 +22,47 @@ import {
 } from '../../components';
 import { useNavigation } from '@react-navigation/native';
 import { SubscriptionsProps } from './types';
+import {
+  initConnection,
+  getProducts,
+  getSubscriptions,
+  requestSubscription,
+} from 'react-native-iap';
 
 export const Subscriptions: React.FC<SubscriptionsProps> = () => {
   const navigation = useNavigation<any>();
+  const [subscriptions, setSubscriptions] = useState<Array<any>>([]);
+
   const onPressDismiss = () => {
     Keyboard.dismiss();
   };
 
-  const renderItem = ({ item }: any) => <></>;
+  useEffect(() => {
+    (async () => {
+      await initConnection();
+      const subs = await getSubscriptions({
+        skus: [
+          'mybusinessplus.lite',
+          'mybusinessplus.base',
+          'mybusinessplus.pro',
+          'mybusinessplus.full',
+        ],
+      });
+
+      setSubscriptions(subs);
+    })();
+  }, [navigation]);
+
+  console.log('====================================');
+  console.log(subscriptions);
+  console.log('====================================');
+
+  const handleSubscription = async (sku: string) => {
+    try {
+      await requestSubscription({ sku });
+    } catch (err) {}
+  };
+
   return (
     <SafeAreaView style={styles.area}>
       <TouchableWithoutFeedback onPress={onPressDismiss}>
@@ -52,17 +86,89 @@ export const Subscriptions: React.FC<SubscriptionsProps> = () => {
             specific needs.
           </Text>
           <Divider height={40} />
-          <View style={styles.subCard}>
-            <View style={styles.subTextWrapper}>
-              <Text style={styles.subText}>Zakhar Sub</Text>
-              <Text style={styles.subText}>200 reksov</Text>
-            </View>
+
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <TouchableOpacity
+              style={styles.subCard}
+              onPress={() => handleSubscription('mybusinessplus.lite')}>
+              <View style={styles.subTextWrapper}>
+                <Text style={styles.subText}>Lite</Text>
+                <Text style={styles.subText}>
+                  {subscriptions[0].localizedPrice}
+                </Text>
+              </View>
+              <Divider height={20} />
+
+              <Text style={styles.subDesc}>Can create:</Text>
+              <Text style={styles.subDesc}>* 1 business</Text>
+              <Text style={styles.subDesc}>* 5 products</Text>
+              <Text style={styles.subDesc}>* 10 inventories</Text>
+              <Text style={styles.subDesc}>* 2 suppliers</Text>
+            </TouchableOpacity>
+
             <Divider height={20} />
 
-            <Text style={styles.subDesc}>Чтобы</Text>
-            <Text style={styles.subDesc}>Не быть лохом</Text>
-            <Text style={styles.subDesc}>Покупай</Text>
-          </View>
+            <TouchableOpacity
+              style={styles.subCard}
+              onPress={() => handleSubscription('mybusinessplus.base')}>
+              <View style={styles.subTextWrapper}>
+                <Text style={styles.subText}>Base</Text>
+                <Text style={styles.subText}>
+                  {subscriptions[1].localizedPrice}
+                </Text>
+              </View>
+              <Divider height={20} />
+
+              <Text style={styles.subDesc}>Can create:</Text>
+              <Text style={styles.subDesc}>* 1 business</Text>
+              <Text style={styles.subDesc}>* 20 products</Text>
+              <Text style={styles.subDesc}>* 50 inventories</Text>
+              <Text style={styles.subDesc}>* 10 suppliers</Text>
+              <Text style={styles.subDesc}>* 1 worker</Text>
+            </TouchableOpacity>
+
+            <Divider height={20} />
+
+            <TouchableOpacity
+              style={styles.subCard}
+              onPress={() => handleSubscription('mybusinessplus.pro')}>
+              <View style={styles.subTextWrapper}>
+                <Text style={styles.subText}>Pro</Text>
+                <Text style={styles.subText}>
+                  {subscriptions[2].localizedPrice}
+                </Text>
+              </View>
+              <Divider height={20} />
+
+              <Text style={styles.subDesc}>Can create:</Text>
+              <Text style={styles.subDesc}>* 3 businesses</Text>
+              <Text style={styles.subDesc}>* 100 products</Text>
+              <Text style={styles.subDesc}>* 200 inventories</Text>
+              <Text style={styles.subDesc}>* 100 suppliers</Text>
+              <Text style={styles.subDesc}>* 5 workers</Text>
+            </TouchableOpacity>
+
+            <Divider height={20} />
+
+            <TouchableOpacity
+              style={styles.subCard}
+              onPress={() => handleSubscription('mybusinessplus.full')}>
+              <View style={styles.subTextWrapper}>
+                <Text style={styles.subText}>Full</Text>
+                <Text style={styles.subText}>
+                  {subscriptions[3].localizedPrice}
+                </Text>
+              </View>
+              <Divider height={20} />
+
+              <Text style={styles.subDesc}>Can create:</Text>
+              <Text style={styles.subDesc}>* 10 businesses</Text>
+              <Text style={styles.subDesc}>* 1000 products</Text>
+              <Text style={styles.subDesc}>* 2000 inventories</Text>
+              <Text style={styles.subDesc}>* 1000 suppliers</Text>
+              <Text style={styles.subDesc}>* 50 workers</Text>
+            </TouchableOpacity>
+          </ScrollView>
         </View>
       </TouchableWithoutFeedback>
     </SafeAreaView>

@@ -6,6 +6,7 @@ import {
   updateBusinessInventory,
 } from '../api';
 import { Alert } from 'react-native';
+import { refreshTokenFn, setTokenInstance } from '../axios';
 
 const initialState = {
   isLoading: false,
@@ -70,7 +71,21 @@ export const createInventory = (data, onSuccess, onError) => async dispatch => {
       dispatch(slice.actions.addOneInventory(response.data));
     })
     .then(onSuccess)
-    .catch(error => console.log(error));
+    .catch(async error => {
+      if (error.code === 'INVALID_TOKEN') {
+        const result = await refreshTokenFn();
+        if (result) {
+          setTokenInstance(result);
+
+          createBusinessInventory(data)
+            .then(async res => {
+              const response = await res.json();
+              dispatch(slice.actions.addOneInventory(response.data));
+            })
+            .then(onSuccess);
+        }
+      }
+    });
 };
 
 export const updateInventory = (data, onSuccess, onError) => async dispatch => {
@@ -81,7 +96,21 @@ export const updateInventory = (data, onSuccess, onError) => async dispatch => {
       dispatch(slice.actions.replaceOneInventory(response.data));
     })
     .then(onSuccess)
-    .catch(error => console.log(error));
+    .catch(async error => {
+      if (error.code === 'INVALID_TOKEN') {
+        const result = await refreshTokenFn();
+        if (result) {
+          setTokenInstance(result);
+
+          updateBusinessInventory(data)
+            .then(async res => {
+              const response = await res.json();
+              dispatch(slice.actions.replaceOneInventory(response.data));
+            })
+            .then(onSuccess);
+        }
+      }
+    });
 };
 
 export const deleteInventory = (data, onSuccess, onError) => async dispatch => {

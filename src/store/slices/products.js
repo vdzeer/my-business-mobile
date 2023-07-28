@@ -10,6 +10,7 @@ import {
   updateBusinessProduct,
 } from '../api';
 import { Alert } from 'react-native';
+import { refreshTokenFn, setTokenInstance } from '../axios';
 
 const initialState = {
   isLoading: false,
@@ -96,7 +97,21 @@ export const createCategory = (data, onSuccess, onError) => async dispatch => {
       dispatch(slice.actions.addOneCategory(response.data));
     })
     .then(onSuccess)
-    .catch(error => console.log(error));
+    .catch(async error => {
+      if (error.code === 'INVALID_TOKEN') {
+        const result = await refreshTokenFn();
+        if (result) {
+          setTokenInstance(result);
+
+          createBusinessCategory(data)
+            .then(async res => {
+              const response = await res.json();
+              dispatch(slice.actions.addOneCategory(response.data));
+            })
+            .then(onSuccess);
+        }
+      }
+    });
 };
 
 export const updateCategory = (data, onSuccess, onError) => async dispatch => {
@@ -107,7 +122,21 @@ export const updateCategory = (data, onSuccess, onError) => async dispatch => {
       dispatch(slice.actions.replaceOneCategory(response.data));
     })
     .then(onSuccess)
-    .catch(error => console.log(error));
+    .catch(async error => {
+      if (error.code === 'INVALID_TOKEN') {
+        const result = await refreshTokenFn();
+        if (result) {
+          setTokenInstance(result);
+
+          updateBusinessCategory(data)
+            .then(async res => {
+              const response = await res.json();
+              dispatch(slice.actions.replaceOneCategory(response.data));
+            })
+            .then(onSuccess);
+        }
+      }
+    });
 };
 
 export const deleteCategory = (data, onSuccess, onError) => async dispatch => {
@@ -140,7 +169,21 @@ export const createProduct = (data, onSuccess, onError) => async dispatch => {
       dispatch(slice.actions.addOneProduct(response.data));
     })
     .then(onSuccess)
-    .catch(error => console.log(error));
+    .catch(async error => {
+      if (error.code === 'INVALID_TOKEN') {
+        const result = await refreshTokenFn();
+        if (result) {
+          setTokenInstance(result);
+
+          createBusinessProduct(data)
+            .then(async res => {
+              const response = await res.json();
+              dispatch(slice.actions.addOneProduct(response.data));
+            })
+            .then(onSuccess);
+        }
+      }
+    });
 };
 
 export const updateProducts = (data, onSuccess, onError) => async dispatch => {
@@ -151,7 +194,21 @@ export const updateProducts = (data, onSuccess, onError) => async dispatch => {
       dispatch(slice.actions.replaceOneProduct(response.data));
     })
     .then(onSuccess)
-    .catch(error => console.log(error));
+    .catch(async error => {
+      if (error.code === 'INVALID_TOKEN') {
+        const result = await refreshTokenFn();
+        if (result) {
+          setTokenInstance(result);
+
+          updateBusinessProduct(data)
+            .then(async res => {
+              const response = await res.json();
+              dispatch(slice.actions.replaceOneProduct(response.data));
+            })
+            .then(onSuccess);
+        }
+      }
+    });
 };
 
 export const deleteProduct = (data, onSuccess, onError) => async dispatch => {

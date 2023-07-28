@@ -8,6 +8,7 @@ import {
   updateOwnBusiness,
 } from '../api';
 import { getMe } from './auth';
+import { refreshTokenFn, setTokenInstance } from '../axios';
 
 const initialState = {
   isLoading: false,
@@ -52,7 +53,18 @@ export const createBusiness = (data, onSuccess, onError) => async dispatch => {
     .then(res => {
       dispatch(getMe('', onSuccess));
     })
-    .catch(error => console.log(error));
+    .catch(async error => {
+      if (error.code === 'INVALID_TOKEN') {
+        const result = await refreshTokenFn();
+        if (result) {
+          setTokenInstance(result);
+
+          createOwnBusiness(data).then(async res => {
+            dispatch(getMe('', onSuccess));
+          });
+        }
+      }
+    });
 };
 
 export const updateBusiness = (data, onSuccess, onError) => async dispatch => {
@@ -64,7 +76,22 @@ export const updateBusiness = (data, onSuccess, onError) => async dispatch => {
       dispatch(slice.actions.updateCurrentBusiness(response.data));
     })
     .then(onSuccess)
-    .catch(error => console.log(error));
+    .catch(async error => {
+      if (error.code === 'INVALID_TOKEN') {
+        const result = await refreshTokenFn();
+        if (result) {
+          setTokenInstance(result);
+
+          updateOwnBusiness(data)
+            .then(async res => {
+              const response = await res.json();
+
+              dispatch(slice.actions.updateCurrentBusiness(response.data));
+            })
+            .then(onSuccess);
+        }
+      }
+    });
 };
 export const loginBusiness = (data, onSuccess, onError) => async dispatch => {
   dispatch(slice.actions.setLoading());

@@ -1,5 +1,7 @@
-import { setTokenInstance } from './../axios';
+import { refreshTokenFn, setTokenInstance } from './../axios';
 import { createSlice } from '@reduxjs/toolkit';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import {
   getMeUser,
   signIn,
@@ -14,7 +16,6 @@ import {
 const initialState = {
   isLoading: false,
   profile: null,
-
   token: null,
 };
 
@@ -42,7 +43,6 @@ const slice = createSlice({
     clearAuthStore(state, action) {
       state.isLoading = false;
       state.profile = null;
-      state.token = null;
     },
     updateProfile(state, action) {
       state.isLoading = false;
@@ -59,11 +59,13 @@ export const login =
 
     signIn(data)
       .then(res => {
-        console.log(res);
+        AsyncStorage.setItem('refresh', res.data.refreshToken);
+        AsyncStorage.setItem('token', res.data.accessToken);
+
         dispatch(
           slice.actions.loginSuccess({
-            token: res.data.accessToken,
             user: res.data.data,
+            token: res.data.accessToken,
           }),
         );
       })
@@ -77,7 +79,6 @@ export const getMe =
 
     getMeUser()
       .then(res => {
-        console.log(res);
         dispatch(slice.actions.updateProfile(res.data.data));
       })
       .then(onSuccess)
@@ -90,7 +91,9 @@ export const google =
 
     googleApi(data)
       .then(res => {
-        console.log(res);
+        AsyncStorage.setItem('refresh', res.data.refreshToken);
+        AsyncStorage.setItem('token', res.data.accessToken);
+
         dispatch(
           slice.actions.loginSuccess({
             token: res.data.accessToken,
@@ -109,11 +112,22 @@ export const updateUser =
     updateMeUser(data)
       .then(async res => {
         const response = await res.json();
-        console.log(response);
         dispatch(slice.actions.updateProfile(response.data));
       })
       .then(onSuccess)
-      .catch(error => console.log(error.response.data));
+      .catch(async error => {
+        if (error.code === 'INVALID_TOKEN') {
+          const result = await refreshTokenFn();
+          if (result) {
+            setTokenInstance(result);
+
+            updateMeUser(data).then(async res => {
+              const response = await res.json();
+              dispatch(slice.actions.updateProfile(response.data));
+            });
+          }
+        }
+      });
   };
 
 export const apple =
@@ -122,7 +136,9 @@ export const apple =
 
     appleApi(data)
       .then(res => {
-        console.log(res);
+        AsyncStorage.setItem('refresh', res.data.refreshToken);
+        AsyncStorage.setItem('token', res.data.accessToken);
+
         dispatch(
           slice.actions.loginSuccess({
             token: res.data.accessToken,
@@ -169,5 +185,8 @@ export const register =
   };
 
 export const logout = () => async (dispatch: any) => {
+  AsyncStorage.setItem('refresh', '');
+  AsyncStorage.setItem('token', '');
+
   dispatch(slice.actions.logoutSuccess());
 };
