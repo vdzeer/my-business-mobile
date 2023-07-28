@@ -105,17 +105,28 @@ export const Promocodes: React.FC<PromocodesProps> = () => {
         onDismiss={() => {
           setOpen(false);
         }}>
-        <Input placeholder="Promocode" value={code} onChange={setCode} />
+        <Input
+          placeholder="Promocode"
+          value={code}
+          onChange={setCode}
+          inBottomSheet
+        />
         <Divider height={20} />
 
         <Input
           placeholder="Sale percent"
           value={percent}
           onChange={setPercent}
+          inBottomSheet
         />
         <Divider height={20} />
 
-        <Input placeholder="Use amount" value={amount} onChange={setAmount} />
+        <Input
+          placeholder="Use amount"
+          value={amount}
+          onChange={setAmount}
+          inBottomSheet
+        />
         <Divider height={30} />
         <Button
           text={edit ? 'Update' : 'Submit'}

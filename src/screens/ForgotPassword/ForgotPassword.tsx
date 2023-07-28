@@ -9,7 +9,7 @@ import {
   View,
 } from 'react-native';
 import { ForgotPasswordProps } from './types';
-import { Button, Divider, Icon, Input } from '../../components';
+import { Button, Divider, Icon, Input, KeyboardAware } from '../../components';
 import { useNavigation } from '@react-navigation/native';
 import { forgotPassword } from '../../store/slices/auth';
 import { useDispatch } from 'react-redux';
@@ -27,46 +27,48 @@ export const ForgotPassword: React.FC<ForgotPasswordProps> = () => {
     <SafeAreaView style={styles.area}>
       <TouchableWithoutFeedback onPress={onPressDismiss}>
         <View style={styles.container}>
-          <Text style={styles.titleText}>FORGOT PASSWORD?</Text>
-          <Divider height={40} />
-          <Text style={styles.descriptionText}>
-            Don’t worry you can restore it now using form below
-          </Text>
-          <Divider height={60} />
+          <KeyboardAware>
+            <Text style={styles.titleText}>FORGOT PASSWORD?</Text>
+            <Divider height={40} />
+            <Text style={styles.descriptionText}>
+              Don’t worry you can restore it now using form below
+            </Text>
+            <Divider height={60} />
 
-          <Input
-            placeholder="Email"
-            value={email}
-            onChange={v => setEmail(v)}
-          />
-          <Divider height={20} />
+            <Input
+              placeholder="Email"
+              value={email}
+              onChange={v => setEmail(v)}
+            />
+            <Divider height={20} />
 
-          <View style={styles.buttonsWrapper}>
-            <Button
-              text="Restore"
-              onPress={() => {
-                dispatch(
-                  //@ts-ignore
-                  forgotPassword(
-                    {
-                      email,
-                    },
-                    () => {
-                      navigation.goBack();
-                    },
-                  ),
-                );
-              }}
-            />
-            <Button
-              text="Back"
-              withIcon
-              onPress={() => {
-                navigation.goBack();
-              }}
-            />
-          </View>
-          <Divider height={140} />
+            <View style={styles.buttonsWrapper}>
+              <Button
+                text="Restore"
+                onPress={() => {
+                  dispatch(
+                    //@ts-ignore
+                    forgotPassword(
+                      {
+                        email,
+                      },
+                      () => {
+                        navigation.goBack();
+                      },
+                    ),
+                  );
+                }}
+              />
+              <Button
+                text="Back"
+                withIcon
+                onPress={() => {
+                  navigation.goBack();
+                }}
+              />
+            </View>
+            <Divider height={140} />
+          </KeyboardAware>
         </View>
       </TouchableWithoutFeedback>
     </SafeAreaView>

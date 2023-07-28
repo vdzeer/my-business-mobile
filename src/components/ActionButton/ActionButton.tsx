@@ -13,6 +13,7 @@ export const ActionButton: React.FC<ActionButtonProps> = ({
   iconName,
   onPress,
   size = 'small',
+  disabled,
 }) => {
   return (
     <>
@@ -26,6 +27,7 @@ export const ActionButton: React.FC<ActionButtonProps> = ({
             padding: size === 'small' ? 5 : 10,
           },
         ]}
+        disabled={disabled}
         onPress={onPress}>
         <Icon name={iconName} />
       </TouchableOpacity>

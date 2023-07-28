@@ -65,10 +65,10 @@ export const Workers: React.FC<WorkersProps> = () => {
         <ImageInput />
         <Divider height={20} />
 
-        <Input placeholder="Name" />
+        <Input placeholder="Name" inBottomSheet />
         <Divider height={20} />
 
-        <Input placeholder="Email" />
+        <Input placeholder="Email" inBottomSheet />
         <Divider height={30} />
         <Button
           text="Submit"

@@ -9,12 +9,20 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import { Button, Divider, Icon, ImageInput, Input } from '../../components';
+import {
+  Button,
+  Divider,
+  Icon,
+  ImageInput,
+  Input,
+  KeyboardAware,
+} from '../../components';
 import { useNavigation } from '@react-navigation/native';
 import { CreateBusinessProps } from './types';
 import DeviceInfo from 'react-native-device-info';
 import { useDispatch } from 'react-redux';
 import { createBusiness } from '../../store/slices/business';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 export const CreateBusiness: React.FC<CreateBusinessProps> = () => {
   const dispatch = useDispatch();
@@ -31,45 +39,51 @@ export const CreateBusiness: React.FC<CreateBusinessProps> = () => {
     <SafeAreaView style={styles.area}>
       <TouchableWithoutFeedback onPress={onPressDismiss}>
         <View style={styles.container}>
-          <Text style={styles.titleText}>CREATE YOUR BUSINESS</Text>
+          <KeyboardAware>
+            <Text style={styles.titleText}>CREATE YOUR BUSINESS</Text>
 
-          <Divider height={80} />
+            <Divider height={80} />
 
-          <Input placeholder="Name" onChange={setName} />
-          <Divider height={20} />
-          <Input placeholder="Password" onChange={setPassword} />
-          <Divider height={20} />
-          <ImageInput onSelect={setPhoto} />
-
-          <Divider height={40} />
-
-          <View style={styles.buttonsWrapper}>
-            <Button
-              text="Submit"
-              onPress={() => {
-                const formData = new FormData();
-                formData.append('name', name);
-                formData.append('password', password);
-                photo.path &&
-                  formData.append('image', {
-                    name: photo.filename,
-                    type: photo.mime ?? 'image/jpeg',
-                    uri: photo.path,
-                  });
-
-                dispatch(
-                  createBusiness(
-                    formData,
-                    () => {
-                      navigation.navigate('BusinessList');
-                    },
-                    () => {},
-                  ) as any,
-                );
-              }}
+            <Input placeholder="Name" onChange={setName} />
+            <Divider height={20} />
+            <Input
+              placeholder="Password"
+              onChange={setPassword}
+              secureTextEntry
             />
-          </View>
-          <Divider height={140} />
+            <Divider height={20} />
+            <ImageInput onSelect={setPhoto} />
+
+            <Divider height={40} />
+
+            <View style={styles.buttonsWrapper}>
+              <Button
+                text="Submit"
+                onPress={() => {
+                  const formData = new FormData();
+                  formData.append('name', name);
+                  formData.append('password', password);
+                  photo.path &&
+                    formData.append('image', {
+                      name: photo.filename,
+                      type: photo.mime ?? 'image/jpeg',
+                      uri: photo.path,
+                    } as any);
+
+                  dispatch(
+                    createBusiness(
+                      formData,
+                      () => {
+                        navigation.navigate('BusinessList');
+                      },
+                      () => {},
+                    ) as any,
+                  );
+                }}
+              />
+            </View>
+            <Divider height={140} />
+          </KeyboardAware>
         </View>
       </TouchableWithoutFeedback>
     </SafeAreaView>

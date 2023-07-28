@@ -17,12 +17,17 @@ import { google, login, register, apple } from '../../store/slices/auth';
 
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { appleAuth } from '@invertase/react-native-apple-authentication';
+import { useTranslation } from 'react-i18next';
 
 export const SignIn: React.FC<SignInProps> = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation<any>();
+  const { t } = useTranslation();
 
   const [stage, setStage] = useState(true);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
   const onPressDismiss = () => {
     Keyboard.dismiss();
   };
@@ -33,12 +38,22 @@ export const SignIn: React.FC<SignInProps> = () => {
         <View style={styles.logoWrapper}>
           <Icon name="logo" />
         </View>
-        <Text style={styles.mainText}>{stage ? 'SIGN IN' : 'SIGN UP'}</Text>
+        <Text style={styles.mainText}>{stage ? t('hello') : 'SIGN UP'}</Text>
         <Divider height={40} />
-        <Input placeholder="Email" />
+        <Input
+          placeholder="Email"
+          value={email}
+          onChangeText={setEmail}
+          keyboardType="email-address"
+        />
         <Divider height={20} />
 
-        <Input placeholder="Password" />
+        <Input
+          placeholder="Password"
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry
+        />
         <Divider height={20} />
         <View style={styles.loginButtonsWrapper}>
           <Button
@@ -48,15 +63,15 @@ export const SignIn: React.FC<SignInProps> = () => {
                 ? dispatch(
                     //@ts-ignore
                     login({
-                      email: 'vdzerniuk@gmail.com',
-                      password: '123456',
+                      email,
+                      password,
                     }),
                   )
                 : dispatch(
                     //@ts-ignore
                     register({
-                      email: 'maxft2206@gmail.com',
-                      password: 'max88283920',
+                      email,
+                      password,
                       role: 'creator',
                     }),
                   );

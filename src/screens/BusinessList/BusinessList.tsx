@@ -9,6 +9,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
+import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import {
   ActionButton,
   BottomSheet,
@@ -85,7 +86,13 @@ export const BusinessList: React.FC<BusinessListProps> = () => {
         onDismiss={() => {
           setOpen(false);
         }}>
-        <Input placeholder="Password" onChange={setPassword} />
+        <Input
+          placeholder="Password"
+          onChange={setPassword}
+          secureTextEntry
+          inBottomSheet
+        />
+
         <Divider height={40} />
         <Button
           text="Open your business"
@@ -111,6 +118,14 @@ export const BusinessList: React.FC<BusinessListProps> = () => {
 };
 
 const styles = StyleSheet.create({
+  textInput: {
+    width: '100%',
+    height: 50,
+    backgroundColor: '#D9F0FF',
+    borderRadius: 10,
+    fontFamily: 'Montserrat',
+    paddingLeft: 20,
+  },
   headerWrapper: {
     flexDirection: 'row',
     justifyContent: 'space-between',

@@ -18,11 +18,13 @@ import {
   Icon,
   ImageInput,
   Input,
+  KeyboardAware,
 } from '../../components';
 import { useNavigation } from '@react-navigation/native';
 import { BusinessSettingsProps } from './types';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteBusiness, updateBusiness } from '../../store/slices/business';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 export const BusinessSettings: React.FC<BusinessSettingsProps> = () => {
   const navigation = useNavigation<any>();
@@ -43,52 +45,55 @@ export const BusinessSettings: React.FC<BusinessSettingsProps> = () => {
     <SafeAreaView style={styles.area}>
       <TouchableWithoutFeedback onPress={onPressDismiss}>
         <View style={styles.container}>
-          <Header />
-          <Divider height={20} />
-          <Text style={styles.titleText}>Business settings</Text>
-          <Divider height={30} />
-          <Text style={styles.descText}>
-            Change properties of your business in a few clicks
-          </Text>
-          <Divider height={40} />
+          <KeyboardAware>
+            <Header />
+            <Divider height={20} />
+            <Text style={styles.titleText}>Business settings</Text>
+            <Divider height={30} />
+            <Text style={styles.descText}>
+              Change properties of your business in a few clicks
+            </Text>
+            <Divider height={40} />
 
-          <ImageInput onSelect={setPhoto} imageUrl={imageUrl} />
-          <Divider height={20} />
+            <ImageInput onSelect={setPhoto} imageUrl={imageUrl} />
+            <Divider height={20} />
 
-          <Input placeholder="Name" value={name} onChange={setName} />
+            <Input placeholder="Name" value={name} onChange={setName} />
+            <Divider height={40} />
 
-          <View style={styles.buttonWrapper}>
-            <Button
-              text="Submit"
-              onPress={() => {
-                const formData = new FormData();
-                formData.append('name', name);
-                formData.append('businessId', currentBusiness?._id);
-                photo.path &&
-                  formData.append('image', {
-                    name: photo.filename,
-                    type: photo.mime ?? 'image/jpeg',
-                    uri: photo.path,
-                  });
-                dispatch(
-                  updateBusiness(formData, () => {
-                    navigation.navigate('NewOrder');
-                  }),
-                );
-              }}
-            />
-            <ActionButton
-              iconName="delete"
-              onPress={() => {
-                dispatch(
-                  deleteBusiness(currentBusiness?._id, () => {
-                    navigation.navigate('BusinessList');
-                  }),
-                );
-              }}
-              size="large"
-            />
-          </View>
+            <View style={styles.buttonWrapper}>
+              <Button
+                text="Submit"
+                onPress={() => {
+                  const formData = new FormData();
+                  formData.append('name', name);
+                  formData.append('businessId', currentBusiness?._id);
+                  photo.path &&
+                    formData.append('image', {
+                      name: photo.filename,
+                      type: photo.mime ?? 'image/jpeg',
+                      uri: photo.path,
+                    } as any);
+                  dispatch(
+                    updateBusiness(formData, () => {
+                      navigation.navigate('NewOrder');
+                    }),
+                  );
+                }}
+              />
+              <ActionButton
+                iconName="delete"
+                onPress={() => {
+                  dispatch(
+                    deleteBusiness(currentBusiness?._id, () => {
+                      navigation.navigate('BusinessList');
+                    }),
+                  );
+                }}
+                size="large"
+              />
+            </View>
+          </KeyboardAware>
         </View>
       </TouchableWithoutFeedback>
     </SafeAreaView>
@@ -101,11 +106,13 @@ const styles = StyleSheet.create({
   container: { paddingHorizontal: 15, height: '100%' },
   buttonWrapper: {
     alignSelf: 'center',
-    position: 'absolute',
+    // position: 'absolute',
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
     width: '90%',
-    bottom: 10,
+    // marginTop: 20,
+    // bottom: 10,
   },
 
   list: {

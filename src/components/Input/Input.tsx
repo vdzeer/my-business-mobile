@@ -1,22 +1,38 @@
 import { StyleSheet, TextInput } from 'react-native';
 import React from 'react';
 import { InputProps } from './types';
+import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 
 export const Input: React.FC<InputProps> = ({
   placeholder,
   value,
+  inBottomSheet,
   onChange: onChangeText,
   ...props
 }) => {
   return (
     <>
-      <TextInput
-        placeholder={placeholder}
-        value={value}
-        onChangeText={text => onChangeText && onChangeText(text)}
-        style={styles.textInput}
-        {...props}
-      />
+      {inBottomSheet ? (
+        <BottomSheetTextInput
+          placeholder={placeholder}
+          placeholderTextColor={'#00000066'}
+          value={value}
+          onChangeText={text => onChangeText && onChangeText(text)}
+          style={styles.textInput}
+          autoCapitalize={'none'}
+          {...props}
+        />
+      ) : (
+        <TextInput
+          placeholder={placeholder}
+          placeholderTextColor={'#00000066'}
+          value={value}
+          onChangeText={text => onChangeText && onChangeText(text)}
+          style={styles.textInput}
+          autoCapitalize={'none'}
+          {...props}
+        />
+      )}
     </>
   );
 };

@@ -7,3 +7,4 @@ export * from './BottomSheet';
 export * from './ActionButton';
 export * from './ImageInput';
 export * from './Header';
+export * from './KeyboardAware';

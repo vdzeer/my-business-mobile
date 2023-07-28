@@ -96,10 +96,20 @@ export const Suppliers: React.FC<SuppliersProps> = () => {
         onDismiss={() => {
           setOpen(false);
         }}>
-        <Input placeholder="Name" value={name} onChange={setName} />
+        <Input
+          placeholder="Name"
+          value={name}
+          onChange={setName}
+          inBottomSheet
+        />
         <Divider height={20} />
 
-        <Input placeholder="Phone" value={phone} onChange={setPhone} />
+        <Input
+          placeholder="Phone"
+          value={phone}
+          onChange={setPhone}
+          inBottomSheet
+        />
         <Divider height={30} />
         <Button
           text={edit ? 'Update' : 'Submit'}

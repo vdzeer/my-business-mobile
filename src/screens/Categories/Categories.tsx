@@ -22,18 +22,7 @@ import { useNavigation } from '@react-navigation/native';
 import { CategoriesProps } from './types';
 import { PromocodeCard } from './components/SupplierCard';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  createSupplier,
-  deleteSupplier,
-  getSuppliersList,
-  updateSupplier,
-} from '../../store/slices/suppliers';
-import {
-  createPromocode,
-  deletePromocode,
-  getPromocodesList,
-  updatePromocode,
-} from '../../store/slices/promocodes';
+
 import {
   createCategory,
   deleteCategory,
@@ -104,7 +93,12 @@ export const Categories: React.FC<CategoriesProps> = () => {
         onDismiss={() => {
           setOpen(false);
         }}>
-        <Input placeholder="Name" value={name} onChange={setName} />
+        <Input
+          placeholder="Name"
+          value={name}
+          onChange={setName}
+          inBottomSheet
+        />
         <Divider height={20} />
 
         <Button

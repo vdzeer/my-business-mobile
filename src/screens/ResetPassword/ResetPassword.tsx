@@ -38,6 +38,7 @@ export const ResetPassword: React.FC<ForgotPasswordProps> = ({
           <Input
             placeholder="New Password"
             value={password}
+            secureTextEntry
             onChange={v => setPassword(v)}
           />
           <Divider height={20} />

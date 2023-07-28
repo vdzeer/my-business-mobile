@@ -109,6 +109,7 @@ export const updateUser =
     updateMeUser(data)
       .then(async res => {
         const response = await res.json();
+        console.log(response);
         dispatch(slice.actions.updateProfile(response.data));
       })
       .then(onSuccess)

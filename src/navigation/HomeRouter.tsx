@@ -147,6 +147,7 @@ const CustomDrawerItem = ({
   };
   return (
     <TouchableOpacity
+      activeOpacity={1}
       onPress={() => {
         if (iconName === 'Logout') {
           //@ts-ignore
@@ -160,6 +161,7 @@ const CustomDrawerItem = ({
           size="large"
           iconName={screenName ?? iconName}
           onPress={() => {}}
+          disabled
         />
         <Divider width={15} />
         <Text style={styles.drawerItemText as any}>{label}</Text>

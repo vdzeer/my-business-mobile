@@ -36,6 +36,9 @@ export const BottomSheet: React.FC<BottomSheetProps> = ({
     <>
       <BottomSheetModalProvider>
         <BottomSheetModal
+          // keyboardBehavior="interactive"
+          // keyboardBehavior="fillParent"
+          keyboardBlurBehavior="restore"
           ref={bottomSheetModalRef}
           snapPoints={snapPoints}
           onDismiss={onDismiss}
