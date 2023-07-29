@@ -27,12 +27,13 @@ import {
   getInventoryList,
   updateInventory,
 } from '../../store/slices/inventory';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
+import { useTranslation } from 'react-i18next';
 
 export const CreateInventory: React.FC<CreateInventoryProps> = () => {
   const navigation = useNavigation<any>();
   const dispatch = useDispatch();
-
+  const { t } = useTranslation();
   const { params } = useRoute<any>();
 
   const { currentBusiness } = useSelector((store: any) => store.business);
@@ -51,8 +52,6 @@ export const CreateInventory: React.FC<CreateInventoryProps> = () => {
   const [photo, setPhoto] = useState<any>('');
   const [imageUrl, setImageUrl] = useState<any>(params?.image ?? '');
 
-  console.log(params);
-
   return (
     <SafeAreaView style={styles.area}>
       <TouchableWithoutFeedback onPress={onPressDismiss}>
@@ -62,21 +61,23 @@ export const CreateInventory: React.FC<CreateInventoryProps> = () => {
             <Divider height={40} />
 
             <Text style={styles.titleText}>
-              {params?.edit
-                ? 'Update your inventory '
-                : 'Create your inventory in a few clicks'}
+              {params?.edit ? t('updateInventory') : t('createInventory')}
             </Text>
             <Divider height={40} />
 
             <ImageInput onSelect={setPhoto} imageUrl={imageUrl} />
             <Divider height={20} />
 
-            <Input placeholder="Name" onChange={setName} value={name} />
-            <Divider height={20} />
-            <Input placeholder="Amount" onChange={setAmount} value={amount} />
+            <Input placeholder={t('name')} onChange={setName} value={name} />
             <Divider height={20} />
             <Input
-              placeholder="Lower range"
+              placeholder={t('amount')}
+              onChange={setAmount}
+              value={amount}
+            />
+            <Divider height={20} />
+            <Input
+              placeholder={t('lowerRange')}
               onChange={setLower}
               value={lower}
             />
@@ -84,7 +85,7 @@ export const CreateInventory: React.FC<CreateInventoryProps> = () => {
 
             <View style={styles.buttonWrapper}>
               <Button
-                text={params?.edit ? 'Update' : 'Submit'}
+                text={params?.edit ? t('update') : t('submit')}
                 onPress={() => {
                   const formData = new FormData();
                   formData.append('name', name);

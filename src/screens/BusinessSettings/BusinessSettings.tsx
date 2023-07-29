@@ -24,11 +24,13 @@ import { useNavigation } from '@react-navigation/native';
 import { BusinessSettingsProps } from './types';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteBusiness, updateBusiness } from '../../store/slices/business';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
+import { useTranslation } from 'react-i18next';
 
 export const BusinessSettings: React.FC<BusinessSettingsProps> = () => {
   const navigation = useNavigation<any>();
   const dispatch = useDispatch<any>();
+  const { t } = useTranslation();
 
   const onPressDismiss = () => {
     Keyboard.dismiss();
@@ -48,22 +50,20 @@ export const BusinessSettings: React.FC<BusinessSettingsProps> = () => {
           <KeyboardAware>
             <Header />
             <Divider height={20} />
-            <Text style={styles.titleText}>Business settings</Text>
+            <Text style={styles.titleText}>{t('businessSettings')}</Text>
             <Divider height={30} />
-            <Text style={styles.descText}>
-              Change properties of your business in a few clicks
-            </Text>
+            <Text style={styles.descText}>{t('businessDesc')}</Text>
             <Divider height={40} />
 
             <ImageInput onSelect={setPhoto} imageUrl={imageUrl} />
             <Divider height={20} />
 
-            <Input placeholder="Name" value={name} onChange={setName} />
+            <Input placeholder={t('name')} value={name} onChange={setName} />
             <Divider height={40} />
 
             <View style={styles.buttonWrapper}>
               <Button
-                text="Submit"
+                text={t('submit')}
                 onPress={() => {
                   const formData = new FormData();
                   formData.append('name', name);

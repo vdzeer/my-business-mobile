@@ -1,32 +1,37 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { Alert, Image, StyleSheet, Text, View } from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import { IntroductionProps, Slide } from './types';
 import { useNavigation } from '@react-navigation/native';
 import { AuthButton } from '../../components';
 
-const slides: Slide[] = [
-  {
-    key: 1,
-    text: 'Quick solution for your business.',
-    image: require('../../assets/intro/first.png'),
-  },
-  {
-    key: 2,
-    text: 'Create, manage, analyze in one place.',
-    image: require('../../assets/intro/second.png'),
-  },
-  {
-    key: 3,
-    text: 'Let’s start managing \nyour business',
-    image: require('../../assets/intro/third.png'),
-  },
-];
+import { useTranslation } from 'react-i18next';
 
 export const Introduction: React.FC<IntroductionProps> = () => {
   const sliderRef = useRef<AppIntroSlider>(null);
   const navigation = useNavigation<any>();
+  const { t } = useTranslation();
   const [index, setIndex] = useState<number>(0);
+  const slides: Slide[] = useMemo(
+    () => [
+      {
+        key: 1,
+        text: t('intro1'),
+        image: require('../../assets/intro/first.png'),
+      },
+      {
+        key: 2,
+        text: t('intro2'),
+        image: require('../../assets/intro/second.png'),
+      },
+      {
+        key: 3,
+        text: t('intro3'),
+        image: require('../../assets/intro/third.png'),
+      },
+    ],
+    [],
+  );
 
   const goToNextSlide = useCallback(() => {
     sliderRef.current?.goToSlide(index + 1);
@@ -68,7 +73,7 @@ export const Introduction: React.FC<IntroductionProps> = () => {
 
       <View style={styles.buttonWrapper}>
         <AuthButton
-          text={index === 2 ? 'Go to authorization' : 'Next'}
+          text={index === 2 ? t('goAuth') : t('next')}
           onPress={index === 2 ? goToAuth : goToNextSlide}
           withIcon={index !== 2}
         />

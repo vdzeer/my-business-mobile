@@ -13,10 +13,13 @@ import { Button, Divider, Icon, Input, KeyboardAware } from '../../components';
 import { useNavigation } from '@react-navigation/native';
 import { forgotPassword } from '../../store/slices/auth';
 import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 export const ForgotPassword: React.FC<ForgotPasswordProps> = () => {
   const navigation = useNavigation<any>();
   const dispatch = useDispatch();
+
+  const { t } = useTranslation();
 
   const [email, setEmail] = useState('');
 
@@ -26,17 +29,17 @@ export const ForgotPassword: React.FC<ForgotPasswordProps> = () => {
   return (
     <SafeAreaView style={styles.area}>
       <TouchableWithoutFeedback onPress={onPressDismiss}>
-        <View style={styles.container}>
-          <KeyboardAware>
-            <Text style={styles.titleText}>FORGOT PASSWORD?</Text>
+        <KeyboardAware>
+          <View style={styles.container}>
+            <Text style={styles.titleText}>{t('forgotPassword')}</Text>
             <Divider height={40} />
             <Text style={styles.descriptionText}>
-              Don’t worry you can restore it now using form below
+              {t('forgotPasswordDesc')}
             </Text>
             <Divider height={60} />
 
             <Input
-              placeholder="Email"
+              placeholder={t('email')}
               value={email}
               onChange={v => setEmail(v)}
             />
@@ -44,7 +47,7 @@ export const ForgotPassword: React.FC<ForgotPasswordProps> = () => {
 
             <View style={styles.buttonsWrapper}>
               <Button
-                text="Restore"
+                text={t('restore')}
                 onPress={() => {
                   dispatch(
                     //@ts-ignore
@@ -60,7 +63,7 @@ export const ForgotPassword: React.FC<ForgotPasswordProps> = () => {
                 }}
               />
               <Button
-                text="Back"
+                text={t('back')}
                 withIcon
                 onPress={() => {
                   navigation.goBack();
@@ -68,8 +71,8 @@ export const ForgotPassword: React.FC<ForgotPasswordProps> = () => {
               />
             </View>
             <Divider height={140} />
-          </KeyboardAware>
-        </View>
+          </View>
+        </KeyboardAware>
       </TouchableWithoutFeedback>
     </SafeAreaView>
   );

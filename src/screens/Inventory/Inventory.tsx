@@ -26,10 +26,12 @@ import {
   deleteInventory,
   getInventoryList,
 } from '../../store/slices/inventory';
+import { useTranslation } from 'react-i18next';
 
 export const Inventory: React.FC<InventoryProps> = () => {
   const navigation = useNavigation<any>();
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const { inventory } = useSelector((store: any) => store.inventory);
 
@@ -43,7 +45,7 @@ export const Inventory: React.FC<InventoryProps> = () => {
         <Header />
         <Divider height={20} />
         <View style={styles.headerWrapper}>
-          <Text style={styles.titleText}>Your inventory</Text>
+          <Text style={styles.titleText}>{t('yourInventory')}</Text>
           <ActionButton
             iconName="plus"
             onPress={() => {

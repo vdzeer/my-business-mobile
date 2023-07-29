@@ -29,11 +29,13 @@ import {
 import { getSuppliersList } from '../../store/slices/suppliers';
 import { addToBasket, getOrdersList } from '../../store/slices/orders';
 import { getPromocodesList } from '../../store/slices/promocodes';
+import { useTranslation } from 'react-i18next';
 
 export const NewOrder: React.FC<NewOrderProps> = () => {
   const navigation = useNavigation<any>();
 
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const { currentBusiness } = useSelector((store: any) => store.business);
   const { products } = useSelector((store: any) => store.products);
@@ -59,7 +61,7 @@ export const NewOrder: React.FC<NewOrderProps> = () => {
         <Header />
         <Divider height={20} />
 
-        <Text style={styles.titleText}>New order</Text>
+        <Text style={styles.titleText}>{t('newOrder')}</Text>
         <FlatList
           data={productList ?? []}
           renderItem={({ item }) => (
@@ -76,7 +78,7 @@ export const NewOrder: React.FC<NewOrderProps> = () => {
         />
         <View style={styles.buttonWrapper}>
           <Button
-            text="Checkout"
+            text={t('checkout')}
             onPress={() => {
               navigation.navigate('Basket');
             }}

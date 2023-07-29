@@ -28,7 +28,9 @@ export const Button: React.FC<ButtonProps> = ({
             paddingHorizontal: mode === 'lite' ? 0 : 15,
           },
         ]}>
-        <Text style={styles.buttonText}>{text}</Text>
+        <Text style={styles.buttonText} numberOfLines={1}>
+          {text}
+        </Text>
         {withIcon && (
           <View style={styles.iconWrapper}>
             <Icon name="arrowRightBlack" />

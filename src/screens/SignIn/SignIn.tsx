@@ -38,10 +38,12 @@ export const SignIn: React.FC<SignInProps> = () => {
         <View style={styles.logoWrapper}>
           <Icon name="logo" />
         </View>
-        <Text style={styles.mainText}>{stage ? t('hello') : 'SIGN UP'}</Text>
+        <Text style={styles.mainText}>
+          {stage ? t('signin').toUpperCase() : t('signup').toUpperCase()}
+        </Text>
         <Divider height={40} />
         <Input
-          placeholder="Email"
+          placeholder={t('email')}
           value={email}
           onChangeText={setEmail}
           keyboardType="email-address"
@@ -49,7 +51,7 @@ export const SignIn: React.FC<SignInProps> = () => {
         <Divider height={20} />
 
         <Input
-          placeholder="Password"
+          placeholder={t('password')}
           value={password}
           onChangeText={setPassword}
           secureTextEntry
@@ -57,7 +59,7 @@ export const SignIn: React.FC<SignInProps> = () => {
         <Divider height={20} />
         <View style={styles.loginButtonsWrapper}>
           <Button
-            text={stage ? 'Sign In' : 'Sign Up'}
+            text={stage ? t('signin') : t('signup')}
             onPress={() => {
               stage
                 ? dispatch(
@@ -79,7 +81,7 @@ export const SignIn: React.FC<SignInProps> = () => {
           />
 
           <Button
-            text={stage ? 'Forgot password?' : 'Already here?'}
+            text={stage ? t('forgot') : t('already')}
             onPress={() => {
               stage ? navigation.navigate('ForgotPassword') : setStage(true);
             }}
@@ -89,7 +91,7 @@ export const SignIn: React.FC<SignInProps> = () => {
         <Divider height={20} />
 
         <Text style={styles.secondaryText}>
-          {`or sign ${stage ? 'in' : 'up'} using social accounts`}
+          {stage ? t('signin.desc') : t('signup.desc')}
         </Text>
         <Divider height={20} />
 
@@ -151,7 +153,7 @@ export const SignIn: React.FC<SignInProps> = () => {
               setStage(false);
             }}>
             <Text style={styles.descriptionText}>
-              Don’t have an account? Sign-up and manage your business
+              {t('changeRegistration')}
             </Text>
           </TouchableOpacity>
         )}
@@ -177,7 +179,7 @@ const styles = StyleSheet.create({
   socialButtonsWrapper: { flexDirection: 'row' },
   mainText: {
     color: '#000000',
-    fontSize: 28,
+    fontSize: 24,
     fontFamily: 'Montserrat',
     fontWeight: '700',
   },

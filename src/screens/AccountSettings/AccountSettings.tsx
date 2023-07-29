@@ -24,11 +24,12 @@ import { useNavigation } from '@react-navigation/native';
 import { AccountSettingsProps } from './types';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUser } from '../../store/slices/auth';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { useTranslation } from 'react-i18next';
 
 export const AccountSettings: React.FC<AccountSettingsProps> = () => {
   const navigation = useNavigation<any>();
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const onPressDismiss = () => {
     Keyboard.dismiss();
@@ -49,30 +50,28 @@ export const AccountSettings: React.FC<AccountSettingsProps> = () => {
           <KeyboardAware>
             <Header />
             <Divider height={20} />
-            <Text style={styles.titleText}>{`Welcome, ${name}`}</Text>
+            <Text style={styles.titleText}>{`${t('welcome')}${name}`}</Text>
             <Divider height={30} />
-            <Text style={styles.descText}>
-              Here you can change your plan and update your own details
-            </Text>
+            <Text style={styles.descText}>{t('accountDetails')}</Text>
             <Divider height={40} />
             <ImageInput onSelect={setPhoto} imageUrl={imageUrl} />
             <Divider height={20} />
-            <Input placeholder="Name" value={name} onChange={setName} />
+            <Input placeholder={t('name')} value={name} onChange={setName} />
             <Divider height={20} />
             <Input
-              placeholder="Email"
+              placeholder={t('email')}
               value={email}
               onChange={setEmail}
               editable={false}
             />
             <Divider height={20} />
-            <Input placeholder="Password" secureTextEntry />
+            <Input placeholder={t('password')} secureTextEntry />
 
             <Divider height={40} />
-            <Text style={styles.payText}>Payment & Subscriptions</Text>
+            <Text style={styles.payText}>{t('payandsub')}</Text>
             <Divider height={10} />
             <View style={styles.payContent}>
-              <Text style={styles.subName}>name of subscription</Text>
+              <Text style={styles.subName}>{t('emptySub')}</Text>
               <View style={styles.payContent}>
                 <ActionButton
                   iconName="edit"
@@ -91,7 +90,7 @@ export const AccountSettings: React.FC<AccountSettingsProps> = () => {
             </View>
             <View style={styles.buttonWrapper}>
               <Button
-                text="Update"
+                text={t('update')}
                 onPress={() => {
                   const formData = new FormData();
                   formData.append('name', name);

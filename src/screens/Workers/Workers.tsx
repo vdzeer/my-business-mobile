@@ -22,11 +22,14 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { WorkersProps } from './types';
 import { WorkerCard } from './components/WorkerCard';
+import { useTranslation } from 'react-i18next';
 
 export const Workers: React.FC<WorkersProps> = () => {
   const navigation = useNavigation<any>();
+  const { t } = useTranslation();
 
   const [open, setOpen] = useState(false);
+  const [photo, setPhoto] = useState<any>(false);
 
   return (
     <SafeAreaView style={styles.area}>
@@ -34,7 +37,7 @@ export const Workers: React.FC<WorkersProps> = () => {
         <Header />
         <Divider height={20} />
         <View style={styles.headerWrapper}>
-          <Text style={styles.titleText}>Your workers</Text>
+          <Text style={styles.titleText}>{t('yourWorkers')}</Text>
           <ActionButton
             iconName="plus"
             onPress={() => {
@@ -62,16 +65,16 @@ export const Workers: React.FC<WorkersProps> = () => {
         onDismiss={() => {
           setOpen(false);
         }}>
-        <ImageInput />
+        <ImageInput onSelect={setPhoto} />
         <Divider height={20} />
 
-        <Input placeholder="Name" inBottomSheet />
+        <Input placeholder={t('name')} inBottomSheet />
         <Divider height={20} />
 
-        <Input placeholder="Email" inBottomSheet />
+        <Input placeholder={t('email')} inBottomSheet />
         <Divider height={30} />
         <Button
-          text="Submit"
+          text={t('submit')}
           mode="large"
           onPress={() => {
             setOpen(false);

@@ -22,11 +22,14 @@ import { CreateBusinessProps } from './types';
 import DeviceInfo from 'react-native-device-info';
 import { useDispatch } from 'react-redux';
 import { createBusiness } from '../../store/slices/business';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
+import { useTranslation } from 'react-i18next';
 
 export const CreateBusiness: React.FC<CreateBusinessProps> = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation<any>();
+  const { t } = useTranslation();
+
   const onPressDismiss = () => {
     Keyboard.dismiss();
   };
@@ -40,14 +43,14 @@ export const CreateBusiness: React.FC<CreateBusinessProps> = () => {
       <TouchableWithoutFeedback onPress={onPressDismiss}>
         <View style={styles.container}>
           <KeyboardAware>
-            <Text style={styles.titleText}>CREATE YOUR BUSINESS</Text>
+            <Text style={styles.titleText}>{t('createBusiness')}</Text>
 
             <Divider height={80} />
 
-            <Input placeholder="Name" onChange={setName} />
+            <Input placeholder={t('name')} onChange={setName} />
             <Divider height={20} />
             <Input
-              placeholder="Password"
+              placeholder={t('password')}
               onChange={setPassword}
               secureTextEntry
             />
@@ -58,7 +61,7 @@ export const CreateBusiness: React.FC<CreateBusinessProps> = () => {
 
             <View style={styles.buttonsWrapper}>
               <Button
-                text="Submit"
+                text={t('submit')}
                 onPress={() => {
                   const formData = new FormData();
                   formData.append('name', name);

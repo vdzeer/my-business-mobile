@@ -28,10 +28,12 @@ import {
   deleteCategory,
   updateCategory,
 } from '../../store/slices/products';
+import { useTranslation } from 'react-i18next';
 
 export const Categories: React.FC<CategoriesProps> = () => {
   const navigation = useNavigation<any>();
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const [open, setOpen] = useState(false);
   const [edit, setEdit] = useState(false);
@@ -54,7 +56,7 @@ export const Categories: React.FC<CategoriesProps> = () => {
         <Header withGoBack />
         <Divider height={20} />
         <View style={styles.headerWrapper}>
-          <Text style={styles.titleText}>Edit categories</Text>
+          <Text style={styles.titleText}>{t('editCategory')}</Text>
           <ActionButton
             iconName="plus"
             onPress={() => {
@@ -94,7 +96,7 @@ export const Categories: React.FC<CategoriesProps> = () => {
           setOpen(false);
         }}>
         <Input
-          placeholder="Name"
+          placeholder={t('name')}
           value={name}
           onChange={setName}
           inBottomSheet
@@ -102,7 +104,7 @@ export const Categories: React.FC<CategoriesProps> = () => {
         <Divider height={20} />
 
         <Button
-          text={edit ? 'Update' : 'Submit'}
+          text={edit ? t('update') : t('submit')}
           mode="large"
           onPress={() => {
             if (edit) {

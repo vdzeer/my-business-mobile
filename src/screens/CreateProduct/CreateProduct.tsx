@@ -28,11 +28,13 @@ import {
   getProductsList,
   updateProducts,
 } from '../../store/slices/products';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { useTranslation } from 'react-i18next';
 
 export const CreateProduct: React.FC<CreateProductProps> = () => {
   const navigation = useNavigation<any>();
   const dispatch = useDispatch();
+  const { t } = useTranslation();
+
   const onPressDismiss = () => {
     Keyboard.dismiss();
   };
@@ -62,15 +64,19 @@ export const CreateProduct: React.FC<CreateProductProps> = () => {
             <ImageInput onSelect={setPhoto} imageUrl={imageUrl} />
             <Divider height={20} />
 
-            <Input placeholder="Name" value={name} onChange={setName} />
+            <Input placeholder={t('name')} value={name} onChange={setName} />
             <Divider height={20} />
-            <Input placeholder="Price" value={price} onChange={setPrice} />
+            <Input placeholder={t('price')} value={price} onChange={setPrice} />
             <Divider height={20} />
-            <Input placeholder="Self price" value={self} onChange={setSelf} />
+            <Input
+              placeholder={t('selfPrice')}
+              value={self}
+              onChange={setSelf}
+            />
             <Divider height={20} />
-            <Input placeholder="Items of inventory" />
+            <Input placeholder={t('itemsInventory')} />
             <Divider height={20} />
-            <Text style={styles.labelText}>Category</Text>
+            <Text style={styles.labelText}>{t('category')}</Text>
             <Divider height={15} />
             <View style={{ height: 35 }}>
               <ScrollView
@@ -98,7 +104,7 @@ export const CreateProduct: React.FC<CreateProductProps> = () => {
             </View>
             <Divider height={15} />
             <Button
-              text="Edit categories"
+              text={t('editCategory')}
               onPress={() => {
                 navigation.navigate('Categories');
               }}
@@ -106,7 +112,7 @@ export const CreateProduct: React.FC<CreateProductProps> = () => {
 
             <View style={styles.buttonWrapper}>
               <Button
-                text={params?.edit ? 'Update' : 'Submit'}
+                text={params?.edit ? t('update') : t('submit')}
                 onPress={() => {
                   const formData = new FormData();
                   formData.append('name', name);

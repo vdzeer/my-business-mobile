@@ -23,18 +23,19 @@ import { useNavigation } from '@react-navigation/native';
 import { OrderHistoryProps } from './types';
 import { OrderHistoryCard } from './components/OrderHistoryCard';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 export const OrderHistory: React.FC<OrderHistoryProps> = () => {
   const navigation = useNavigation<any>();
+  const { t } = useTranslation();
 
-  const { currentBasket, orders } = useSelector((store: any) => store.orders);
+  const { orders } = useSelector((store: any) => store.orders);
 
   const [orderList, setOrderList] = useState<any>(null);
 
   useEffect(() => {
     setOrderList(orders);
   }, [orders]);
-  console.log('a', orders[0]);
 
   return (
     <SafeAreaView style={styles.area}>
@@ -42,7 +43,7 @@ export const OrderHistory: React.FC<OrderHistoryProps> = () => {
         <Header />
         <Divider height={20} />
         <View style={styles.headerWrapper}>
-          <Text style={styles.titleText}>Order history</Text>
+          <Text style={styles.titleText}>{t('orderHistory')}</Text>
         </View>
         <Divider height={20} />
 

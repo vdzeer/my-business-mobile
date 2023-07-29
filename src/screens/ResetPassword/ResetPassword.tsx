@@ -13,12 +13,14 @@ import { Button, Divider, Icon, Input } from '../../components';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import { resetPassword } from '../../store/slices/auth';
+import { useTranslation } from 'react-i18next';
 
 export const ResetPassword: React.FC<ForgotPasswordProps> = ({
   route,
 }: any) => {
   const navigation = useNavigation<any>();
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const params = route.params || {};
   const { token, email } = params;
@@ -32,11 +34,11 @@ export const ResetPassword: React.FC<ForgotPasswordProps> = ({
     <SafeAreaView style={styles.area}>
       <TouchableWithoutFeedback onPress={onPressDismiss}>
         <View style={styles.container}>
-          <Text style={styles.titleText}>RESET PASSWORD</Text>
+          <Text style={styles.titleText}>{t('resetPassword')}</Text>
           <Divider height={60} />
 
           <Input
-            placeholder="New Password"
+            placeholder={t('newPassword')}
             value={password}
             secureTextEntry
             onChange={v => setPassword(v)}
@@ -45,7 +47,7 @@ export const ResetPassword: React.FC<ForgotPasswordProps> = ({
 
           <View style={styles.buttonsWrapper}>
             <Button
-              text="SAVE"
+              text={t('save')}
               onPress={() => {
                 dispatch(
                   //@ts-ignore
@@ -63,7 +65,7 @@ export const ResetPassword: React.FC<ForgotPasswordProps> = ({
               }}
             />
             <Button
-              text="Back"
+              text={t('back')}
               withIcon
               onPress={() => {
                 navigation.navigate('SignIn');

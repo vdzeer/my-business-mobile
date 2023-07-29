@@ -44,7 +44,7 @@ const resources = {
 
 i18n
   .use(initReactI18next)
-  // .use(languageDetector)
+  .use(languageDetector)
   .init({
     compatibilityJSON: 'v3',
     resources,

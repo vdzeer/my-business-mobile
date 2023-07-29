@@ -23,20 +23,20 @@ import { ProductsProps } from './types';
 import { ProductCard } from './components/ProductCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteProduct, getProductsList } from '../../store/slices/products';
+import { useTranslation } from 'react-i18next';
 
 export const Products: React.FC<ProductsProps> = () => {
   const navigation = useNavigation<any>();
   const dispatch = useDispatch();
 
   const { products } = useSelector((store: any) => store.products);
-  const { currentBusiness } = useSelector((store: any) => store.business);
 
   const [productList, setProductList] = useState<any>(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     setProductList(products);
   }, [products]);
-  console.log(products[products.length - 1]);
 
   return (
     <SafeAreaView style={styles.area}>
@@ -44,7 +44,7 @@ export const Products: React.FC<ProductsProps> = () => {
         <Header />
         <Divider height={20} />
         <View style={styles.headerWrapper}>
-          <Text style={styles.titleText}>Products</Text>
+          <Text style={styles.titleText}>{t('products')}</Text>
           <ActionButton
             iconName="plus"
             onPress={() => {
@@ -75,7 +75,7 @@ export const Products: React.FC<ProductsProps> = () => {
         />
         <View style={styles.buttonWrapper}>
           <Button
-            text="Checkout"
+            text={t('checkout')}
             onPress={() => {
               navigation.navigate('Basket');
             }}

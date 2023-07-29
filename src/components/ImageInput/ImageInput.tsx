@@ -16,11 +16,13 @@ import { Icon } from '../Icon';
 import { Divider } from '../Divider';
 import ImageCropPicker from 'react-native-image-crop-picker';
 import { image_url } from '../../store/config';
+import { useTranslation } from 'react-i18next';
 
 export const ImageInput: React.FC<ImageInputProps> = ({
   onSelect,
   imageUrl,
 }) => {
+  const { t } = useTranslation();
   const [image, setImage] = useState('');
   const onSelectPhoto = async () => {
     setTimeout(() => {
@@ -58,7 +60,7 @@ export const ImageInput: React.FC<ImageInputProps> = ({
         <Divider width={15} />
 
         <Text style={styles.text}>
-          {image || imageUrl ? 'Change image' : 'Attach your image'}
+          {image || imageUrl ? t('changeImage') : t('attachImage')}
         </Text>
       </TouchableOpacity>
     </>

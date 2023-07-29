@@ -24,10 +24,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { loginBusiness } from '../../store/slices/business';
 import { getMe } from '../../store/slices/auth';
 import axiosInstance from '../../store/axios';
+import { useTranslation } from 'react-i18next';
 
 export const BusinessList: React.FC<BusinessListProps> = () => {
   const navigation = useNavigation<any>();
   const dispatch = useDispatch<any>();
+  const { t } = useTranslation();
 
   const [open, setOpen] = useState(false);
   const [password, setPassword] = useState('');
@@ -67,7 +69,7 @@ export const BusinessList: React.FC<BusinessListProps> = () => {
   return (
     <SafeAreaView style={styles.area}>
       <View style={styles.headerWrapper}>
-        <Text style={styles.titleText}>My business</Text>
+        <Text style={styles.titleText}>{t('myBusiness')}</Text>
         <ActionButton
           iconName="plus"
           onPress={() => {
@@ -92,7 +94,7 @@ export const BusinessList: React.FC<BusinessListProps> = () => {
           setOpen(false);
         }}>
         <Input
-          placeholder="Password"
+          placeholder={t('password')}
           onChange={setPassword}
           secureTextEntry
           inBottomSheet
@@ -100,7 +102,7 @@ export const BusinessList: React.FC<BusinessListProps> = () => {
 
         <Divider height={40} />
         <Button
-          text="Open your business"
+          text={t('openBusiness')}
           mode="large"
           onPress={() => {
             dispatch(

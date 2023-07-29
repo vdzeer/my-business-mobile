@@ -26,10 +26,13 @@ import {
   createOrder,
   removeFromBasket,
 } from '../../store/slices/orders';
+import { useTranslation } from 'react-i18next';
 
 export const Basket: React.FC<BasketProps> = () => {
   const navigation = useNavigation<any>();
   const dispatch = useDispatch();
+
+  const { t } = useTranslation();
 
   const { currentBasket, orders } = useSelector((store: any) => store.orders);
   const { currentBusiness } = useSelector((store: any) => store.business);
@@ -51,7 +54,7 @@ export const Basket: React.FC<BasketProps> = () => {
       <View style={styles.container}>
         <Header withGoBack />
         <Divider height={20} />
-        <Text style={styles.titleText}>Your items</Text>
+        <Text style={styles.titleText}>{t('yourItems')}</Text>
         <FlatList
           data={basket}
           renderItem={({ item }) => (
@@ -72,24 +75,24 @@ export const Basket: React.FC<BasketProps> = () => {
         />
         <View style={styles.buttonWrapper}>
           <View style={styles.textWrapper}>
-            <Text style={styles.text}>Total items</Text>
+            <Text style={styles.text}>{t('totalItems')}</Text>
             <Text style={styles.text}>{basket?.length ?? 0}</Text>
           </View>
           <View style={styles.textWrapper}>
-            <Text style={styles.text}>Price</Text>
+            <Text style={styles.text}>{t('price')}</Text>
             <Text style={styles.text}>{countTotalPrice(basket)}</Text>
           </View>
           <View style={styles.textWrapper}>
-            <Text style={styles.text}>Pay with:</Text>
+            <Text style={styles.text}>{t('payWith') + ':'}</Text>
             <View style={styles.paymentWrapper}>
-              <Text style={styles.text}>cash</Text>
+              <Text style={styles.text}>{t('cash')}</Text>
               <Divider width={20} />
-              <Text style={styles.text}>card</Text>
+              <Text style={styles.text}>{t('card')}</Text>
             </View>
           </View>
 
           <Button
-            text="Confirm"
+            text={t('confirm')}
             onPress={() => {
               dispatch(
                 createOrder(

@@ -29,9 +29,12 @@ import {
   updateSupplier,
 } from '../../store/slices/suppliers';
 
+import { useTranslation } from 'react-i18next';
+
 export const Suppliers: React.FC<SuppliersProps> = () => {
   const navigation = useNavigation<any>();
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const [open, setOpen] = useState(false);
   const [edit, setEdit] = useState(false);
@@ -55,7 +58,7 @@ export const Suppliers: React.FC<SuppliersProps> = () => {
         <Header />
         <Divider height={20} />
         <View style={styles.headerWrapper}>
-          <Text style={styles.titleText}>Your supplies</Text>
+          <Text style={styles.titleText}>{t('yourSupplies')}</Text>
           <ActionButton
             iconName="plus"
             onPress={() => {
@@ -97,7 +100,7 @@ export const Suppliers: React.FC<SuppliersProps> = () => {
           setOpen(false);
         }}>
         <Input
-          placeholder="Name"
+          placeholder={t('name')}
           value={name}
           onChange={setName}
           inBottomSheet
@@ -105,14 +108,14 @@ export const Suppliers: React.FC<SuppliersProps> = () => {
         <Divider height={20} />
 
         <Input
-          placeholder="Phone"
+          placeholder={t('phone')}
           value={phone}
           onChange={setPhone}
           inBottomSheet
         />
         <Divider height={30} />
         <Button
-          text={edit ? 'Update' : 'Submit'}
+          text={edit ? t('update') : t('submit')}
           mode="large"
           onPress={() => {
             if (edit) {

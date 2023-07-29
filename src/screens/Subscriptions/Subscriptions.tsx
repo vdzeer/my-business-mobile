@@ -28,9 +28,12 @@ import {
   getSubscriptions,
   requestSubscription,
 } from 'react-native-iap';
+import { useTranslation } from 'react-i18next';
 
 export const Subscriptions: React.FC<SubscriptionsProps> = () => {
   const navigation = useNavigation<any>();
+  const { t } = useTranslation();
+
   const [subscriptions, setSubscriptions] = useState<Array<any>>([]);
 
   const onPressDismiss = () => {
@@ -77,14 +80,10 @@ export const Subscriptions: React.FC<SubscriptionsProps> = () => {
               }}
               size="large"
             />
-            <Text style={styles.titleText}>Subscriptions</Text>
+            <Text style={styles.titleText}>{t('subscriptions')}</Text>
           </View>
           <Divider height={30} />
-          <Text style={styles.descText}>
-            To unlock the full potential of our features and take your business
-            to new heights, we offer subscription plans tailored to your
-            specific needs.
-          </Text>
+          <Text style={styles.descText}>{t('subscriptionDesc')}</Text>
           <Divider height={40} />
 
           <ScrollView showsVerticalScrollIndicator={false}>
@@ -94,16 +93,16 @@ export const Subscriptions: React.FC<SubscriptionsProps> = () => {
               <View style={styles.subTextWrapper}>
                 <Text style={styles.subText}>Lite</Text>
                 <Text style={styles.subText}>
-                  {subscriptions[0].localizedPrice}
+                  {subscriptions[0]?.localizedPrice}
                 </Text>
               </View>
               <Divider height={20} />
 
-              <Text style={styles.subDesc}>Can create:</Text>
-              <Text style={styles.subDesc}>* 1 business</Text>
-              <Text style={styles.subDesc}>* 5 products</Text>
-              <Text style={styles.subDesc}>* 10 inventories</Text>
-              <Text style={styles.subDesc}>* 2 suppliers</Text>
+              <Text style={styles.subDesc}>{t('canCreate')}</Text>
+              <Text style={styles.subDesc}>{`* 1 ${t('business')}`}</Text>
+              <Text style={styles.subDesc}>{`* 5 ${t('products')}`}</Text>
+              <Text style={styles.subDesc}>{`* 10 ${t('inventories')}`}</Text>
+              <Text style={styles.subDesc}>{`* 2 ${t('suppliers')}`}</Text>
             </TouchableOpacity>
 
             <Divider height={20} />
@@ -114,17 +113,17 @@ export const Subscriptions: React.FC<SubscriptionsProps> = () => {
               <View style={styles.subTextWrapper}>
                 <Text style={styles.subText}>Base</Text>
                 <Text style={styles.subText}>
-                  {subscriptions[1].localizedPrice}
+                  {subscriptions[1]?.localizedPrice}
                 </Text>
               </View>
               <Divider height={20} />
 
-              <Text style={styles.subDesc}>Can create:</Text>
-              <Text style={styles.subDesc}>* 1 business</Text>
-              <Text style={styles.subDesc}>* 20 products</Text>
-              <Text style={styles.subDesc}>* 50 inventories</Text>
-              <Text style={styles.subDesc}>* 10 suppliers</Text>
-              <Text style={styles.subDesc}>* 1 worker</Text>
+              <Text style={styles.subDesc}>{t('canCreate')}</Text>
+              <Text style={styles.subDesc}>{`* 1 ${t('business')}`}</Text>
+              <Text style={styles.subDesc}>{`* 20 ${t('products')}`}</Text>
+              <Text style={styles.subDesc}>{`* 50 ${t('inventories')}`}</Text>
+              <Text style={styles.subDesc}>{`* 10 ${t('suppliers')}`}</Text>
+              <Text style={styles.subDesc}>{`* 1 ${t('worker')}`}</Text>
             </TouchableOpacity>
 
             <Divider height={20} />
@@ -135,17 +134,17 @@ export const Subscriptions: React.FC<SubscriptionsProps> = () => {
               <View style={styles.subTextWrapper}>
                 <Text style={styles.subText}>Pro</Text>
                 <Text style={styles.subText}>
-                  {subscriptions[2].localizedPrice}
+                  {subscriptions[2]?.localizedPrice}
                 </Text>
               </View>
               <Divider height={20} />
 
-              <Text style={styles.subDesc}>Can create:</Text>
-              <Text style={styles.subDesc}>* 3 businesses</Text>
-              <Text style={styles.subDesc}>* 100 products</Text>
-              <Text style={styles.subDesc}>* 200 inventories</Text>
-              <Text style={styles.subDesc}>* 100 suppliers</Text>
-              <Text style={styles.subDesc}>* 5 workers</Text>
+              <Text style={styles.subDesc}>{t('canCreate')}</Text>
+              <Text style={styles.subDesc}>{`* 3 ${t('business')}`}</Text>
+              <Text style={styles.subDesc}>{`* 100 ${t('products')}`}</Text>
+              <Text style={styles.subDesc}>{`* 200 ${t('inventories')}`}</Text>
+              <Text style={styles.subDesc}>{`* 100 ${t('suppliers')}`}</Text>
+              <Text style={styles.subDesc}>{`* 5 ${t('worker')}`}</Text>
             </TouchableOpacity>
 
             <Divider height={20} />
@@ -156,17 +155,17 @@ export const Subscriptions: React.FC<SubscriptionsProps> = () => {
               <View style={styles.subTextWrapper}>
                 <Text style={styles.subText}>Full</Text>
                 <Text style={styles.subText}>
-                  {subscriptions[3].localizedPrice}
+                  {subscriptions[3]?.localizedPrice}
                 </Text>
               </View>
               <Divider height={20} />
 
-              <Text style={styles.subDesc}>Can create:</Text>
-              <Text style={styles.subDesc}>* 10 businesses</Text>
-              <Text style={styles.subDesc}>* 1000 products</Text>
-              <Text style={styles.subDesc}>* 2000 inventories</Text>
-              <Text style={styles.subDesc}>* 1000 suppliers</Text>
-              <Text style={styles.subDesc}>* 50 workers</Text>
+              <Text style={styles.subDesc}>{t('canCreate')}</Text>
+              <Text style={styles.subDesc}>{`* 10 ${t('business')}`}</Text>
+              <Text style={styles.subDesc}>{`* 300 ${t('products')}`}</Text>
+              <Text style={styles.subDesc}>{`* 500 ${t('inventories')}`}</Text>
+              <Text style={styles.subDesc}>{`* 100 ${t('suppliers')}`}</Text>
+              <Text style={styles.subDesc}>{`* 50 ${t('worker')}`}</Text>
             </TouchableOpacity>
           </ScrollView>
         </View>

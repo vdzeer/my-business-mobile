@@ -22,22 +22,19 @@ import { useNavigation } from '@react-navigation/native';
 import { PromocodesProps } from './types';
 import { PromocodeCard } from './components/SupplierCard';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  createSupplier,
-  deleteSupplier,
-  getSuppliersList,
-  updateSupplier,
-} from '../../store/slices/suppliers';
+
 import {
   createPromocode,
   deletePromocode,
   getPromocodesList,
   updatePromocode,
 } from '../../store/slices/promocodes';
+import { useTranslation } from 'react-i18next';
 
 export const Promocodes: React.FC<PromocodesProps> = () => {
   const navigation = useNavigation<any>();
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const [open, setOpen] = useState(false);
   const [edit, setEdit] = useState(false);
@@ -62,7 +59,7 @@ export const Promocodes: React.FC<PromocodesProps> = () => {
         <Header />
         <Divider height={20} />
         <View style={styles.headerWrapper}>
-          <Text style={styles.titleText}>Business promocodes</Text>
+          <Text style={styles.titleText}>{t('promocodes')}</Text>
           <ActionButton
             iconName="plus"
             onPress={() => {
@@ -106,7 +103,7 @@ export const Promocodes: React.FC<PromocodesProps> = () => {
           setOpen(false);
         }}>
         <Input
-          placeholder="Promocode"
+          placeholder={t('promocode')}
           value={code}
           onChange={setCode}
           inBottomSheet
@@ -114,7 +111,7 @@ export const Promocodes: React.FC<PromocodesProps> = () => {
         <Divider height={20} />
 
         <Input
-          placeholder="Sale percent"
+          placeholder={t('salePercent')}
           value={percent}
           onChange={setPercent}
           inBottomSheet
@@ -122,14 +119,14 @@ export const Promocodes: React.FC<PromocodesProps> = () => {
         <Divider height={20} />
 
         <Input
-          placeholder="Use amount"
+          placeholder={t('useAmount')}
           value={amount}
           onChange={setAmount}
           inBottomSheet
         />
         <Divider height={30} />
         <Button
-          text={edit ? 'Update' : 'Submit'}
+          text={edit ? t('update') : t('submit')}
           mode="large"
           onPress={() => {
             if (edit) {
