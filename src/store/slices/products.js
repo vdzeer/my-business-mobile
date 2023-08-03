@@ -195,6 +195,7 @@ export const updateProducts = (data, onSuccess, onError) => async dispatch => {
     })
     .then(onSuccess)
     .catch(async error => {
+      console.log(error);
       if (error.code === 'INVALID_TOKEN') {
         const result = await refreshTokenFn();
         if (result) {

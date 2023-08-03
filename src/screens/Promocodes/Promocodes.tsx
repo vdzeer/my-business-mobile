@@ -75,6 +75,7 @@ export const Promocodes: React.FC<PromocodesProps> = () => {
         <Divider height={20} />
 
         <FlatList
+          showsVerticalScrollIndicator={false}
           data={promocodesList ?? []}
           renderItem={({ item }) => (
             <PromocodeCard

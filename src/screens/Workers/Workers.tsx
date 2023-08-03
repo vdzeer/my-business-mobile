@@ -49,6 +49,7 @@ export const Workers: React.FC<WorkersProps> = () => {
         <Divider height={20} />
 
         <FlatList
+          showsVerticalScrollIndicator={false}
           data={[
             { name: 'Zakhar', phone: 'Kurska' },
             { name: 'Zakhar', phone: 'Kurska' },

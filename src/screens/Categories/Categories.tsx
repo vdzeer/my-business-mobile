@@ -70,6 +70,7 @@ export const Categories: React.FC<CategoriesProps> = () => {
         <Divider height={20} />
 
         <FlatList
+          showsVerticalScrollIndicator={false}
           data={categoriesList ?? []}
           renderItem={({ item }) => (
             <PromocodeCard

@@ -97,7 +97,7 @@ export const getOrdersList = (data, onSuccess, onError) => async dispatch => {
       dispatch(slice.actions.setCurrentOrders(res.data.data));
     })
     .then(onSuccess)
-    .catch(error => console.log(error.response));
+    .catch(error => console.log(error.response.data));
 };
 
 export const createOrder = (data, onSuccess, onError) => async dispatch => {

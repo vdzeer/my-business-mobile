@@ -82,6 +82,7 @@ export const BusinessList: React.FC<BusinessListProps> = () => {
 
       <TouchableWithoutFeedback onPress={onPressDismiss}>
         <FlatList
+          showsVerticalScrollIndicator={false}
           data={profile.businesses ?? []}
           renderItem={renderItem}
           style={styles.list}

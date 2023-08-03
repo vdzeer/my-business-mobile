@@ -100,7 +100,6 @@ export const AccountSettings: React.FC<AccountSettingsProps> = () => {
                       type: photo.mime ?? 'image/jpeg',
                       uri: photo.path,
                     } as any);
-                  console.log(formData);
                   dispatch(
                     updateUser(formData, () => {
                       // navigation.navigate('NewOrder');

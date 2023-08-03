@@ -49,6 +49,7 @@ export const OrderHistory: React.FC<OrderHistoryProps> = () => {
 
         <FlatList
           data={orderList}
+          showsVerticalScrollIndicator={false}
           renderItem={({ item }) => (
             <OrderHistoryCard
               name={

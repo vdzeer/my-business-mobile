@@ -57,6 +57,7 @@ export const Products: React.FC<ProductsProps> = () => {
         <Divider height={20} />
 
         <FlatList
+          showsVerticalScrollIndicator={false}
           data={productList ?? []}
           renderItem={({ item }) => (
             <ProductCard

@@ -13,6 +13,7 @@ import {
   Inventory,
   NewOrder,
   OrderHistory,
+  PickInventory,
   Products,
   Promocodes,
   Subscriptions,
@@ -37,6 +38,7 @@ import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { ActionButton, Button, Divider, Icon } from '../components';
 import { useDispatch } from 'react-redux';
 import { logout } from '../store/slices/auth';
+import { useTranslation } from 'react-i18next';
 
 const HomeStack = createNativeStackNavigator();
 
@@ -46,6 +48,7 @@ const CustomDrawerContent = ({ navigation, state }: any) => {
   const closeDrawer = () => {
     navigation.closeDrawer();
   };
+  const { t } = useTranslation();
   return (
     <DrawerContentScrollView style={styles.drawerWrapper}>
       <View style={styles.headerContainer}>
@@ -65,69 +68,69 @@ const CustomDrawerContent = ({ navigation, state }: any) => {
         navigation={navigation}
         state={state}
         screenName="NewOrder"
-        label="New Order"
+        label={t('newOrder')}
       />
       <CustomDrawerItem
         navigation={navigation}
         state={state}
         screenName="Products"
-        label="Products"
+        label={t('products')}
       />
       <CustomDrawerItem
         navigation={navigation}
         state={state}
         screenName="Inventory"
-        label="Inventory"
+        label={t('navigationInventory')}
       />
       <CustomDrawerItem
         navigation={navigation}
         state={state}
         screenName="Suppliers"
-        label="Suppliers"
+        label={t('navigationSuppliers')}
       />
       <CustomDrawerItem
         navigation={navigation}
         state={state}
         screenName="Promocodes"
-        label="Promocodes"
+        label={t('navigationPromocodes')}
       />
       <CustomDrawerItem
         navigation={navigation}
         state={state}
         screenName="Workers"
-        label="Workers"
+        label={t('navigationWorkers')}
       />
       <CustomDrawerItem
         navigation={navigation}
         state={state}
         screenName="Analytics"
-        label="Analytics"
+        label={t('navigationAnalytics')}
       />
       <CustomDrawerItem
         navigation={navigation}
         state={state}
         screenName="OrderHistory"
-        label="Order History"
+        label={t('orderHistory')}
       />
 
       <CustomDrawerItem
         navigation={navigation}
         state={state}
         screenName="BusinessSettings"
-        label="Business Settings"
+        label={t('businessSettings')}
       />
       <CustomDrawerItem
         navigation={navigation}
         state={state}
         screenName="AccountSettings"
-        label="Account Settings"
+        label={t('accountSettings')}
       />
       <Divider height={60} />
       <CustomDrawerItem
         navigation={navigation}
         state={state}
         iconName="Logout"
-        label="Log Out"
+        label={t('logout')}
       />
     </DrawerContentScrollView>
   );
@@ -206,6 +209,7 @@ export const HomeRouter: FC = () => {
       <Drawer.Screen name="CreateInventory" component={CreateInventory} />
       <Drawer.Screen name="Basket" component={Basket} />
       <Drawer.Screen name="Categories" component={Categories} />
+      <Drawer.Screen name="PickInventory" component={PickInventory} />
 
       <HomeStack.Screen name={'BusinessList'} component={BusinessList} />
       <HomeStack.Screen name={'Business'} component={SideBar} />

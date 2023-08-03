@@ -14,10 +14,14 @@ export const ActionButton: React.FC<ActionButtonProps> = ({
   onPress,
   size = 'small',
   disabled,
+  onPressIn = () => {},
+  onPressOut = () => {},
 }) => {
   return (
     <>
       <TouchableOpacity
+        onPressIn={onPressIn}
+        onPressOut={onPressOut}
         style={[
           styles.addButton,
           {

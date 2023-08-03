@@ -73,6 +73,7 @@ export const Suppliers: React.FC<SuppliersProps> = () => {
         <Divider height={20} />
 
         <FlatList
+          showsVerticalScrollIndicator={false}
           data={suppliersList ?? []}
           renderItem={({ item }) => (
             <SupplierCard

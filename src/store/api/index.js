@@ -1,3 +1,4 @@
+import moment from 'moment';
 import axiosInstance from '../axios';
 import { BASE_API_URL } from '../config';
 
@@ -188,7 +189,11 @@ export const deleteBusinessSupplier = data => {
 };
 
 export const getBusinessOrders = data => {
-  return axiosInstance.get(`/business-api/order/get-all/${data}`);
+  return axiosInstance.get(
+    `/business-api/order/get-all/${data}/?date=${moment(new Date()).format(
+      'YYYY-MM-DD',
+    )}`,
+  );
 };
 
 export const createBusinessOrder = data => {

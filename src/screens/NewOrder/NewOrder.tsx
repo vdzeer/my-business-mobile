@@ -38,6 +38,8 @@ export const NewOrder: React.FC<NewOrderProps> = () => {
   const { t } = useTranslation();
 
   const { currentBusiness } = useSelector((store: any) => store.business);
+  const { currentBasket } = useSelector((store: any) => store.orders);
+
   const { products } = useSelector((store: any) => store.products);
 
   const [productList, setProductList] = useState<any>(null);
@@ -63,6 +65,7 @@ export const NewOrder: React.FC<NewOrderProps> = () => {
 
         <Text style={styles.titleText}>{t('newOrder')}</Text>
         <FlatList
+          showsVerticalScrollIndicator={false}
           data={productList ?? []}
           renderItem={({ item }) => (
             <ProductCard
@@ -78,7 +81,7 @@ export const NewOrder: React.FC<NewOrderProps> = () => {
         />
         <View style={styles.buttonWrapper}>
           <Button
-            text={t('checkout')}
+            text={t('checkout') + ` (${currentBasket.length})`}
             onPress={() => {
               navigation.navigate('Basket');
             }}

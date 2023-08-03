@@ -1,7 +1,15 @@
 export default {
+  navigationAnalytics: 'Analytics',
+  navigationInventory: 'Inventory',
+  navigationSuppliers: 'Suppliers',
+  navigationPromocodes: 'Promocodes',
+  navigationWorkers: 'Workers',
+
   hello: 'Hello!',
   signin: 'Sign In',
   signup: 'Sign Up',
+  logout: 'Log Out',
+
   save: 'Save',
 
   email: 'Email',
@@ -45,8 +53,12 @@ export default {
   myBusiness: 'My business',
   openBusiness: 'Open your business',
   businessSettings: 'Business settings',
+  accountSettings: 'Account settings',
+
   businessDesc: 'Change properties of your business in a few clicks',
   editCategory: 'Edit categories',
+  editInventory: 'Edit inventory',
+
   createBusiness: 'CREATE YOUR BUSINESS',
   createInventory: 'Create your inventory in a few clicks',
   updateInventory: 'Update your inventory',

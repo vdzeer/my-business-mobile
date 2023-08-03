@@ -23,7 +23,7 @@ export const Button: React.FC<ButtonProps> = ({
           styles.buttonWrapper,
           {
             justifyContent: withIcon ? 'space-between' : 'center',
-            width: mode === 'large' ? 250 : 150,
+            // width: mode === 'large' ? 250 : 150,
             backgroundColor: mode === 'lite' ? 'transparent' : '#83C9F4',
             paddingHorizontal: mode === 'lite' ? 0 : 15,
           },
@@ -43,7 +43,7 @@ export const Button: React.FC<ButtonProps> = ({
 
 const styles = StyleSheet.create({
   buttonWrapper: {
-    width: 150,
+    width: '100%',
     height: 40,
     backgroundColor: '#83C9F4',
     justifyContent: 'center',

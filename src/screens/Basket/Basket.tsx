@@ -38,6 +38,7 @@ export const Basket: React.FC<BasketProps> = () => {
   const { currentBusiness } = useSelector((store: any) => store.business);
 
   const [basket, setBasket] = useState<any>([]);
+  const [payBy, setPayBy] = useState<any>('cash');
 
   useEffect(() => {
     setBasket(currentBasket);
@@ -56,6 +57,7 @@ export const Basket: React.FC<BasketProps> = () => {
         <Divider height={20} />
         <Text style={styles.titleText}>{t('yourItems')}</Text>
         <FlatList
+          showsVerticalScrollIndicator={false}
           data={basket}
           renderItem={({ item }) => (
             <ProductCard
@@ -85,11 +87,40 @@ export const Basket: React.FC<BasketProps> = () => {
           <View style={styles.textWrapper}>
             <Text style={styles.text}>{t('payWith') + ':'}</Text>
             <View style={styles.paymentWrapper}>
-              <Text style={styles.text}>{t('cash')}</Text>
+              <TouchableOpacity
+                onPress={() => {
+                  setPayBy('cash');
+                }}>
+                <Text
+                  style={[
+                    styles.text,
+                    {
+                      opacity: payBy === 'cash' ? 1 : 0.4,
+                      fontWeight: payBy === 'cash' ? '600' : '400',
+                    },
+                  ]}>
+                  {t('cash')}
+                </Text>
+              </TouchableOpacity>
               <Divider width={20} />
-              <Text style={styles.text}>{t('card')}</Text>
+              <TouchableOpacity
+                onPress={() => {
+                  setPayBy('card');
+                }}>
+                <Text
+                  style={[
+                    styles.text,
+                    {
+                      opacity: payBy === 'card' ? 1 : 0.4,
+                      fontWeight: payBy === 'card' ? '600' : '400',
+                    },
+                  ]}>
+                  {t('card')}
+                </Text>
+              </TouchableOpacity>
             </View>
           </View>
+          <Divider height={20} />
 
           <Button
             text={t('confirm')}
@@ -98,9 +129,10 @@ export const Basket: React.FC<BasketProps> = () => {
                 createOrder(
                   {
                     businessId: currentBusiness?._id,
-                    payType: 'cash',
-                    //how to do with multiple items of total >1 ???
-                    products: basket.map((el: any) => el._id),
+                    payType: payBy,
+                    products: basket.flatMap(({ _id, total }: any) =>
+                      Array.from({ length: total }, () => String(_id)),
+                    ),
                   },
                   () => {
                     navigation.goBack();
