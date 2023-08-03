@@ -134,11 +134,11 @@ export const SignIn: React.FC<SignInProps> = () => {
                 ],
               });
 
-              if (appleAuthRequestResponse.authorizationCode) {
+              if (appleAuthRequestResponse.identityToken) {
                 dispatch(
                   //@ts-ignore
                   apple({
-                    code: appleAuthRequestResponse.authorizationCode,
+                    code: appleAuthRequestResponse.identityToken,
                   }),
                 );
               }

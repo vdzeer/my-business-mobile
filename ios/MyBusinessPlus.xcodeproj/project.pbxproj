@@ -70,6 +70,7 @@
 		848EB9B72F8D473FAD6CB8B1 /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Regular.ttf"; path = "../src/assets/fonts/Montserrat-Regular.ttf"; sourceTree = "<group>"; };
 		98DD4CB0154B79C23ABEB4F2 /* Pods-MyBusinessPlus.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyBusinessPlus.release.xcconfig"; path = "Target Support Files/Pods-MyBusinessPlus/Pods-MyBusinessPlus.release.xcconfig"; sourceTree = "<group>"; };
 		AE2D08BBC3E54208AA179AC7 /* Montserrat-MediumItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-MediumItalic.ttf"; path = "../src/assets/fonts/Montserrat-MediumItalic.ttf"; sourceTree = "<group>"; };
+		B00AEBFE2A77F1630067DF46 /* MyBusinessPlus.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = MyBusinessPlus.entitlements; path = MyBusinessPlus/MyBusinessPlus.entitlements; sourceTree = "<group>"; };
 		B022F2932A72A6BF0039CA55 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		B7DDADD42F3E4513A7D7913F /* Montserrat-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Light.ttf"; path = "../src/assets/fonts/Montserrat-Light.ttf"; sourceTree = "<group>"; };
 		C91888FBB1E5474CB7C4D792 /* Montserrat-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Thin.ttf"; path = "../src/assets/fonts/Montserrat-Thin.ttf"; sourceTree = "<group>"; };
@@ -124,6 +125,7 @@
 		13B07FAE1A68108700A75B9A /* MyBusinessPlus */ = {
 			isa = PBXGroup;
 			children = (
+				B00AEBFE2A77F1630067DF46 /* MyBusinessPlus.entitlements */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -570,7 +572,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CODE_SIGN_ENTITLEMENTS = MyBusinessPlus/MyBusinessPlus.entitlements;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = RV38A3JNTT;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = MyBusinessPlus/Info.plist;
@@ -605,7 +608,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CODE_SIGN_ENTITLEMENTS = MyBusinessPlus/MyBusinessPlus.entitlements;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = RV38A3JNTT;
 				INFOPLIST_FILE = MyBusinessPlus/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "My Business Plus";

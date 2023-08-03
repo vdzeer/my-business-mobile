@@ -88,4 +88,7 @@ export default {
   workers: 'workers',
   yourSuppliers: 'Your supplies',
   yourWorkers: 'Your workers',
+
+  free: 'Free',
+  cancelSubs: 'Cancel Subscription',
 };

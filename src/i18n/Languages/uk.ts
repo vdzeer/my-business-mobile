@@ -90,4 +90,7 @@ export default {
   workers: 'співробітники',
   yourSuppliers: 'Ваші постачальники',
   yourWorkers: 'Ваші співробітники',
+
+  free: 'Безкоштовно',
+  cancelSubs: 'Відмінити підписку',
 };

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {
   FlatList,
   Keyboard,
+  Linking,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -29,12 +30,33 @@ import {
   requestSubscription,
 } from 'react-native-iap';
 import { useTranslation } from 'react-i18next';
+import { updateSubscription } from '../../store/slices/auth';
+import { useDispatch, useSelector } from 'react-redux';
+
+const ids = {
+  'mybusinessplus.lite': '64c38bc1939ea5354c0d8fde',
+  'mybusinessplus.base': '64c38c23efc5ea36020b3664',
+  'mybusinessplus.pro': '64c38c5f6ac05d364624f96a',
+  'mybusinessplus.full': '64c38c7f6b09f43683d2b752',
+};
+
+const skus = {
+  '64c38bc1939ea5354c0d8fde': 'mybusinessplus.lite',
+  '64c38c23efc5ea36020b3664': 'mybusinessplus.base',
+  '64c38c5f6ac05d364624f96a': 'mybusinessplus.pro',
+  '64c38c7f6b09f43683d2b752': 'mybusinessplus.full',
+};
 
 export const Subscriptions: React.FC<SubscriptionsProps> = () => {
   const navigation = useNavigation<any>();
   const { t } = useTranslation();
-
+  const dispatch = useDispatch();
   const [subscriptions, setSubscriptions] = useState<Array<any>>([]);
+  const { profile } = useSelector((store: any) => store.auth);
+
+  const currentSubscription =
+    // @ts-ignore
+    skus?.[profile?.subscription?._id] ?? 'mybusinessplus.lite';
 
   const onPressDismiss = () => {
     Keyboard.dismiss();
@@ -45,7 +67,6 @@ export const Subscriptions: React.FC<SubscriptionsProps> = () => {
       await initConnection();
       const subs = await getSubscriptions({
         skus: [
-          'mybusinessplus.lite',
           'mybusinessplus.base',
           'mybusinessplus.pro',
           'mybusinessplus.full',
@@ -56,13 +77,18 @@ export const Subscriptions: React.FC<SubscriptionsProps> = () => {
     })();
   }, [navigation]);
 
-  console.log('====================================');
-  console.log(subscriptions);
-  console.log('====================================');
-
   const handleSubscription = async (sku: string) => {
     try {
-      await requestSubscription({ sku });
+      if (sku === 'mybusinessplus.lite') {
+        // @ts-ignore
+        dispatch(updateSubscription(ids[sku]));
+      }
+      await requestSubscription({ sku }).then(v => {
+        if (v?.transactionReceipt) {
+          // @ts-ignore
+          dispatch(updateSubscription(ids[v.productId]));
+        }
+      });
     } catch (err) {}
   };
 
@@ -83,91 +109,156 @@ export const Subscriptions: React.FC<SubscriptionsProps> = () => {
             <Text style={styles.titleText}>{t('subscriptions')}</Text>
           </View>
           <Divider height={30} />
+
           <Text style={styles.descText}>{t('subscriptionDesc')}</Text>
+
           <Divider height={40} />
 
-          <ScrollView showsVerticalScrollIndicator={false}>
-            <TouchableOpacity
-              style={styles.subCard}
-              onPress={() => handleSubscription('mybusinessplus.lite')}>
-              <View style={styles.subTextWrapper}>
-                <Text style={styles.subText}>Lite</Text>
-                <Text style={styles.subText}>
-                  {subscriptions[0]?.localizedPrice}
-                </Text>
+          {!!subscriptions?.length && (
+            <>
+              <ScrollView showsVerticalScrollIndicator={false}>
+                <TouchableOpacity
+                  style={[
+                    styles.subCard,
+                    currentSubscription === 'mybusinessplus.lite'
+                      ? styles.currentSubscription
+                      : null,
+                  ]}
+                  onPress={() => handleSubscription('mybusinessplus.lite')}>
+                  <View style={styles.subTextWrapper}>
+                    <Text style={styles.subText}>Lite</Text>
+                    <Text style={styles.subText}>{t('free')}</Text>
+                  </View>
+                  <Divider height={20} />
+
+                  <Text style={styles.subDesc}>{t('canCreate')}</Text>
+                  <Text style={styles.subDesc}>{`* 1 ${t('business')}`}</Text>
+                  <Text style={styles.subDesc}>{`* 5 ${t('products')}`}</Text>
+                  <Text style={styles.subDesc}>{`* 10 ${t(
+                    'inventories',
+                  )}`}</Text>
+                  <Text style={styles.subDesc}>{`* 2 ${t('suppliers')}`}</Text>
+                </TouchableOpacity>
+
+                <Divider height={20} />
+
+                <TouchableOpacity
+                  style={[
+                    styles.subCard,
+                    currentSubscription === 'mybusinessplus.base'
+                      ? styles.currentSubscription
+                      : null,
+                  ]}
+                  onPress={() => handleSubscription('mybusinessplus.base')}>
+                  <View style={styles.subTextWrapper}>
+                    <Text style={styles.subText}>Base</Text>
+                    <Text style={styles.subText}>
+                      {
+                        subscriptions.find(
+                          el => el.productId === 'mybusinessplus.base',
+                        ).localizedPrice
+                      }
+                    </Text>
+                  </View>
+                  <Divider height={20} />
+
+                  <Text style={styles.subDesc}>{t('canCreate')}</Text>
+                  <Text style={styles.subDesc}>{`* 1 ${t('business')}`}</Text>
+                  <Text style={styles.subDesc}>{`* 20 ${t('products')}`}</Text>
+                  <Text style={styles.subDesc}>{`* 50 ${t(
+                    'inventories',
+                  )}`}</Text>
+                  <Text style={styles.subDesc}>{`* 10 ${t('suppliers')}`}</Text>
+                  <Text style={styles.subDesc}>{`* 1 ${t('worker')}`}</Text>
+                </TouchableOpacity>
+
+                <Divider height={20} />
+
+                <TouchableOpacity
+                  style={[
+                    styles.subCard,
+                    currentSubscription === 'mybusinessplus.pro'
+                      ? styles.currentSubscription
+                      : null,
+                  ]}
+                  onPress={() => handleSubscription('mybusinessplus.pro')}>
+                  <View style={styles.subTextWrapper}>
+                    <Text style={styles.subText}>Pro</Text>
+                    <Text style={styles.subText}>
+                      {
+                        subscriptions.find(
+                          el => el.productId === 'mybusinessplus.pro',
+                        ).localizedPrice
+                      }
+                    </Text>
+                  </View>
+                  <Divider height={20} />
+
+                  <Text style={styles.subDesc}>{t('canCreate')}</Text>
+                  <Text style={styles.subDesc}>{`* 3 ${t('business')}`}</Text>
+                  <Text style={styles.subDesc}>{`* 100 ${t('products')}`}</Text>
+                  <Text style={styles.subDesc}>{`* 200 ${t(
+                    'inventories',
+                  )}`}</Text>
+                  <Text style={styles.subDesc}>{`* 100 ${t(
+                    'suppliers',
+                  )}`}</Text>
+                  <Text style={styles.subDesc}>{`* 5 ${t('worker')}`}</Text>
+                </TouchableOpacity>
+
+                <Divider height={20} />
+
+                <TouchableOpacity
+                  style={[
+                    styles.subCard,
+                    currentSubscription === 'mybusinessplus.full'
+                      ? styles.currentSubscription
+                      : null,
+                  ]}
+                  onPress={() => handleSubscription('mybusinessplus.full')}>
+                  <View style={styles.subTextWrapper}>
+                    <Text style={styles.subText}>Full</Text>
+                    <Text style={styles.subText}>
+                      {
+                        subscriptions.find(
+                          el => el.productId === 'mybusinessplus.full',
+                        ).localizedPrice
+                      }
+                    </Text>
+                  </View>
+                  <Divider height={20} />
+
+                  <Text style={styles.subDesc}>{t('canCreate')}</Text>
+                  <Text style={styles.subDesc}>{`* 10 ${t('business')}`}</Text>
+                  <Text style={styles.subDesc}>{`* 300 ${t('products')}`}</Text>
+                  <Text style={styles.subDesc}>{`* 500 ${t(
+                    'inventories',
+                  )}`}</Text>
+                  <Text style={styles.subDesc}>{`* 100 ${t(
+                    'suppliers',
+                  )}`}</Text>
+                  <Text style={styles.subDesc}>{`* 50 ${t('worker')}`}</Text>
+                </TouchableOpacity>
+              </ScrollView>
+
+              <Divider height={30} />
+
+              <View style={styles.buttonWrapper}>
+                <Button
+                  text={t('cancelSubs')}
+                  onPress={() => {
+                    Linking.openURL(
+                      'https://apps.apple.com/account/subscriptions',
+                    ).then(() => {
+                      // @ts-ignore
+                      dispatch(updateSubscription('64c38bc1939ea5354c0d8fde'));
+                    });
+                  }}
+                  mode="large"
+                />
               </View>
-              <Divider height={20} />
-
-              <Text style={styles.subDesc}>{t('canCreate')}</Text>
-              <Text style={styles.subDesc}>{`* 1 ${t('business')}`}</Text>
-              <Text style={styles.subDesc}>{`* 5 ${t('products')}`}</Text>
-              <Text style={styles.subDesc}>{`* 10 ${t('inventories')}`}</Text>
-              <Text style={styles.subDesc}>{`* 2 ${t('suppliers')}`}</Text>
-            </TouchableOpacity>
-
-            <Divider height={20} />
-
-            <TouchableOpacity
-              style={styles.subCard}
-              onPress={() => handleSubscription('mybusinessplus.base')}>
-              <View style={styles.subTextWrapper}>
-                <Text style={styles.subText}>Base</Text>
-                <Text style={styles.subText}>
-                  {subscriptions[1]?.localizedPrice}
-                </Text>
-              </View>
-              <Divider height={20} />
-
-              <Text style={styles.subDesc}>{t('canCreate')}</Text>
-              <Text style={styles.subDesc}>{`* 1 ${t('business')}`}</Text>
-              <Text style={styles.subDesc}>{`* 20 ${t('products')}`}</Text>
-              <Text style={styles.subDesc}>{`* 50 ${t('inventories')}`}</Text>
-              <Text style={styles.subDesc}>{`* 10 ${t('suppliers')}`}</Text>
-              <Text style={styles.subDesc}>{`* 1 ${t('worker')}`}</Text>
-            </TouchableOpacity>
-
-            <Divider height={20} />
-
-            <TouchableOpacity
-              style={styles.subCard}
-              onPress={() => handleSubscription('mybusinessplus.pro')}>
-              <View style={styles.subTextWrapper}>
-                <Text style={styles.subText}>Pro</Text>
-                <Text style={styles.subText}>
-                  {subscriptions[2]?.localizedPrice}
-                </Text>
-              </View>
-              <Divider height={20} />
-
-              <Text style={styles.subDesc}>{t('canCreate')}</Text>
-              <Text style={styles.subDesc}>{`* 3 ${t('business')}`}</Text>
-              <Text style={styles.subDesc}>{`* 100 ${t('products')}`}</Text>
-              <Text style={styles.subDesc}>{`* 200 ${t('inventories')}`}</Text>
-              <Text style={styles.subDesc}>{`* 100 ${t('suppliers')}`}</Text>
-              <Text style={styles.subDesc}>{`* 5 ${t('worker')}`}</Text>
-            </TouchableOpacity>
-
-            <Divider height={20} />
-
-            <TouchableOpacity
-              style={styles.subCard}
-              onPress={() => handleSubscription('mybusinessplus.full')}>
-              <View style={styles.subTextWrapper}>
-                <Text style={styles.subText}>Full</Text>
-                <Text style={styles.subText}>
-                  {subscriptions[3]?.localizedPrice}
-                </Text>
-              </View>
-              <Divider height={20} />
-
-              <Text style={styles.subDesc}>{t('canCreate')}</Text>
-              <Text style={styles.subDesc}>{`* 10 ${t('business')}`}</Text>
-              <Text style={styles.subDesc}>{`* 300 ${t('products')}`}</Text>
-              <Text style={styles.subDesc}>{`* 500 ${t('inventories')}`}</Text>
-              <Text style={styles.subDesc}>{`* 100 ${t('suppliers')}`}</Text>
-              <Text style={styles.subDesc}>{`* 50 ${t('worker')}`}</Text>
-            </TouchableOpacity>
-          </ScrollView>
+            </>
+          )}
         </View>
       </TouchableWithoutFeedback>
     </SafeAreaView>
@@ -193,6 +284,11 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 20,
   },
+  currentSubscription: {
+    borderColor: '#6F73D2',
+    borderWidth: 2,
+    backgroundColor: '#a2a3e1',
+  },
   headerWrapper: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -203,8 +299,6 @@ const styles = StyleSheet.create({
   container: { paddingHorizontal: 15, height: '100%' },
   buttonWrapper: {
     alignSelf: 'center',
-    position: 'absolute',
-    bottom: 10,
   },
   payContent: {
     flexDirection: 'row',

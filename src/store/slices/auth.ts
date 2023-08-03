@@ -11,6 +11,7 @@ import {
   forgot,
   googleApi,
   resetPasswordApi,
+  subscriptionApi,
 } from '../api';
 
 const initialState = {
@@ -147,7 +148,26 @@ export const apple =
         );
       })
       .then(onSuccess)
-      .catch(error => console.log(error.response.data));
+      .catch(error => console.log(error));
+  };
+
+export const updateSubscription =
+  (id: string, onSuccess: any, onError: any) => async (dispatch: any) => {
+    dispatch(slice.actions.setLoading());
+
+    subscriptionApi(id)
+      .then(res => {
+        if (res) {
+          getMeUser()
+            .then(res => {
+              dispatch(slice.actions.updateProfile(res.data.data));
+            })
+            .then(onSuccess)
+            .catch(error => console.log(error.response.data));
+        }
+      })
+      .then(onSuccess)
+      .catch(error => console.log(error));
   };
 
 export const forgotPassword =

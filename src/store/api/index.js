@@ -17,6 +17,11 @@ export const appleApi = data =>
     headers: { Authorization: null },
   });
 
+export const subscriptionApi = id =>
+  axiosInstance.put(`/user-api/user/update-subscription`, {
+    subscriptionId: id,
+  });
+
 export const forgot = data =>
   axiosInstance.post(`/user-api/user/forget-password`, data, {
     headers: { Authorization: null },
