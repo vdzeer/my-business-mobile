@@ -31,6 +31,7 @@ export default {
   restore: 'Відновити пароль?',
   back: 'Назад',
   checkout: 'Оформити замовлення',
+  currency: 'Валюта',
 
   next: 'Далі',
   goAuth: 'Перейти до авторизації',

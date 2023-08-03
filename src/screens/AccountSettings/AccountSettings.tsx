@@ -19,12 +19,14 @@ import {
   ImageInput,
   Input,
   KeyboardAware,
+  LanguagePicker,
 } from '../../components';
 import { useNavigation } from '@react-navigation/native';
 import { AccountSettingsProps } from './types';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUser } from '../../store/slices/auth';
 import { useTranslation } from 'react-i18next';
+import i18next from 'i18next';
 
 export const AccountSettings: React.FC<AccountSettingsProps> = () => {
   const navigation = useNavigation<any>();
@@ -39,9 +41,11 @@ export const AccountSettings: React.FC<AccountSettingsProps> = () => {
 
   const [name, setName] = useState(profile?.name ?? '');
   const [email, setEmail] = useState(profile?.email ?? '');
+  const [language, setLanguage] = useState(profile?.language ?? '');
 
   const [photo, setPhoto] = useState<any>('');
   const [imageUrl, setImageUrl] = useState<any>(profile?.image ?? '');
+  console.log(profile);
 
   return (
     <SafeAreaView style={styles.area}>
@@ -66,6 +70,11 @@ export const AccountSettings: React.FC<AccountSettingsProps> = () => {
             />
             <Divider height={20} />
             <Input placeholder={t('password')} secureTextEntry />
+            <Divider height={40} />
+            <LanguagePicker
+              language={language}
+              onChangeLanguage={(value: any) => setLanguage(value)}
+            />
 
             <Divider height={40} />
             <Text style={styles.payText}>{t('payandsub')}</Text>
@@ -88,26 +97,32 @@ export const AccountSettings: React.FC<AccountSettingsProps> = () => {
                 />
               </View>
             </View>
-            <View style={styles.buttonWrapper}>
-              <Button
-                text={t('update')}
-                onPress={() => {
-                  const formData = new FormData();
-                  formData.append('name', name);
-                  photo.path &&
-                    formData.append('image', {
-                      name: photo.filename,
-                      type: photo.mime ?? 'image/jpeg',
-                      uri: photo.path,
-                    } as any);
-                  dispatch(
-                    updateUser(formData, () => {
-                      // navigation.navigate('NewOrder');
-                    }) as any,
-                  );
-                }}
-              />
-            </View>
+            <Divider height={40} />
+
+            {/* <View style={styles.buttonWrapper}> */}
+            <Button
+              text={t('update')}
+              onPress={() => {
+                i18next.changeLanguage(language);
+
+                const formData = new FormData();
+                formData.append('name', name);
+                formData.append('language', language);
+
+                photo.path &&
+                  formData.append('image', {
+                    name: photo.filename,
+                    type: photo.mime ?? 'image/jpeg',
+                    uri: photo.path,
+                  } as any);
+                dispatch(
+                  updateUser(formData, () => {
+                    // navigation.navigate('NewOrder');
+                  }) as any,
+                );
+              }}
+            />
+            {/* </View> */}
           </KeyboardAware>
         </View>
       </TouchableWithoutFeedback>

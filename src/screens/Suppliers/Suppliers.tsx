@@ -44,6 +44,8 @@ export const Suppliers: React.FC<SuppliersProps> = () => {
   const [phone, setPhone] = useState('');
 
   const { suppliers } = useSelector((store: any) => store.suppliers);
+  const { profile } = useSelector((store: any) => store.auth);
+
   const { currentBusiness } = useSelector((store: any) => store.business);
 
   const [suppliersList, setSuppliersList] = useState<any>(null);
@@ -58,14 +60,18 @@ export const Suppliers: React.FC<SuppliersProps> = () => {
         <Header />
         <Divider height={20} />
         <View style={styles.headerWrapper}>
-          <Text style={styles.titleText}>{t('yourSupplies')}</Text>
+          <Text style={styles.titleText}>{t('yourSuppliers')}</Text>
           <ActionButton
             iconName="plus"
             onPress={() => {
-              setOpen(true);
-              setEdit(false);
-              setName('');
-              setPhone('');
+              if (suppliers?.length < profile.subscription.suppliersLength) {
+                setOpen(true);
+                setEdit(false);
+                setName('');
+                setPhone('');
+              } else {
+                //TOAST
+              }
             }}
             size="large"
           />
@@ -96,7 +102,7 @@ export const Suppliers: React.FC<SuppliersProps> = () => {
       </View>
       <BottomSheet
         open={open}
-        snapPoints={['30%']}
+        snapPoints={['40%']}
         onDismiss={() => {
           setOpen(false);
         }}>

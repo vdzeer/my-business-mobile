@@ -99,7 +99,7 @@ export const Promocodes: React.FC<PromocodesProps> = () => {
       </View>
       <BottomSheet
         open={open}
-        snapPoints={['40%']}
+        snapPoints={['50%']}
         onDismiss={() => {
           setOpen(false);
         }}>

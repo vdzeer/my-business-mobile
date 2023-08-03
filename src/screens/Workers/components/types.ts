@@ -1,4 +1,5 @@
 export type WorkerCardProps = {
   name: string;
-  image: string;
+  email: string;
+  onDelete: () => void;
 };

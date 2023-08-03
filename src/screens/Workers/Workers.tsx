@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   FlatList,
   Keyboard,
@@ -23,13 +23,27 @@ import { useNavigation } from '@react-navigation/native';
 import { WorkersProps } from './types';
 import { WorkerCard } from './components/WorkerCard';
 import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import { addUser, deleteUser } from '../../store/slices/business';
 
 export const Workers: React.FC<WorkersProps> = () => {
   const navigation = useNavigation<any>();
+  const dispatch = useDispatch<any>();
+
   const { t } = useTranslation();
 
   const [open, setOpen] = useState(false);
-  const [photo, setPhoto] = useState<any>(false);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+
+  const { currentBusiness } = useSelector((store: any) => store.business);
+  const { profile } = useSelector((store: any) => store.auth);
+
+  const [workerList, setWorkerList] = useState<any>(null);
+
+  useEffect(() => {
+    setWorkerList(currentBusiness?.workers);
+  }, [currentBusiness]);
 
   return (
     <SafeAreaView style={styles.area}>
@@ -41,7 +55,14 @@ export const Workers: React.FC<WorkersProps> = () => {
           <ActionButton
             iconName="plus"
             onPress={() => {
-              setOpen(true);
+              if (
+                currentBusiness?.workers?.length <
+                profile.subscription.usersLength
+              ) {
+                setOpen(true);
+              } else {
+                //TOAST
+              }
             }}
             size="large"
           />
@@ -50,12 +71,20 @@ export const Workers: React.FC<WorkersProps> = () => {
 
         <FlatList
           showsVerticalScrollIndicator={false}
-          data={[
-            { name: 'Zakhar', phone: 'Kurska' },
-            { name: 'Zakhar', phone: 'Kurska' },
-          ]}
+          data={workerList}
           renderItem={({ item }) => (
-            <WorkerCard name={item.name} image={item.phone} />
+            <WorkerCard
+              name={item.name}
+              email={item.email}
+              onDelete={() => {
+                dispatch(
+                  deleteUser({
+                    businessId: currentBusiness?._id,
+                    email: item.email,
+                  }),
+                );
+              }}
+            />
           )}
           style={styles.list}
         />
@@ -66,18 +95,24 @@ export const Workers: React.FC<WorkersProps> = () => {
         onDismiss={() => {
           setOpen(false);
         }}>
-        <ImageInput onSelect={setPhoto} />
+        <Input placeholder={t('name')} inBottomSheet onChangeText={setName} />
         <Divider height={20} />
 
-        <Input placeholder={t('name')} inBottomSheet />
-        <Divider height={20} />
-
-        <Input placeholder={t('email')} inBottomSheet />
+        <Input placeholder={t('email')} inBottomSheet onChangeText={setEmail} />
         <Divider height={30} />
         <Button
           text={t('submit')}
           mode="large"
           onPress={() => {
+            name &&
+              email &&
+              dispatch(
+                addUser({
+                  businessId: currentBusiness?._id,
+                  name,
+                  email,
+                }),
+              );
             setOpen(false);
           }}
         />

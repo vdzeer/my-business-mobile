@@ -22,9 +22,10 @@ import { useNavigation } from '@react-navigation/native';
 import { BusinessListProps } from './types';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginBusiness } from '../../store/slices/business';
-import { getMe } from '../../store/slices/auth';
+import { getMe, logout } from '../../store/slices/auth';
 import axiosInstance from '../../store/axios';
 import { useTranslation } from 'react-i18next';
+import i18next from 'i18next';
 
 export const BusinessList: React.FC<BusinessListProps> = () => {
   const navigation = useNavigation<any>();
@@ -51,6 +52,10 @@ export const BusinessList: React.FC<BusinessListProps> = () => {
     }, 1000);
   }, [token]);
 
+  useEffect(() => {
+    profile?.language && i18next.changeLanguage(profile?.language);
+  }, [profile.language]);
+
   const renderItem = ({ item }: any) => (
     <TouchableOpacity
       style={styles.listItem}
@@ -61,10 +66,7 @@ export const BusinessList: React.FC<BusinessListProps> = () => {
       <Text style={styles.listText}>{item.name}</Text>
     </TouchableOpacity>
   );
-
-  console.log('====================================');
-  console.log(profile);
-  console.log('====================================');
+  // console.log(profile.subscription.businessLength);
 
   return (
     <SafeAreaView style={styles.area}>
@@ -73,7 +75,13 @@ export const BusinessList: React.FC<BusinessListProps> = () => {
         <ActionButton
           iconName="plus"
           onPress={() => {
-            navigation.navigate('CreateBusiness');
+            if (
+              profile?.businesses?.length < profile.subscription.businessLength
+            ) {
+              navigation.navigate('CreateBusiness');
+            } else {
+              //TOAST
+            }
           }}
           size="large"
         />
@@ -88,9 +96,18 @@ export const BusinessList: React.FC<BusinessListProps> = () => {
           style={styles.list}
         />
       </TouchableWithoutFeedback>
+      <View style={styles.buttonWrapper}>
+        <Button
+          onPress={() => {
+            dispatch(logout());
+          }}
+          text={t('logout')}
+        />
+      </View>
+
       <BottomSheet
         open={open}
-        snapPoints={['30%']}
+        snapPoints={['40%']}
         onDismiss={() => {
           setOpen(false);
         }}>
@@ -126,6 +143,7 @@ export const BusinessList: React.FC<BusinessListProps> = () => {
 };
 
 const styles = StyleSheet.create({
+  buttonWrapper: { width: '100%', paddingHorizontal: 15 },
   textInput: {
     width: '100%',
     height: 50,
@@ -148,7 +166,7 @@ const styles = StyleSheet.create({
     color: '#000000',
   },
   area: { flex: 1 },
-  list: { paddingHorizontal: 15, paddingTop: 20 },
+  list: { paddingHorizontal: 15, paddingTop: 20, height: '70%' },
   listItem: {
     height: 60,
     width: '100%',

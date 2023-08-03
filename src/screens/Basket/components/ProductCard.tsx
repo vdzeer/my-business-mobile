@@ -4,6 +4,8 @@ import { ActionButton, Divider, Icon } from '../../../components';
 import { ProductCardProps } from './types';
 import { Image } from 'react-native';
 import { image_url } from '../../../store/config';
+import { useSelector } from 'react-redux';
+import FastImage from 'react-native-fast-image';
 
 export const ProductCard = ({
   title,
@@ -13,12 +15,17 @@ export const ProductCard = ({
   onRemove,
   total,
 }: ProductCardProps) => {
+  const { currentBusiness } = useSelector((store: any) => store.business);
+
   return (
     <View style={styles.cardWrapper}>
       <View style={styles.contentWrapper}>
         {image ? (
           <>
-            <Image source={{ uri: image_url + image }} style={styles.image} />
+            <FastImage
+              source={{ uri: image_url + image }}
+              style={styles.image}
+            />
           </>
         ) : (
           <View style={styles.image}></View>
@@ -28,7 +35,9 @@ export const ProductCard = ({
       </View>
 
       <View style={styles.contentWrapper2}>
-        <Text style={styles.cardText}>{price}</Text>
+        <Text style={styles.cardText}>
+          {`${price} ${currentBusiness?.currency ?? ''}`}
+        </Text>
         <Divider width={15} />
 
         <ActionButton iconName="plus" onPress={onAdd} size="small" />

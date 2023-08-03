@@ -1,7 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
+  addUserForBusiness,
   createOwnBusiness,
   deleteOwnBusiness,
+  deleteUserForBusiness,
   loginOwnBusiness,
   signIn,
   signUp,
@@ -42,6 +44,18 @@ const slice = createSlice({
       state.isLoading = false;
       state.currentBusiness = action.payload;
     },
+    addWorker(state, action) {
+      const newWorker = action.payload;
+      state.isLoading = false;
+      state.currentBusiness.workers.push(action.payload);
+    },
+    removeWorkerById(state, action) {
+      const workerIdToRemove = action.payload;
+      state.isLoading = false;
+      state.currentBusiness.workers = state.currentBusiness.workers.filter(
+        worker => worker.email !== workerIdToRemove,
+      );
+    },
   },
 });
 
@@ -64,6 +78,31 @@ export const createBusiness = (data, onSuccess, onError) => async dispatch => {
           });
         }
       }
+    });
+};
+
+export const addUser = (data, onSuccess, onError) => async dispatch => {
+  dispatch(slice.actions.setLoading());
+  addUserForBusiness(data)
+    .then(res => {
+      console.log(res.data.data);
+      // dispatch(getMe('', onSuccess));
+    })
+    .catch(async error => {
+      console.log('addUser', error);
+    });
+};
+
+export const deleteUser = (data, onSuccess, onError) => async dispatch => {
+  dispatch(slice.actions.setLoading());
+
+  deleteUserForBusiness(data)
+    .then(res => {
+      // console.log(res.data);
+      dispatch(slice.actions.removeWorkerById(data?.email));
+    })
+    .catch(async error => {
+      console.log('deleteUser', error);
     });
 };
 

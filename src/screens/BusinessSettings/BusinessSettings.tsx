@@ -39,6 +39,9 @@ export const BusinessSettings: React.FC<BusinessSettingsProps> = () => {
   const { currentBusiness } = useSelector((store: any) => store.business);
 
   const [name, setName] = useState<any>(currentBusiness?.name);
+  const [currency, setCurrency] = useState<any>(
+    currentBusiness?.currency ?? '',
+  );
 
   const [photo, setPhoto] = useState<any>('');
   const [imageUrl, setImageUrl] = useState<any>(currentBusiness?.image ?? '');
@@ -59,28 +62,41 @@ export const BusinessSettings: React.FC<BusinessSettingsProps> = () => {
             <Divider height={20} />
 
             <Input placeholder={t('name')} value={name} onChange={setName} />
+            <Divider height={20} />
+
+            <Input
+              placeholder={t('currency')}
+              value={currency}
+              onChange={setCurrency}
+            />
+
             <Divider height={40} />
 
             <View style={styles.buttonWrapper}>
-              <Button
-                text={t('submit')}
-                onPress={() => {
-                  const formData = new FormData();
-                  formData.append('name', name);
-                  formData.append('businessId', currentBusiness?._id);
-                  photo.path &&
-                    formData.append('image', {
-                      name: photo.filename,
-                      type: photo.mime ?? 'image/jpeg',
-                      uri: photo.path,
-                    } as any);
-                  dispatch(
-                    updateBusiness(formData, () => {
-                      navigation.navigate('NewOrder');
-                    }),
-                  );
-                }}
-              />
+              <View style={styles.buttonWrapper2}>
+                <Button
+                  text={t('submit')}
+                  onPress={() => {
+                    const formData = new FormData();
+                    formData.append('name', name);
+                    formData.append('currency', currency);
+
+                    formData.append('businessId', currentBusiness?._id);
+                    photo.path &&
+                      formData.append('image', {
+                        name: photo.filename,
+                        type: photo.mime ?? 'image/jpeg',
+                        uri: photo.path,
+                      } as any);
+                    dispatch(
+                      updateBusiness(formData, () => {
+                        navigation.navigate('NewOrder');
+                      }),
+                    );
+                  }}
+                />
+              </View>
+
               <ActionButton
                 iconName="delete"
                 onPress={() => {
@@ -101,6 +117,7 @@ export const BusinessSettings: React.FC<BusinessSettingsProps> = () => {
 };
 
 const styles = StyleSheet.create({
+  buttonWrapper2: { width: '70%' },
   createbuttonWrapper: { alignSelf: 'center' },
   area: { flex: 1 },
   container: { paddingHorizontal: 15, height: '100%' },

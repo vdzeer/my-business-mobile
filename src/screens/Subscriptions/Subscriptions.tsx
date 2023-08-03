@@ -110,7 +110,7 @@ export const Subscriptions: React.FC<SubscriptionsProps> = () => {
           </View>
           <Divider height={30} />
 
-          <Text style={styles.descText}>{t('subscriptionDesc')}</Text>
+          <Text style={styles.descText}>{t('subscriptionsDesc')}</Text>
 
           <Divider height={40} />
 
@@ -243,20 +243,20 @@ export const Subscriptions: React.FC<SubscriptionsProps> = () => {
 
               <Divider height={30} />
 
-              <View style={styles.buttonWrapper}>
-                <Button
-                  text={t('cancelSubs')}
-                  onPress={() => {
-                    Linking.openURL(
-                      'https://apps.apple.com/account/subscriptions',
-                    ).then(() => {
-                      // @ts-ignore
-                      dispatch(updateSubscription('64c38bc1939ea5354c0d8fde'));
-                    });
-                  }}
-                  mode="large"
-                />
-              </View>
+              {/* <View style={styles.buttonWrapper}> */}
+              <Button
+                text={t('cancelSubs')}
+                onPress={() => {
+                  Linking.openURL(
+                    'https://apps.apple.com/account/subscriptions',
+                  ).then(() => {
+                    // @ts-ignore
+                    dispatch(updateSubscription('64c38bc1939ea5354c0d8fde'));
+                  });
+                }}
+                mode="large"
+              />
+              {/* </View> */}
             </>
           )}
         </View>

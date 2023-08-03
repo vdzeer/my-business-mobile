@@ -3,8 +3,11 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { ActionButton, Divider, Icon } from '../../../components';
 import { OrderHistoryProps } from './types';
 import moment from 'moment';
+import { useSelector } from 'react-redux';
 
 export const OrderHistoryCard = ({ name, date, price }: OrderHistoryProps) => {
+  const { currentBusiness } = useSelector((store: any) => store.business);
+
   return (
     <View style={styles.cardWrapper}>
       <View style={styles.contentWrapper}>
@@ -16,7 +19,9 @@ export const OrderHistoryCard = ({ name, date, price }: OrderHistoryProps) => {
         </Text>
       </View>
       <View style={styles.contentWrapper2}>
-        <Text style={styles.priceText}>{price}</Text>
+        <Text style={styles.priceText}>
+          {`${price} ${currentBusiness?.currency ?? ''}`}
+        </Text>
       </View>
     </View>
   );

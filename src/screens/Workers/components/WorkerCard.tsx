@@ -1,31 +1,35 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
 import { ActionButton, Divider, Icon } from '../../../components';
 import { WorkerCardProps } from './types';
+import { image_url } from '../../../store/config';
 
-export const WorkerCard = ({ name, image }: WorkerCardProps) => {
+export const WorkerCard = ({ name, email, onDelete }: WorkerCardProps) => {
   return (
     <View style={styles.cardWrapper}>
+      <Divider width={20} />
+
       <View style={styles.contentWrapper}>
-        <View
-          style={{
-            width: 36,
-            height: 36,
-            borderRadius: 20,
-            backgroundColor: 'black',
-          }}></View>
-        <Divider width={20} />
         <Text style={styles.cardText}>{name}</Text>
+        <Divider height={10} />
+
+        <Text style={styles.cardDesc}>{email}</Text>
       </View>
       <View style={styles.contentWrapper2}>
         <Divider width={10} />
-        <ActionButton onPress={() => {}} iconName="delete" size="large" />
+        <ActionButton onPress={onDelete} iconName="delete" size="large" />
       </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  image: {
+    width: 36,
+    height: 36,
+    borderRadius: 20,
+    backgroundColor: 'black',
+  },
   addButton: {
     width: 34,
     height: 34,
@@ -37,16 +41,13 @@ const styles = StyleSheet.create({
   },
 
   contentWrapper: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    width: '50%',
+    width: '70%',
   },
   contentWrapper2: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
     alignItems: 'center',
-    width: '50%',
+    width: '30%',
   },
   cardText: { fontFamily: 'Montserrat', fontWeight: '500' },
   cardDesc: {
@@ -54,10 +55,11 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     fontSize: 12,
     opacity: 0.4,
+    width: '100%',
   },
 
   cardWrapper: {
-    height: 60,
+    height: 80,
     backgroundColor: '#D9F0FF',
     borderRadius: 10,
     paddingHorizontal: 20,

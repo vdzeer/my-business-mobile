@@ -92,7 +92,7 @@ export const Categories: React.FC<CategoriesProps> = () => {
       </View>
       <BottomSheet
         open={open}
-        snapPoints={['20%']}
+        snapPoints={['30%']}
         onDismiss={() => {
           setOpen(false);
         }}>

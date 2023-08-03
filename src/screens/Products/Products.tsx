@@ -30,6 +30,7 @@ export const Products: React.FC<ProductsProps> = () => {
   const dispatch = useDispatch();
 
   const { products } = useSelector((store: any) => store.products);
+  const { profile } = useSelector((store: any) => store.auth);
 
   const [productList, setProductList] = useState<any>(null);
   const { t } = useTranslation();
@@ -48,7 +49,11 @@ export const Products: React.FC<ProductsProps> = () => {
           <ActionButton
             iconName="plus"
             onPress={() => {
-              navigation.navigate('CreateProduct');
+              if (products?.length < profile.subscription.productLength) {
+                navigation.navigate('CreateProduct');
+              } else {
+                //TOAST
+              }
             }}
             size="large"
           />
@@ -74,14 +79,6 @@ export const Products: React.FC<ProductsProps> = () => {
           )}
           style={styles.list}
         />
-        <View style={styles.buttonWrapper}>
-          <Button
-            text={t('checkout')}
-            onPress={() => {
-              navigation.navigate('Basket');
-            }}
-          />
-        </View>
       </View>
     </SafeAreaView>
   );

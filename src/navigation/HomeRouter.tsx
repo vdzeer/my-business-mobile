@@ -36,7 +36,7 @@ import {
 } from 'react-native';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { ActionButton, Button, Divider, Icon } from '../components';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../store/slices/auth';
 import { useTranslation } from 'react-i18next';
 
@@ -48,6 +48,8 @@ const CustomDrawerContent = ({ navigation, state }: any) => {
   const closeDrawer = () => {
     navigation.closeDrawer();
   };
+  const { profile } = useSelector((store: any) => store.auth);
+
   const { t } = useTranslation();
   return (
     <DrawerContentScrollView style={styles.drawerWrapper}>
@@ -70,36 +72,41 @@ const CustomDrawerContent = ({ navigation, state }: any) => {
         screenName="NewOrder"
         label={t('newOrder')}
       />
-      <CustomDrawerItem
-        navigation={navigation}
-        state={state}
-        screenName="Products"
-        label={t('products')}
-      />
-      <CustomDrawerItem
-        navigation={navigation}
-        state={state}
-        screenName="Inventory"
-        label={t('navigationInventory')}
-      />
-      <CustomDrawerItem
-        navigation={navigation}
-        state={state}
-        screenName="Suppliers"
-        label={t('navigationSuppliers')}
-      />
-      <CustomDrawerItem
-        navigation={navigation}
-        state={state}
-        screenName="Promocodes"
-        label={t('navigationPromocodes')}
-      />
-      <CustomDrawerItem
-        navigation={navigation}
-        state={state}
-        screenName="Workers"
-        label={t('navigationWorkers')}
-      />
+      {profile?.role === 'creator' && (
+        <>
+          <CustomDrawerItem
+            navigation={navigation}
+            state={state}
+            screenName="Products"
+            label={t('products')}
+          />
+          <CustomDrawerItem
+            navigation={navigation}
+            state={state}
+            screenName="Inventory"
+            label={t('navigationInventory')}
+          />
+          <CustomDrawerItem
+            navigation={navigation}
+            state={state}
+            screenName="Suppliers"
+            label={t('navigationSuppliers')}
+          />
+          <CustomDrawerItem
+            navigation={navigation}
+            state={state}
+            screenName="Promocodes"
+            label={t('navigationPromocodes')}
+          />
+          <CustomDrawerItem
+            navigation={navigation}
+            state={state}
+            screenName="Workers"
+            label={t('navigationWorkers')}
+          />
+        </>
+      )}
+
       <CustomDrawerItem
         navigation={navigation}
         state={state}
@@ -112,13 +119,15 @@ const CustomDrawerContent = ({ navigation, state }: any) => {
         screenName="OrderHistory"
         label={t('orderHistory')}
       />
+      {profile?.role === 'creator' && (
+        <CustomDrawerItem
+          navigation={navigation}
+          state={state}
+          screenName="BusinessSettings"
+          label={t('businessSettings')}
+        />
+      )}
 
-      <CustomDrawerItem
-        navigation={navigation}
-        state={state}
-        screenName="BusinessSettings"
-        label={t('businessSettings')}
-      />
       <CustomDrawerItem
         navigation={navigation}
         state={state}

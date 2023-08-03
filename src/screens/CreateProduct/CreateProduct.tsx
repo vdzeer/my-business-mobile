@@ -131,59 +131,60 @@ export const CreateProduct: React.FC<CreateProductProps> = () => {
                 navigation.navigate('Categories');
               }}
             />
-            <Divider height={15} />
+            <Divider height={45} />
 
-            <View style={styles.buttonWrapper}>
-              <Button
-                text={params?.edit ? t('update') : t('submit')}
-                onPress={() => {
-                  const formData = new FormData();
-                  formData.append('name', name);
-                  formData.append('price', price);
-                  formData.append('selfPrice', self);
-                  formData.append('businessId', currentBusiness?._id);
-                  if (inventory.length) {
-                    const resultArray = inventory.flatMap(
-                      ({ _id, total }: any) =>
-                        Array.from({ length: total }, () => String(_id)),
-                    );
-                    formData.append('inventories', resultArray);
-                  }
+            {/* <View style={styles.buttonWrapper}> */}
+            <Button
+              text={params?.edit ? t('update') : t('submit')}
+              onPress={() => {
+                const formData = new FormData();
+                formData.append('name', name);
+                formData.append('price', price);
+                formData.append('selfPrice', self);
+                formData.append('businessId', currentBusiness?._id);
+                if (inventory.length) {
+                  const resultArray = inventory.flatMap(({ _id, total }: any) =>
+                    Array.from({ length: total }, () => String(_id)),
+                  );
+                  resultArray.forEach((el: any, index: number) => {
+                    formData.append(`inventories[${index}]`, el);
+                  });
+                }
 
-                  category?._id && formData.append('categoryId', category?._id);
+                category?._id && formData.append('categoryId', category?._id);
 
-                  params?._id && formData.append('productId', params?._id);
+                params?._id && formData.append('productId', params?._id);
 
-                  photo.path &&
-                    formData.append('image', {
-                      name: photo.filename,
-                      type: photo.mime ?? 'image/jpeg',
-                      uri: photo.path,
-                    } as any);
-                  if (params?.edit) {
-                    dispatch(
-                      updateProducts(
-                        formData,
-                        () => {
-                          navigation.navigate('Products');
-                        },
-                        () => {},
-                      ) as any,
-                    );
-                  } else {
-                    dispatch(
-                      createProduct(
-                        formData,
-                        () => {
-                          navigation.navigate('Products');
-                        },
-                        () => {},
-                      ) as any,
-                    );
-                  }
-                }}
-              />
-            </View>
+                photo.path &&
+                  formData.append('image', {
+                    name: photo.filename,
+                    type: photo.mime ?? 'image/jpeg',
+                    uri: photo.path,
+                  } as any);
+                if (params?.edit) {
+                  dispatch(
+                    updateProducts(
+                      formData,
+                      () => {
+                        navigation.navigate('Products');
+                      },
+                      () => {},
+                    ) as any,
+                  );
+                } else {
+                  dispatch(
+                    createProduct(
+                      formData,
+                      () => {
+                        navigation.navigate('Products');
+                      },
+                      () => {},
+                    ) as any,
+                  );
+                }
+              }}
+            />
+            {/* </View> */}
           </KeyboardAware>
         </View>
       </TouchableWithoutFeedback>

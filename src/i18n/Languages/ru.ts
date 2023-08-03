@@ -45,9 +45,11 @@ export default {
   attachImage: 'Прикрепите свое изображение',
   payandsub: 'Оплата и подписки',
   emptySub: 'Нет',
+  currency: 'Валюта',
+
   update: 'Обновить',
   confirm: 'Подтвердить',
-  submit: 'Отправить',
+  submit: 'Подтвердить',
   yourItems: 'Ваши позиции',
   totalItems: 'Общее количество позиций',
   payWith: 'Оплатить с помощью',

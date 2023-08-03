@@ -34,6 +34,7 @@ export const Inventory: React.FC<InventoryProps> = () => {
   const { t } = useTranslation();
 
   const { inventory } = useSelector((store: any) => store.inventory);
+  const { profile } = useSelector((store: any) => store.auth);
 
   const [inventoryList, setInventroyList] = useState<any>(null);
   useEffect(() => {
@@ -49,7 +50,11 @@ export const Inventory: React.FC<InventoryProps> = () => {
           <ActionButton
             iconName="plus"
             onPress={() => {
-              navigation.navigate('CreateInventory');
+              if (inventory?.length < profile.subscription.inventoriesLength) {
+                navigation.navigate('CreateInventory');
+              } else {
+                //TOAST
+              }
             }}
             size="large"
           />

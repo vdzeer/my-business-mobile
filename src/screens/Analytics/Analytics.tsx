@@ -41,7 +41,7 @@ export const Analytics: React.FC<AnalyticsProps> = () => {
       </View>
       <BottomSheet
         open={open}
-        snapPoints={['40%']}
+        snapPoints={['50%']}
         onDismiss={() => {
           setOpen(false);
         }}>

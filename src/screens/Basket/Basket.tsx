@@ -82,7 +82,9 @@ export const Basket: React.FC<BasketProps> = () => {
           </View>
           <View style={styles.textWrapper}>
             <Text style={styles.text}>{t('price')}</Text>
-            <Text style={styles.text}>{countTotalPrice(basket)}</Text>
+            <Text style={styles.text}>
+              {`${countTotalPrice(basket)} ${currentBusiness?.currency ?? ''}`}
+            </Text>
           </View>
           <View style={styles.textWrapper}>
             <Text style={styles.text}>{t('payWith') + ':'}</Text>

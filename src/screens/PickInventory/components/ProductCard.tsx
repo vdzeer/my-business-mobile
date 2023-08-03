@@ -4,6 +4,7 @@ import { ActionButton, Divider, Icon } from '../../../components';
 import { ProductCardProps } from './types';
 import { Image } from 'react-native';
 import { image_url } from '../../../store/config';
+import FastImage from 'react-native-fast-image';
 
 export const ProductCard = ({
   title,
@@ -38,7 +39,10 @@ export const ProductCard = ({
       <View style={styles.contentWrapper}>
         {image ? (
           <>
-            <Image source={{ uri: image_url + image }} style={styles.image} />
+            <FastImage
+              source={{ uri: image_url + image }}
+              style={styles.image}
+            />
           </>
         ) : (
           <View style={styles.image}></View>

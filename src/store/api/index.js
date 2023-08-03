@@ -60,6 +60,13 @@ export const createOwnBusiness = data => {
   });
 };
 
+export const addUserForBusiness = data => {
+  return axiosInstance.post(`/business-api/business/add-user`, data);
+};
+
+export const deleteUserForBusiness = data => {
+  return axiosInstance.post(`/business-api/business/delete-user`, data);
+};
 export const updateOwnBusiness = data => {
   return fetch(BASE_API_URL + `/business-api/business/update`, {
     method: 'PUT',

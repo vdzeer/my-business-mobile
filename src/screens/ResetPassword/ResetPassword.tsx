@@ -46,24 +46,27 @@ export const ResetPassword: React.FC<ForgotPasswordProps> = ({
           <Divider height={20} />
 
           <View style={styles.buttonsWrapper}>
-            <Button
-              text={t('save')}
-              onPress={() => {
-                dispatch(
-                  //@ts-ignore
-                  resetPassword(
-                    {
-                      newPassword: password,
-                      email,
-                      token,
-                    },
-                    () => {
-                      navigation.navigate('SignIn');
-                    },
-                  ),
-                );
-              }}
-            />
+            <View style={styles.buttonsWrapper2}>
+              <Button
+                text={t('save')}
+                onPress={() => {
+                  dispatch(
+                    //@ts-ignore
+                    resetPassword(
+                      {
+                        newPassword: password,
+                        email,
+                        token,
+                      },
+                      () => {
+                        navigation.navigate('SignIn');
+                      },
+                    ),
+                  );
+                }}
+              />
+            </View>
+
             <Button
               text={t('back')}
               withIcon
@@ -86,6 +89,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'flex-start',
     paddingHorizontal: 20,
+  },
+  buttonsWrapper2: {
+    width: '70%',
   },
   buttonsWrapper: {
     flexDirection: 'row',

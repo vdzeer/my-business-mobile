@@ -31,6 +31,8 @@ export const ForgotPassword: React.FC<ForgotPasswordProps> = () => {
       <TouchableWithoutFeedback onPress={onPressDismiss}>
         <KeyboardAware>
           <View style={styles.container}>
+            <Divider height={140} />
+
             <Text style={styles.titleText}>{t('forgotPassword')}</Text>
             <Divider height={40} />
             <Text style={styles.descriptionText}>
@@ -46,29 +48,33 @@ export const ForgotPassword: React.FC<ForgotPasswordProps> = () => {
             <Divider height={20} />
 
             <View style={styles.buttonsWrapper}>
-              <Button
-                text={t('restore')}
-                onPress={() => {
-                  dispatch(
-                    //@ts-ignore
-                    forgotPassword(
-                      {
-                        email,
-                      },
-                      () => {
-                        navigation.goBack();
-                      },
-                    ),
-                  );
-                }}
-              />
-              <Button
-                text={t('back')}
-                withIcon
-                onPress={() => {
-                  navigation.goBack();
-                }}
-              />
+              <View style={styles.buttonsWrapper2}>
+                <Button
+                  text={t('restore')}
+                  onPress={() => {
+                    dispatch(
+                      //@ts-ignore
+                      forgotPassword(
+                        {
+                          email,
+                        },
+                        () => {
+                          navigation.goBack();
+                        },
+                      ),
+                    );
+                  }}
+                />
+              </View>
+              <View style={styles.buttonsWrapper2}>
+                <Button
+                  text={t('back')}
+                  withIcon
+                  onPress={() => {
+                    navigation.goBack();
+                  }}
+                />
+              </View>
             </View>
             <Divider height={140} />
           </View>
@@ -79,6 +85,7 @@ export const ForgotPassword: React.FC<ForgotPasswordProps> = () => {
 };
 
 const styles = StyleSheet.create({
+  buttonsWrapper2: { width: '48%' },
   area: { flex: 1 },
   container: {
     flex: 1,

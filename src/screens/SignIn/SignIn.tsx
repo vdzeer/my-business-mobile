@@ -58,35 +58,38 @@ export const SignIn: React.FC<SignInProps> = () => {
         />
         <Divider height={20} />
         <View style={styles.loginButtonsWrapper}>
-          <Button
-            text={stage ? t('signin') : t('signup')}
-            onPress={() => {
-              stage
-                ? dispatch(
-                    //@ts-ignore
-                    login({
-                      email,
-                      password,
-                    }),
-                  )
-                : dispatch(
-                    //@ts-ignore
-                    register({
-                      email,
-                      password,
-                      role: 'creator',
-                    }),
-                  );
-            }}
-          />
-
-          <Button
-            text={stage ? t('forgot') : t('already')}
-            onPress={() => {
-              stage ? navigation.navigate('ForgotPassword') : setStage(true);
-            }}
-            mode="lite"
-          />
+          <View style={styles.loginButtonsWrapper2}>
+            <Button
+              text={stage ? t('signin') : t('signup')}
+              onPress={() => {
+                stage
+                  ? dispatch(
+                      //@ts-ignore
+                      login({
+                        email,
+                        password,
+                      }),
+                    )
+                  : dispatch(
+                      //@ts-ignore
+                      register({
+                        email,
+                        password,
+                        role: 'creator',
+                      }),
+                    );
+              }}
+            />
+          </View>
+          <View style={styles.loginButtonsWrapper2}>
+            <Button
+              text={stage ? t('forgot') : t('already')}
+              onPress={() => {
+                stage ? navigation.navigate('ForgotPassword') : setStage(true);
+              }}
+              mode="lite"
+            />
+          </View>
         </View>
         <Divider height={20} />
 
@@ -174,6 +177,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: '100%',
     justifyContent: 'space-between',
+  },
+  loginButtonsWrapper2: {
+    width: '50%',
   },
 
   socialButtonsWrapper: { flexDirection: 'row' },

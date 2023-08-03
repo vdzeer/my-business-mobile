@@ -81,50 +81,50 @@ export const CreateInventory: React.FC<CreateInventoryProps> = () => {
               onChange={setLower}
               value={lower}
             />
-            <Divider height={20} />
+            <Divider height={40} />
 
-            <View style={styles.buttonWrapper}>
-              <Button
-                text={params?.edit ? t('update') : t('submit')}
-                onPress={() => {
-                  const formData = new FormData();
-                  formData.append('name', name);
-                  formData.append('lowerRange', lower);
-                  formData.append('amount', amount);
-                  formData.append('businessId', currentBusiness?._id);
+            {/* <View style={styles.buttonWrapper}> */}
+            <Button
+              text={params?.edit ? t('update') : t('submit')}
+              onPress={() => {
+                const formData = new FormData();
+                formData.append('name', name);
+                formData.append('lowerRange', lower);
+                formData.append('amount', amount);
+                formData.append('businessId', currentBusiness?._id);
 
-                  params?._id && formData.append('inventoryId', params?._id);
+                params?._id && formData.append('inventoryId', params?._id);
 
-                  photo.path &&
-                    formData.append('image', {
-                      name: photo.filename,
-                      type: photo.mime ?? 'image/jpeg',
-                      uri: photo.path,
-                    } as any);
-                  if (params?.edit) {
-                    dispatch(
-                      updateInventory(
-                        formData,
-                        () => {
-                          navigation.navigate('Inventory');
-                        },
-                        () => {},
-                      ) as any,
-                    );
-                  } else {
-                    dispatch(
-                      createInventory(
-                        formData,
-                        () => {
-                          navigation.navigate('Inventory');
-                        },
-                        () => {},
-                      ) as any,
-                    );
-                  }
-                }}
-              />
-            </View>
+                photo.path &&
+                  formData.append('image', {
+                    name: photo.filename,
+                    type: photo.mime ?? 'image/jpeg',
+                    uri: photo.path,
+                  } as any);
+                if (params?.edit) {
+                  dispatch(
+                    updateInventory(
+                      formData,
+                      () => {
+                        navigation.navigate('Inventory');
+                      },
+                      () => {},
+                    ) as any,
+                  );
+                } else {
+                  dispatch(
+                    createInventory(
+                      formData,
+                      () => {
+                        navigation.navigate('Inventory');
+                      },
+                      () => {},
+                    ) as any,
+                  );
+                }
+              }}
+            />
+            {/* </View> */}
           </KeyboardAware>
         </View>
       </TouchableWithoutFeedback>

@@ -8,3 +8,4 @@ export * from './ActionButton';
 export * from './ImageInput';
 export * from './Header';
 export * from './KeyboardAware';
+export * from './LanguagePicker';

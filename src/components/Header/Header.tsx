@@ -13,6 +13,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Divider } from '../Divider';
 import { useSelector } from 'react-redux';
 import { Image } from 'react-native';
+import FastImage from 'react-native-fast-image';
 import { image_url } from '../../store/config';
 
 export const Header: React.FC<HeaderProps> = ({ withGoBack }) => {
@@ -55,7 +56,10 @@ export const Header: React.FC<HeaderProps> = ({ withGoBack }) => {
             <Text style={styles.nameText}>{name}</Text>
             <Divider width={10} />
             {image ? (
-              <Image source={{ uri: image_url + image }} style={styles.image} />
+              <FastImage
+                source={{ uri: image_url + image }}
+                style={styles.image}
+              />
             ) : (
               <View style={styles.image}></View>
             )}

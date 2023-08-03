@@ -49,6 +49,8 @@ export default {
   submit: 'Submit',
   yourItems: 'Your Items',
   totalItems: 'Total items',
+  currency: 'Currency',
+
   payWith: 'Pay with',
   myBusiness: 'My business',
   openBusiness: 'Open your business',
