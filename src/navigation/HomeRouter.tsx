@@ -219,11 +219,11 @@ export const HomeRouter: FC = () => {
         animation: 'slide_from_right',
       }}>
       <HomeStack.Screen name={'CreateBusiness'} component={CreateBusiness} />
-      <Drawer.Screen name="CreateProduct" component={CreateProduct} />
-      <Drawer.Screen name="CreateInventory" component={CreateInventory} />
-      <Drawer.Screen name="Basket" component={Basket} />
-      <Drawer.Screen name="Categories" component={Categories} />
-      <Drawer.Screen name="PickInventory" component={PickInventory} />
+      <HomeStack.Screen name="CreateProduct" component={CreateProduct} />
+      <HomeStack.Screen name="CreateInventory" component={CreateInventory} />
+      <HomeStack.Screen name="Basket" component={Basket} />
+      <HomeStack.Screen name="PickInventory" component={PickInventory} />
+      <HomeStack.Screen name="Categories" component={Categories} />
 
       <HomeStack.Screen name={'BusinessList'} component={BusinessList} />
       <HomeStack.Screen name={'Business'} component={SideBar} />

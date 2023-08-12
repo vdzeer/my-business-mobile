@@ -1,3 +1,1 @@
-export type PickInventoryProps = {
-  setInventory: () => void;
-};
+export type PickInventoryProps = {};
