@@ -46,6 +46,7 @@ export default {
   payandsub: 'Оплата и подписки',
   emptySub: 'Нет',
   currency: 'Валюта',
+  checkPromo: 'Использовать промокод',
 
   update: 'Обновить',
   confirm: 'Подтвердить',

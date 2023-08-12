@@ -24,9 +24,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   addToBasket,
   createOrder,
+  getOrdersList,
   removeFromBasket,
 } from '../../store/slices/orders';
 import { useTranslation } from 'react-i18next';
+import { checkValidPromocode } from '../../store/slices/business';
 
 export const Basket: React.FC<BasketProps> = () => {
   const navigation = useNavigation<any>();
@@ -40,6 +42,10 @@ export const Basket: React.FC<BasketProps> = () => {
   const [basket, setBasket] = useState<any>([]);
   const [payBy, setPayBy] = useState<any>('cash');
 
+  const [open, setOpen] = useState<any>(false);
+  const [promo, setPromo] = useState<any>('');
+  const [promoResponse, setPromoResponse] = useState<any>(null);
+
   useEffect(() => {
     setBasket(currentBasket);
   }, [currentBasket]);
@@ -50,6 +56,16 @@ export const Basket: React.FC<BasketProps> = () => {
     return totalPrice;
   };
 
+  function calculateDiscountedPrice(
+    originalPrice: number,
+    discountPercentage: number,
+  ) {
+    const discountAmount = (originalPrice * discountPercentage) / 100;
+
+    const finalPrice = originalPrice - discountAmount;
+
+    return finalPrice;
+  }
   return (
     <SafeAreaView style={styles.area}>
       <View style={styles.container}>
@@ -83,7 +99,14 @@ export const Basket: React.FC<BasketProps> = () => {
           <View style={styles.textWrapper}>
             <Text style={styles.text}>{t('price')}</Text>
             <Text style={styles.text}>
-              {`${countTotalPrice(basket)} ${currentBusiness?.currency ?? ''}`}
+              {`${
+                promoResponse?.salePercent
+                  ? calculateDiscountedPrice(
+                      countTotalPrice(basket),
+                      promoResponse?.salePercent,
+                    )
+                  : countTotalPrice(basket)
+              }${currentBusiness?.currency ?? ''}`}
             </Text>
           </View>
           <View style={styles.textWrapper}>
@@ -123,6 +146,19 @@ export const Basket: React.FC<BasketProps> = () => {
             </View>
           </View>
           <Divider height={20} />
+          <Button
+            text={`${t('checkPromo')}${
+              promoResponse?.salePercent
+                ? ' (' + promoResponse?.salePercent + '%)'
+                : ''
+            }
+              `}
+            onPress={() => {
+              setOpen(true);
+            }}
+            mode="lite"
+          />
+          <Divider height={10} />
 
           <Button
             text={t('confirm')}
@@ -135,8 +171,10 @@ export const Basket: React.FC<BasketProps> = () => {
                     products: basket.flatMap(({ _id, total }: any) =>
                       Array.from({ length: total }, () => String(_id)),
                     ),
+                    promocodeId: promoResponse?._id ?? '',
                   },
                   () => {
+                    dispatch(getOrdersList(currentBusiness?._id) as any);
                     navigation.goBack();
                   },
                 ) as any,
@@ -145,6 +183,37 @@ export const Basket: React.FC<BasketProps> = () => {
           />
         </View>
       </View>
+      <BottomSheet
+        open={open}
+        snapPoints={['40%']}
+        onDismiss={() => {
+          setOpen(false);
+        }}>
+        <Input placeholder={t('promocode')} onChange={setPromo} inBottomSheet />
+
+        <Divider height={40} />
+        <Button
+          text={t('submit')}
+          mode="large"
+          onPress={() => {
+            dispatch(
+              checkValidPromocode(
+                {
+                  businessId: currentBusiness._id,
+                  promocodeName: promo,
+                },
+                (res: any) => {
+                  setOpen(false);
+                  setPromoResponse(res);
+                },
+                (error: any) => {
+                  //TOAST
+                },
+              ) as any,
+            );
+          }}
+        />
+      </BottomSheet>
     </SafeAreaView>
   );
 };
@@ -180,7 +249,7 @@ const styles = StyleSheet.create({
 
   list: {
     marginTop: 20,
-    height: '63%',
+    height: '58%',
   },
 
   titleText: {

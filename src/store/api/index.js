@@ -64,6 +64,10 @@ export const addUserForBusiness = data => {
   return axiosInstance.post(`/business-api/business/add-user`, data);
 };
 
+export const inviteUserForBusiness = data => {
+  return axiosInstance.post(`/business-api/business/invite-user`, data);
+};
+
 export const deleteUserForBusiness = data => {
   return axiosInstance.post(`/business-api/business/delete-user`, data);
 };
@@ -79,6 +83,10 @@ export const updateOwnBusiness = data => {
 };
 export const loginOwnBusiness = data => {
   return axiosInstance.post(`/business-api/business/login`, data);
+};
+
+export const checkPromo = data => {
+  return axiosInstance.post(`/business-api/promocode/check`, data);
 };
 export const deleteOwnBusiness = data => {
   return axiosInstance.delete(`/business-api/business/delete`, {

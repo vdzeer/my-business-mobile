@@ -23,6 +23,7 @@ export default {
   card: 'card',
   password: 'Password',
   newPassword: 'New password',
+  checkPromo: 'Check promocode',
 
   name: 'Name',
   amount: 'Amount',

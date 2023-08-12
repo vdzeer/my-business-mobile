@@ -1,9 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
   addUserForBusiness,
+  checkPromo,
   createOwnBusiness,
   deleteOwnBusiness,
   deleteUserForBusiness,
+  inviteUserForBusiness,
   loginOwnBusiness,
   signIn,
   signUp,
@@ -85,11 +87,18 @@ export const addUser = (data, onSuccess, onError) => async dispatch => {
   dispatch(slice.actions.setLoading());
   addUserForBusiness(data)
     .then(res => {
-      console.log(res.data.data);
+      dispatch(slice.actions.addWorker(res.data.data));
+
       // dispatch(getMe('', onSuccess));
     })
     .catch(async error => {
-      console.log('addUser', error);
+      if (error.response.data.code === 'USER_ALREADY_EXIST') {
+        delete data.name;
+        inviteUserForBusiness(data).then(response => {
+          dispatch(slice.actions.addWorker(response.data.data));
+        });
+      }
+      console.log('addUser', error.response.data);
     });
 };
 
@@ -102,7 +111,7 @@ export const deleteUser = (data, onSuccess, onError) => async dispatch => {
       dispatch(slice.actions.removeWorkerById(data?.email));
     })
     .catch(async error => {
-      console.log('deleteUser', error);
+      console.log('deleteUser', error.response.data);
     });
 };
 
@@ -141,6 +150,19 @@ export const loginBusiness = (data, onSuccess, onError) => async dispatch => {
     .then(onSuccess)
     .catch(error => console.log(error.response.data));
 };
+
+export const checkValidPromocode =
+  (data, onSuccess, onError) => async dispatch => {
+    dispatch(slice.actions.setLoading());
+    checkPromo(data)
+      .then(res => {
+        // console.log(res.data.data);
+        res.data.data === null ? onError() : onSuccess(res.data.data);
+      })
+      .catch(error => {
+        console.log(error.response.data);
+      });
+  };
 export const deleteBusiness = (data, onSuccess, onError) => async dispatch => {
   dispatch(slice.actions.setLoading());
   deleteOwnBusiness(data)

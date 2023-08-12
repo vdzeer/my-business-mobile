@@ -9,6 +9,7 @@ export default {
   signin: 'Увійти',
   signup: 'Зареєструватися',
   logout: 'Вийти',
+  checkPromo: 'Використати промокод',
 
   save: 'Зберегти',
 
