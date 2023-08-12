@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {
   Keyboard,
+  Platform,
   SafeAreaView,
   StyleSheet,
   Text,
@@ -28,8 +29,8 @@ export const ForgotPassword: React.FC<ForgotPasswordProps> = () => {
   };
   return (
     <SafeAreaView style={styles.area}>
-      <TouchableWithoutFeedback onPress={onPressDismiss}>
-        <KeyboardAware>
+      <KeyboardAware>
+        <TouchableWithoutFeedback onPress={onPressDismiss}>
           <View style={styles.container}>
             <Divider height={140} />
 
@@ -78,8 +79,8 @@ export const ForgotPassword: React.FC<ForgotPasswordProps> = () => {
             </View>
             <Divider height={140} />
           </View>
-        </KeyboardAware>
-      </TouchableWithoutFeedback>
+        </TouchableWithoutFeedback>
+      </KeyboardAware>
     </SafeAreaView>
   );
 };
@@ -100,13 +101,15 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   titleText: {
-    fontFamily: 'Montserrat',
-    fontWeight: '700',
+    fontFamily: Platform.OS === 'ios' ? 'Montserrat' : 'Montserrat-Bold',
+
+    fontWeight: '600',
     color: '#000000',
     fontSize: 28,
   },
   descriptionText: {
-    fontFamily: 'Montserrat',
+    fontFamily: Platform.OS === 'ios' ? 'Montserrat' : 'Montserrat-Regular',
+
     color: '#000000',
     fontSize: 16,
     opacity: 0.5,

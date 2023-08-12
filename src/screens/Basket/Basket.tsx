@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {
   FlatList,
   Keyboard,
+  Platform,
   SafeAreaView,
   StyleSheet,
   Text,
@@ -233,7 +234,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   text: {
-    fontFamily: 'Montserrat',
+    fontFamily: Platform.OS === 'ios' ? 'Montserrat' : 'Montserrat-SemiBold',
+
     fontSize: 16,
     fontWeight: '500',
     color: '#000000',
@@ -249,11 +251,12 @@ const styles = StyleSheet.create({
 
   list: {
     marginTop: 20,
-    height: '58%',
+    height: Platform.OS === 'ios' ? '58%' : '45%',
   },
 
   titleText: {
-    fontFamily: 'Montserrat',
+    fontFamily: Platform.OS === 'ios' ? 'Montserrat' : 'Montserrat-SemiBold',
+
     fontSize: 28,
     fontWeight: '600',
     color: '#000000',

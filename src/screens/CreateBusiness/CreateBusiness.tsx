@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {
   Alert,
   Keyboard,
+  Platform,
   SafeAreaView,
   StyleSheet,
   Text,
@@ -40,8 +41,8 @@ export const CreateBusiness: React.FC<CreateBusinessProps> = () => {
 
   return (
     <SafeAreaView style={styles.area}>
-      <TouchableWithoutFeedback onPress={onPressDismiss}>
-        <KeyboardAware>
+      <KeyboardAware>
+        <TouchableWithoutFeedback onPress={onPressDismiss}>
           <View style={styles.container}>
             <Divider height={140} />
 
@@ -92,8 +93,8 @@ export const CreateBusiness: React.FC<CreateBusinessProps> = () => {
             {/* </View> */}
             <Divider height={140} />
           </View>
-        </KeyboardAware>
-      </TouchableWithoutFeedback>
+        </TouchableWithoutFeedback>
+      </KeyboardAware>
     </SafeAreaView>
   );
 };
@@ -113,13 +114,15 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   titleText: {
-    fontFamily: 'Montserrat',
-    fontWeight: '700',
+    fontFamily: Platform.OS === 'ios' ? 'Montserrat' : 'Montserrat-Bold',
+
+    fontWeight: '600',
     color: '#000000',
     fontSize: 28,
   },
   descriptionText: {
-    fontFamily: 'Montserrat',
+    fontFamily: Platform.OS === 'ios' ? 'Montserrat' : 'Montserrat-Regular',
+
     color: '#000000',
     fontSize: 16,
     opacity: 0.5,

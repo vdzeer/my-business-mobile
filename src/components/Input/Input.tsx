@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TextInput } from 'react-native';
+import { Platform, StyleSheet, Text, TextInput } from 'react-native';
 import React from 'react';
 import { InputProps } from './types';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
@@ -50,14 +50,15 @@ const styles = StyleSheet.create({
   title: {
     textAlign: 'left',
     width: '100%',
-    fontFamily: 'Montserrat',
+    fontFamily: Platform.OS === 'ios' ? 'Montserrat' : 'Montserrat-Regular',
   },
   textInput: {
     width: '100%',
     height: 50,
     backgroundColor: '#D9F0FF',
     borderRadius: 10,
-    fontFamily: 'Montserrat',
+    fontFamily: Platform.OS === 'ios' ? 'Montserrat' : 'Montserrat-Regular',
+
     paddingLeft: 20,
   },
 });

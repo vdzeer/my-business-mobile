@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {
   FlatList,
   Keyboard,
+  Platform,
   SafeAreaView,
   StyleSheet,
   Text,
@@ -54,9 +55,9 @@ export const CreateInventory: React.FC<CreateInventoryProps> = () => {
 
   return (
     <SafeAreaView style={styles.area}>
-      <TouchableWithoutFeedback onPress={onPressDismiss}>
-        <View style={styles.container}>
-          <KeyboardAware>
+      <KeyboardAware>
+        <TouchableWithoutFeedback onPress={onPressDismiss}>
+          <View style={styles.container}>
             <Header withGoBack />
             <Divider height={40} />
 
@@ -125,9 +126,9 @@ export const CreateInventory: React.FC<CreateInventoryProps> = () => {
               }}
             />
             {/* </View> */}
-          </KeyboardAware>
-        </View>
-      </TouchableWithoutFeedback>
+          </View>
+        </TouchableWithoutFeedback>
+      </KeyboardAware>
     </SafeAreaView>
   );
 };
@@ -149,7 +150,8 @@ const styles = StyleSheet.create({
   },
 
   titleText: {
-    fontFamily: 'Montserrat',
+    fontFamily: Platform.OS === 'ios' ? 'Montserrat' : 'Montserrat-SemiBold',
+
     fontSize: 28,
     fontWeight: '600',
     color: '#000000',

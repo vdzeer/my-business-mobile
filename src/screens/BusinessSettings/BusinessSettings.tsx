@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {
   FlatList,
   Keyboard,
+  Platform,
   SafeAreaView,
   StyleSheet,
   Text,
@@ -48,9 +49,9 @@ export const BusinessSettings: React.FC<BusinessSettingsProps> = () => {
 
   return (
     <SafeAreaView style={styles.area}>
-      <TouchableWithoutFeedback onPress={onPressDismiss}>
-        <View style={styles.container}>
-          <KeyboardAware>
+      <KeyboardAware>
+        <TouchableWithoutFeedback onPress={onPressDismiss}>
+          <View style={styles.container}>
             <Header />
             <Divider height={20} />
             <Text style={styles.titleText}>{t('businessSettings')}</Text>
@@ -109,9 +110,9 @@ export const BusinessSettings: React.FC<BusinessSettingsProps> = () => {
                 size="large"
               />
             </View>
-          </KeyboardAware>
-        </View>
-      </TouchableWithoutFeedback>
+          </View>
+        </TouchableWithoutFeedback>
+      </KeyboardAware>
     </SafeAreaView>
   );
 };
@@ -138,13 +139,15 @@ const styles = StyleSheet.create({
   },
 
   titleText: {
-    fontFamily: 'Montserrat',
+    fontFamily: Platform.OS === 'ios' ? 'Montserrat' : 'Montserrat-SemiBold',
+
     fontSize: 28,
     fontWeight: '600',
     color: '#000000',
   },
   descText: {
-    fontFamily: 'Montserrat',
+    fontFamily: Platform.OS === 'ios' ? 'Montserrat' : 'Montserrat-Regular',
+
     color: '#000000',
     opacity: 0.4,
   },

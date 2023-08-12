@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   text: {
-    fontFamily: 'Montserrat',
+    fontFamily: Platform.OS === 'ios' ? 'Montserrat' : 'Montserrat-Regular',
     opacity: 0.4,
   },
   touchableWrapper: {

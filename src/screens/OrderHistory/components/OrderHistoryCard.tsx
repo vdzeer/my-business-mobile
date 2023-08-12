@@ -1,5 +1,11 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Platform,
+} from 'react-native';
 import { ActionButton, Divider, Icon } from '../../../components';
 import { OrderHistoryProps } from './types';
 import moment from 'moment';
@@ -47,11 +53,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '50%',
   },
-  cardText: { fontFamily: 'Montserrat', fontWeight: '500' },
-  priceText: { fontFamily: 'Montserrat', fontWeight: '700', fontSize: 16 },
+  cardText: {
+    fontFamily: Platform.OS === 'ios' ? 'Montserrat' : 'Montserrat-SemiBold',
+    fontWeight: '500',
+  },
+  priceText: {
+    fontFamily: Platform.OS === 'ios' ? 'Montserrat' : 'Montserrat-Bold',
+    fontWeight: '600',
+    fontSize: 16,
+  },
 
   cardDesc: {
-    fontFamily: 'Montserrat',
+    fontFamily: Platform.OS === 'ios' ? 'Montserrat' : 'Montserrat-SemiBold',
+
     fontWeight: '500',
     fontSize: 12,
     opacity: 0.4,

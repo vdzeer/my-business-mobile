@@ -2,6 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react';
 import {
   FlatList,
   Keyboard,
+  Platform,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -79,7 +80,7 @@ export const NewOrder: React.FC<NewOrderProps> = () => {
         <Divider height={20} />
         <View style={{ height: 35 }}>
           <ScrollView horizontal contentContainerStyle={styles.categoryScroll}>
-            {categories.map((el: any) => (
+            {categories?.map((el: any) => (
               <Fragment key={el._id}>
                 <TouchableOpacity
                   onPress={() => {
@@ -151,13 +152,15 @@ const styles = StyleSheet.create({
 
   list: {
     marginTop: 20,
-    height: '70%',
+    height: Platform.OS === 'ios' ? '70%' : '60%',
   },
   listContent: {
     justifyContent: 'center',
   },
 
-  categoryText: { fontFamily: 'Montserrat' },
+  categoryText: {
+    fontFamily: Platform.OS === 'ios' ? 'Montserrat' : 'Montserrat-Regular',
+  },
   categoryItem: {
     paddingHorizontal: 15,
     paddingVertical: 5,
@@ -171,7 +174,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   titleText: {
-    fontFamily: 'Montserrat',
+    fontFamily: Platform.OS === 'ios' ? 'Montserrat' : 'Montserrat-SemiBold',
     fontSize: 28,
     fontWeight: '600',
     color: '#000000',

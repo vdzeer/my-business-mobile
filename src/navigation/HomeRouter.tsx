@@ -33,6 +33,7 @@ import {
   TouchableOpacity,
   View,
   Text,
+  Platform,
 } from 'react-native';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { ActionButton, Button, Divider, Icon } from '../components';
@@ -192,6 +193,7 @@ const SideBar = () => (
         drawerStyle: {
           width: Dimensions.get('window').width,
         },
+        drawerStatusBarAnimation: 'slide',
       }}>
       <Drawer.Screen name="NewOrder" component={NewOrder} />
       <Drawer.Screen name="Products" component={Products} />
@@ -212,7 +214,10 @@ export const HomeRouter: FC = () => {
   return (
     <HomeStack.Navigator
       initialRouteName="BusinessList"
-      screenOptions={{ headerShown: false }}>
+      screenOptions={{
+        headerShown: false,
+        animation: 'slide_from_right',
+      }}>
       <HomeStack.Screen name={'CreateBusiness'} component={CreateBusiness} />
       <Drawer.Screen name="CreateProduct" component={CreateProduct} />
       <Drawer.Screen name="CreateInventory" component={CreateInventory} />
@@ -237,12 +242,15 @@ const styles = StyleSheet.create({
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
+    marginTop: Platform.OS === 'ios' ? 0 : 20,
   },
   iconContainer: { width: 40, height: 40 },
 
   drawerItemText: {
     fontSize: 18,
-    fontFamily: 'Montserrat',
+
+    fontFamily: Platform.OS === 'ios' ? 'Montserrat' : 'Montserrat-SemiBold',
+
     fontWeight: '500',
   },
 });

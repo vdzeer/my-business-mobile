@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {
   FlatList,
   Keyboard,
+  Platform,
   SafeAreaView,
   StyleSheet,
   Text,
@@ -143,13 +144,18 @@ export const BusinessList: React.FC<BusinessListProps> = () => {
 };
 
 const styles = StyleSheet.create({
-  buttonWrapper: { width: '100%', paddingHorizontal: 15 },
+  buttonWrapper: {
+    width: '100%',
+    paddingHorizontal: 15,
+    marginBottom: Platform.OS === 'ios' ? 0 : 20,
+  },
   textInput: {
     width: '100%',
     height: 50,
     backgroundColor: '#D9F0FF',
     borderRadius: 10,
-    fontFamily: 'Montserrat',
+    fontFamily: Platform.OS === 'ios' ? 'Montserrat' : 'Montserrat-Regular',
+
     paddingLeft: 20,
   },
   headerWrapper: {
@@ -160,7 +166,8 @@ const styles = StyleSheet.create({
     paddingTop: 20,
   },
   titleText: {
-    fontFamily: 'Montserrat',
+    fontFamily: Platform.OS === 'ios' ? 'Montserrat' : 'Montserrat-SemiBold',
+
     fontSize: 28,
     fontWeight: '600',
     color: '#000000',
@@ -177,7 +184,8 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
   },
   listText: {
-    fontFamily: 'Montserrat',
+    fontFamily: Platform.OS === 'ios' ? 'Montserrat' : 'Montserrat-SemiBold',
+
     fontSize: 18,
     fontWeight: '500',
     color: '#000000',

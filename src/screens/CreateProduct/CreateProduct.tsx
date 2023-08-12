@@ -2,6 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react';
 import {
   FlatList,
   Keyboard,
+  Platform,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -57,9 +58,9 @@ export const CreateProduct: React.FC<CreateProductProps> = () => {
 
   return (
     <SafeAreaView style={styles.area}>
-      <TouchableWithoutFeedback onPress={onPressDismiss}>
-        <View style={styles.container}>
-          <KeyboardAware>
+      <KeyboardAware>
+        <TouchableWithoutFeedback onPress={onPressDismiss}>
+          <View style={styles.container}>
             <Header withGoBack />
             <Divider height={20} />
             <ImageInput onSelect={setPhoto} imageUrl={imageUrl} />
@@ -184,16 +185,20 @@ export const CreateProduct: React.FC<CreateProductProps> = () => {
                 }
               }}
             />
+            <Divider height={20} />
+
             {/* </View> */}
-          </KeyboardAware>
-        </View>
-      </TouchableWithoutFeedback>
+          </View>
+        </TouchableWithoutFeedback>
+      </KeyboardAware>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  categoryText: { fontFamily: 'Montserrat' },
+  categoryText: {
+    fontFamily: Platform.OS === 'ios' ? 'Montserrat' : 'Montserrat-Regular',
+  },
   categoryItem: {
     paddingHorizontal: 15,
     paddingVertical: 5,
@@ -207,7 +212,8 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   labelText: {
-    fontFamily: 'Montserrat',
+    fontFamily: Platform.OS === 'ios' ? 'Montserrat' : 'Montserrat-Regular',
+
     fontSize: 16,
   },
   createbuttonWrapper: { alignSelf: 'center' },
@@ -226,7 +232,8 @@ const styles = StyleSheet.create({
   },
 
   titleText: {
-    fontFamily: 'Montserrat',
+    fontFamily: Platform.OS === 'ios' ? 'Montserrat' : 'Montserrat-SemiBold',
+
     fontSize: 28,
     fontWeight: '600',
     color: '#000000',

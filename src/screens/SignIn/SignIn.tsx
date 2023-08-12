@@ -1,6 +1,7 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 import {
   Keyboard,
+  Platform,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -8,7 +9,7 @@ import {
   View,
 } from 'react-native';
 import { SignInProps } from './types';
-import { Button, Divider, Icon, Input } from '../../components';
+import { Button, Divider, Icon, Input, KeyboardAware } from '../../components';
 import { SocialButton } from './components/SocialButton';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
@@ -33,135 +34,143 @@ export const SignIn: React.FC<SignInProps> = () => {
   };
   const auth = useSelector((store: any) => store.auth);
   return (
-    <TouchableWithoutFeedback onPress={onPressDismiss}>
-      <View style={styles.container}>
-        <View style={styles.logoWrapper}>
-          <Icon name="logo" />
-        </View>
-        <Text style={styles.mainText}>
-          {stage ? t('signin').toUpperCase() : t('signup').toUpperCase()}
-        </Text>
-        <Divider height={40} />
-        <Input
-          placeholder={t('email')}
-          value={email}
-          onChangeText={setEmail}
-          keyboardType="email-address"
-        />
-        <Divider height={20} />
+    <KeyboardAware>
+      <TouchableWithoutFeedback onPress={onPressDismiss}>
+        <View style={styles.container}>
+          <Divider height={60} />
 
-        <Input
-          placeholder={t('password')}
-          value={password}
-          onChangeText={setPassword}
-          secureTextEntry
-        />
-        <Divider height={20} />
-        <View style={styles.loginButtonsWrapper}>
-          <View style={styles.loginButtonsWrapper2}>
-            <Button
-              text={stage ? t('signin') : t('signup')}
-              onPress={() => {
-                stage
-                  ? dispatch(
-                      //@ts-ignore
-                      login({
-                        email,
-                        password,
-                      }),
-                    )
-                  : dispatch(
-                      //@ts-ignore
-                      register({
-                        email,
-                        password,
-                        role: 'creator',
-                      }),
-                    );
-              }}
-            />
+          <View style={styles.logoWrapper}>
+            <Icon name="logo" />
           </View>
-          <View style={styles.loginButtonsWrapper2}>
-            <Button
-              text={stage ? t('forgot') : t('already')}
-              onPress={() => {
-                stage ? navigation.navigate('ForgotPassword') : setStage(true);
-              }}
-              mode="lite"
-            />
-          </View>
-        </View>
-        <Divider height={20} />
+          <Text style={styles.mainText}>
+            {stage ? t('signin').toUpperCase() : t('signup').toUpperCase()}
+          </Text>
+          <Divider height={20} />
+          <Input
+            placeholder={t('email')}
+            value={email}
+            onChangeText={setEmail}
+            keyboardType="email-address"
+          />
+          <Divider height={20} />
 
-        <Text style={styles.secondaryText}>
-          {stage ? t('signin.desc') : t('signup.desc')}
-        </Text>
-        <Divider height={20} />
-
-        <View style={styles.socialButtonsWrapper}>
-          <SocialButton
-            icon="google"
-            onPress={() => {
-              GoogleSignin.configure({
-                iosClientId:
-                  '358498520193-q97bfmd28em84qlp4snol4ou039ck7qt.apps.googleusercontent.com',
-              });
-
-              GoogleSignin.hasPlayServices().then(hasPlayService => {
-                if (hasPlayService) {
-                  GoogleSignin.signIn()
-                    .then(userInfo => {
-                      dispatch(
+          <Input
+            placeholder={t('password')}
+            value={password}
+            onChangeText={setPassword}
+            secureTextEntry
+          />
+          <Divider height={20} />
+          <View style={styles.loginButtonsWrapper}>
+            <View style={styles.loginButtonsWrapper2}>
+              <Button
+                text={stage ? t('signin') : t('signup')}
+                onPress={() => {
+                  stage
+                    ? dispatch(
                         //@ts-ignore
-                        google({
-                          code: userInfo.idToken,
+                        login({
+                          email,
+                          password,
+                        }),
+                      )
+                    : dispatch(
+                        //@ts-ignore
+                        register({
+                          email,
+                          password,
+                          role: 'creator',
                         }),
                       );
-                    })
-                    .catch(e => {
-                      console.log('ERROR IS: ' + JSON.stringify(e));
-                    });
-                }
-              });
-            }}
-          />
-          <Divider width={20} />
-          <SocialButton
-            icon="apple"
-            onPress={async () => {
-              const appleAuthRequestResponse = await appleAuth.performRequest({
-                requestedOperation: appleAuth.Operation.LOGIN,
-                requestedScopes: [
-                  appleAuth.Scope.EMAIL,
-                  appleAuth.Scope.FULL_NAME,
-                ],
-              });
+                }}
+              />
+            </View>
+            <View style={styles.loginButtonsWrapper2}>
+              <Button
+                text={stage ? t('forgot') : t('already')}
+                onPress={() => {
+                  stage
+                    ? navigation.navigate('ForgotPassword')
+                    : setStage(true);
+                }}
+                mode="lite"
+              />
+            </View>
+          </View>
+          <Divider height={20} />
 
-              if (appleAuthRequestResponse.identityToken) {
-                dispatch(
-                  //@ts-ignore
-                  apple({
-                    code: appleAuthRequestResponse.identityToken,
-                  }),
+          <Text style={styles.secondaryText}>
+            {stage ? t('signin.desc') : t('signup.desc')}
+          </Text>
+          <Divider height={20} />
+
+          <View style={styles.socialButtonsWrapper}>
+            <SocialButton
+              icon="google"
+              onPress={() => {
+                GoogleSignin.configure({
+                  iosClientId:
+                    '358498520193-q97bfmd28em84qlp4snol4ou039ck7qt.apps.googleusercontent.com',
+                });
+
+                GoogleSignin.hasPlayServices().then(hasPlayService => {
+                  if (hasPlayService) {
+                    GoogleSignin.signIn()
+                      .then(userInfo => {
+                        dispatch(
+                          //@ts-ignore
+                          google({
+                            code: userInfo.idToken,
+                          }),
+                        );
+                      })
+                      .catch(e => {
+                        console.log('ERROR IS: ' + JSON.stringify(e));
+                      });
+                  }
+                });
+              }}
+            />
+            <Divider width={20} />
+            <SocialButton
+              icon="apple"
+              onPress={async () => {
+                const appleAuthRequestResponse = await appleAuth.performRequest(
+                  {
+                    requestedOperation: appleAuth.Operation.LOGIN,
+                    requestedScopes: [
+                      appleAuth.Scope.EMAIL,
+                      appleAuth.Scope.FULL_NAME,
+                    ],
+                  },
                 );
-              }
-            }}
-          />
+
+                if (appleAuthRequestResponse.identityToken) {
+                  dispatch(
+                    //@ts-ignore
+                    apple({
+                      code: appleAuthRequestResponse.identityToken,
+                    }),
+                  );
+                }
+              }}
+            />
+          </View>
+          <Divider height={20} />
+          {stage && (
+            <TouchableOpacity
+              style={styles.descriptionWrapper}
+              onPress={() => {
+                setStage(false);
+              }}>
+              <Text style={styles.descriptionText}>
+                {t('changeRegistration')}
+              </Text>
+            </TouchableOpacity>
+          )}
         </View>
-        <Divider height={20} />
-        {stage && (
-          <TouchableOpacity
-            style={styles.descriptionWrapper}
-            onPress={() => {
-              setStage(false);
-            }}>
-            <Text style={styles.descriptionText}>
-              {t('changeRegistration')}
-            </Text>
-          </TouchableOpacity>
-        )}
-      </View>
-    </TouchableWithoutFeedback>
+      </TouchableWithoutFeedback>
+    </KeyboardAware>
   );
 };
 
@@ -186,22 +195,24 @@ const styles = StyleSheet.create({
   mainText: {
     color: '#000000',
     fontSize: 24,
-    fontFamily: 'Montserrat',
-    fontWeight: '700',
+    fontFamily: Platform.OS === 'ios' ? 'Montserrat' : 'Montserrat-Bold',
+
+    fontWeight: Platform.OS === 'ios' ? '700' : '600',
   },
   secondaryText: {
     color: '#000000',
     fontSize: 16,
-    fontFamily: 'Montserrat',
+    fontFamily: Platform.OS === 'ios' ? 'Montserrat' : 'Montserrat-Regular',
   },
   descriptionWrapper: {
-    position: 'absolute',
-    bottom: 40,
+    // position: 'absolute',
+    // bottom: 40,
   },
   descriptionText: {
     color: '#000000',
     fontSize: 14,
-    fontFamily: 'Montserrat',
+    fontFamily: Platform.OS === 'ios' ? 'Montserrat' : 'Montserrat-Regular',
+
     textAlign: 'center',
   },
 });

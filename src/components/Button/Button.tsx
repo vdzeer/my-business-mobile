@@ -1,4 +1,5 @@
 import {
+  Platform,
   StyleSheet,
   Text,
   TextInput,
@@ -58,7 +59,9 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: '#000000',
-    fontFamily: 'Montserrat',
+
+    fontFamily: Platform.OS === 'ios' ? 'Montserrat' : 'Montserrat-SemiBold',
+
     fontWeight: '500',
   },
 });

@@ -14,7 +14,7 @@ export const AuthRouter: FC = () => {
   return (
     <AuthStack.Navigator
       initialRouteName="Introduction"
-      screenOptions={{ headerShown: false }}>
+      screenOptions={{ headerShown: false, animation: 'slide_from_right' }}>
       <AuthStack.Screen name={'Introduction'} component={Introduction} />
       <AuthStack.Screen name={'SignIn'} component={SignIn} />
       <AuthStack.Screen name={'ForgotPassword'} component={ForgotPassword} />

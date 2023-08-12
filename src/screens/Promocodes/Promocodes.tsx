@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {
   FlatList,
   Keyboard,
+  Platform,
   SafeAreaView,
   StyleSheet,
   Text,
@@ -99,7 +100,7 @@ export const Promocodes: React.FC<PromocodesProps> = () => {
       </View>
       <BottomSheet
         open={open}
-        snapPoints={['50%']}
+        snapPoints={Platform.OS === 'ios' ? ['50%'] : ['60%']}
         onDismiss={() => {
           setOpen(false);
         }}>
@@ -183,7 +184,8 @@ const styles = StyleSheet.create({
   },
 
   titleText: {
-    fontFamily: 'Montserrat',
+    fontFamily: Platform.OS === 'ios' ? 'Montserrat' : 'Montserrat-SemiBold',
+
     fontSize: 28,
     fontWeight: '600',
     color: '#000000',

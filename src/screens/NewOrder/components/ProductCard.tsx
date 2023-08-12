@@ -1,5 +1,12 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Image,
+  Platform,
+} from 'react-native';
 import { ActionButton, Divider, Icon } from '../../../components';
 import { ProductCardProps } from './types';
 import { image_url } from '../../../store/config';
@@ -131,7 +138,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '50%',
   },
-  cardText: { fontFamily: 'Montserrat', fontWeight: '500' },
+  cardText: {
+    fontFamily: Platform.OS === 'ios' ? 'Montserrat' : 'Montserrat-Regular',
+    fontWeight: '500',
+  },
   cardWrapper: {
     height: 60,
     backgroundColor: '#D9F0FF',

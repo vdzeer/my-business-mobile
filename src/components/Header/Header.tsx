@@ -1,4 +1,5 @@
 import {
+  Platform,
   StyleSheet,
   Text,
   TextInput,
@@ -78,8 +79,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#000000',
   },
   nameText: {
-    fontFamily: 'Montserrat',
     fontSize: 12,
+    fontFamily: Platform.OS === 'ios' ? 'Montserrat' : 'Montserrat-Regular',
   },
   itemsWrapper: { width: '42%' },
   nameWrapper: {
@@ -87,6 +88,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   headerWrapper: {
+    marginTop: Platform.OS === 'ios' ? 0 : 20,
     height: 40,
     width: '100%',
     flexDirection: 'row',

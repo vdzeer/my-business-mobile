@@ -27,6 +27,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateUser } from '../../store/slices/auth';
 import { useTranslation } from 'react-i18next';
 import i18next from 'i18next';
+import { Platform } from 'react-native';
 
 export const AccountSettings: React.FC<AccountSettingsProps> = () => {
   const navigation = useNavigation<any>();
@@ -49,9 +50,9 @@ export const AccountSettings: React.FC<AccountSettingsProps> = () => {
 
   return (
     <SafeAreaView style={styles.area}>
-      <TouchableWithoutFeedback onPress={onPressDismiss}>
-        <View style={styles.container}>
-          <KeyboardAware>
+      <KeyboardAware>
+        <TouchableWithoutFeedback onPress={onPressDismiss}>
+          <View style={styles.container}>
             <Header />
             <Divider height={20} />
             <Text style={styles.titleText}>{`${t('welcome')}${name}`}</Text>
@@ -122,10 +123,12 @@ export const AccountSettings: React.FC<AccountSettingsProps> = () => {
                 );
               }}
             />
+            <Divider height={20} />
+
             {/* </View> */}
-          </KeyboardAware>
-        </View>
-      </TouchableWithoutFeedback>
+          </View>
+        </TouchableWithoutFeedback>
+      </KeyboardAware>
     </SafeAreaView>
   );
 };
@@ -151,26 +154,30 @@ const styles = StyleSheet.create({
   },
 
   titleText: {
-    fontFamily: 'Montserrat',
+    fontFamily: Platform.OS === 'ios' ? 'Montserrat' : 'Montserrat-SemiBold',
+
     fontSize: 28,
     fontWeight: '600',
     color: '#000000',
   },
   subName: {
-    fontFamily: 'Montserrat',
+    fontFamily: Platform.OS === 'ios' ? 'Montserrat' : 'Montserrat-SemiBold',
+
     fontSize: 16,
     fontWeight: '500',
     color: '#000000',
     opacity: 0.4,
   },
   payText: {
-    fontFamily: 'Montserrat',
+    fontFamily: Platform.OS === 'ios' ? 'Montserrat' : 'Montserrat-SemiBold',
+
     fontSize: 20,
     fontWeight: '500',
     color: '#000000',
   },
   descText: {
-    fontFamily: 'Montserrat',
+    fontFamily: Platform.OS === 'ios' ? 'Montserrat' : 'Montserrat-Regular',
+
     color: '#000000',
     opacity: 0.4,
   },

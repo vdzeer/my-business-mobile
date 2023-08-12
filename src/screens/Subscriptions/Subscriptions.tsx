@@ -3,6 +3,7 @@ import {
   FlatList,
   Keyboard,
   Linking,
+  Platform,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -267,13 +268,18 @@ export const Subscriptions: React.FC<SubscriptionsProps> = () => {
 
 const styles = StyleSheet.create({
   subDesc: {
-    fontFamily: 'Montserrat',
+    fontFamily: Platform.OS === 'ios' ? 'Montserrat' : 'Montserrat-SemiBold',
+
     fontWeight: '500',
     opacity: 0.4,
     marginLeft: 10,
   },
 
-  subText: { fontFamily: 'Montserrat', fontSize: 18, fontWeight: '700' },
+  subText: {
+    fontFamily: Platform.OS === 'ios' ? 'Montserrat' : 'Montserrat-Bold',
+    fontSize: 18,
+    fontWeight: '600',
+  },
   subTextWrapper: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -311,26 +317,30 @@ const styles = StyleSheet.create({
   },
 
   titleText: {
-    fontFamily: 'Montserrat',
+    fontFamily: Platform.OS === 'ios' ? 'Montserrat' : 'Montserrat-SemiBold',
+
     fontSize: 28,
     fontWeight: '600',
     color: '#000000',
   },
   subName: {
-    fontFamily: 'Montserrat',
+    fontFamily: Platform.OS === 'ios' ? 'Montserrat' : 'Montserrat-SemiBold',
+
     fontSize: 16,
     fontWeight: '500',
     color: '#000000',
     opacity: 0.4,
   },
   payText: {
-    fontFamily: 'Montserrat',
+    fontFamily: Platform.OS === 'ios' ? 'Montserrat' : 'Montserrat-SemiBold',
+
     fontSize: 20,
     fontWeight: '500',
     color: '#000000',
   },
   descText: {
-    fontFamily: 'Montserrat',
+    fontFamily: Platform.OS === 'ios' ? 'Montserrat' : 'Montserrat-Regular',
+
     color: '#000000',
     opacity: 0.4,
     textAlign: 'center',

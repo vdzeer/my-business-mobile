@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useRef, useState } from 'react';
-import { Alert, Image, StyleSheet, Text, View } from 'react-native';
+import { Alert, Image, Platform, StyleSheet, Text, View } from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import { IntroductionProps, Slide } from './types';
 import { useNavigation } from '@react-navigation/native';
@@ -42,16 +42,13 @@ export const Introduction: React.FC<IntroductionProps> = () => {
     navigation.navigate('SignIn');
   };
 
-  const renderItem = useCallback(
-    ({ item }: { item: Slide }) => (
-      <>
-        <Image source={item.image} style={styles.image} resizeMode="cover" />
-        <View style={styles.textWrapper}>
-          <Text style={styles.introText}>{item.text}</Text>
-        </View>
-      </>
-    ),
-    [],
+  const renderItem = ({ item }: { item: Slide }) => (
+    <>
+      <Image source={item.image} style={styles.image} resizeMode="cover" />
+      <View style={styles.textWrapper}>
+        <Text style={styles.introText}>{item.text}</Text>
+      </View>
+    </>
   );
 
   const handleSlideChange = useCallback((index: number) => {
@@ -87,14 +84,16 @@ const styles = StyleSheet.create({
   image: { width: '100%', height: '100%' },
   introText: {
     fontSize: 28,
-    fontFamily: 'Montserrat',
-    fontWeight: '700',
+    fontFamily: Platform.OS === 'ios' ? 'Montserrat' : 'Montserrat-Bold',
+    fontWeight: Platform.OS === 'ios' ? '700' : '400',
     color: '#FFFFFF',
   },
   textWrapper: {
     position: 'absolute',
+
     bottom: 150,
     left: 20,
+    width: '80%',
   },
   buttonWrapper: {
     position: 'absolute',

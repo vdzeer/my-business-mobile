@@ -25,6 +25,7 @@ import { WorkerCard } from './components/WorkerCard';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { addUser, deleteUser } from '../../store/slices/business';
+import { Platform } from 'react-native';
 
 export const Workers: React.FC<WorkersProps> = () => {
   const navigation = useNavigation<any>();
@@ -91,7 +92,7 @@ export const Workers: React.FC<WorkersProps> = () => {
       </View>
       <BottomSheet
         open={open}
-        snapPoints={['40%']}
+        snapPoints={Platform.OS === 'ios' ? ['40%'] : ['50%']}
         onDismiss={() => {
           setOpen(false);
         }}>
@@ -136,7 +137,8 @@ const styles = StyleSheet.create({
   },
 
   titleText: {
-    fontFamily: 'Montserrat',
+    fontFamily: Platform.OS === 'ios' ? 'Montserrat' : 'Montserrat-SemiBold',
+
     fontSize: 28,
     fontWeight: '600',
     color: '#000000',
