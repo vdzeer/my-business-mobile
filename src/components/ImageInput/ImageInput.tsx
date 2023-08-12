@@ -31,7 +31,13 @@ export const ImageInput: React.FC<ImageInputProps> = ({
         height: 400,
         cropping: true,
       }).then(res => {
-        onSelect(res);
+        onSelect({
+          ...res,
+          filename:
+            Platform.OS === 'ios'
+              ? res.filename
+              : res.path.substring(res.path.lastIndexOf('/') + 1),
+        });
         setImage(res.path);
       });
     }, 500);
