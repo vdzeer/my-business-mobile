@@ -80,34 +80,35 @@ export const NewOrder: React.FC<NewOrderProps> = () => {
         <Divider height={20} />
         <View style={{ height: 35 }}>
           <ScrollView horizontal contentContainerStyle={styles.categoryScroll}>
-            {categories?.map((el: any) => (
-              <Fragment key={el._id}>
-                <TouchableOpacity
-                  onPress={() => {
-                    el._id === category?._id
-                      ? setCategory({ _id: '' })
-                      : setCategory(el);
-                  }}
-                  style={[
-                    styles.categoryItem,
-                    {
-                      backgroundColor:
-                        el._id === category?._id ? '#384494' : '#D9F0FF',
-                    },
-                  ]}>
-                  <Text
+            {!!categories?.length &&
+              categories.map((el: any) => (
+                <Fragment key={el._id}>
+                  <TouchableOpacity
+                    onPress={() => {
+                      el._id === category?._id
+                        ? setCategory({ _id: '' })
+                        : setCategory(el);
+                    }}
                     style={[
-                      styles.categoryText,
+                      styles.categoryItem,
                       {
-                        color: el._id === category?._id ? 'white' : 'black',
+                        backgroundColor:
+                          el._id === category?._id ? '#384494' : '#D9F0FF',
                       },
                     ]}>
-                    {el?.name}
-                  </Text>
-                </TouchableOpacity>
-                <Divider width={5} />
-              </Fragment>
-            ))}
+                    <Text
+                      style={[
+                        styles.categoryText,
+                        {
+                          color: el._id === category?._id ? 'white' : 'black',
+                        },
+                      ]}>
+                      {el?.name}
+                    </Text>
+                  </TouchableOpacity>
+                  <Divider width={5} />
+                </Fragment>
+              ))}
           </ScrollView>
         </View>
         <FlatList

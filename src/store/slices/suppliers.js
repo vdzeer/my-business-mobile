@@ -6,6 +6,8 @@ import {
   updateBusinessSupplier,
 } from '../api';
 import { Alert } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { authActions } from './auth';
 
 const initialState = {
   isLoading: false,
@@ -59,7 +61,13 @@ export const getSuppliersList =
         dispatch(slice.actions.setCurrentSuppliers(res.data.data));
       })
       .then(onSuccess)
-      .catch(error => console.log(error.response));
+      .catch(error => {
+        if (error?.response?.status === 401) {
+          AsyncStorage.setItem('refresh', '');
+          AsyncStorage.setItem('token', '');
+          dispatch(authActions.logoutSuccess());
+        }
+      });
   };
 
 export const createSupplier = (data, onSuccess, onError) => async dispatch => {
@@ -69,7 +77,13 @@ export const createSupplier = (data, onSuccess, onError) => async dispatch => {
       dispatch(slice.actions.addOneSupplier(res.data.data));
     })
     .then(onSuccess)
-    .catch(error => console.log(error));
+    .catch(error => {
+      if (error?.response?.status === 401) {
+        AsyncStorage.setItem('refresh', '');
+        AsyncStorage.setItem('token', '');
+        dispatch(authActions.logoutSuccess());
+      }
+    });
 };
 
 export const updateSupplier = (data, onSuccess, onError) => async dispatch => {
@@ -79,7 +93,13 @@ export const updateSupplier = (data, onSuccess, onError) => async dispatch => {
       dispatch(slice.actions.replaceOneSupplier(res.data.data));
     })
     .then(onSuccess)
-    .catch(error => console.log(error));
+    .catch(error => {
+      if (error?.response?.status === 401) {
+        AsyncStorage.setItem('refresh', '');
+        AsyncStorage.setItem('token', '');
+        dispatch(authActions.logoutSuccess());
+      }
+    });
 };
 
 export const deleteSupplier = (data, onSuccess, onError) => async dispatch => {
@@ -89,5 +109,11 @@ export const deleteSupplier = (data, onSuccess, onError) => async dispatch => {
       dispatch(slice.actions.deleteOneSupplier(data));
     })
     .then(onSuccess)
-    .catch(error => console.log(error));
+    .catch(error => {
+      if (error?.response?.status === 401) {
+        AsyncStorage.setItem('refresh', '');
+        AsyncStorage.setItem('token', '');
+        dispatch(authActions.logoutSuccess());
+      }
+    });
 };

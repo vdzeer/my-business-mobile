@@ -46,7 +46,6 @@ export const AccountSettings: React.FC<AccountSettingsProps> = () => {
 
   const [photo, setPhoto] = useState<any>('');
   const [imageUrl, setImageUrl] = useState<any>(profile?.image ?? '');
-  console.log(profile);
 
   return (
     <SafeAreaView style={styles.area}>
@@ -81,19 +80,15 @@ export const AccountSettings: React.FC<AccountSettingsProps> = () => {
             <Text style={styles.payText}>{t('payandsub')}</Text>
             <Divider height={10} />
             <View style={styles.payContent}>
-              <Text style={styles.subName}>{t('emptySub')}</Text>
+              <Text style={styles.subName}>
+                {profile?.subscription?.subscriptionName ?? t('emptySub')}
+              </Text>
               <View style={styles.payContent}>
                 <ActionButton
                   iconName="edit"
                   onPress={() => {
                     navigation.navigate('Subscriptions');
                   }}
-                  size="large"
-                />
-                <Divider width={10} />
-                <ActionButton
-                  iconName="delete"
-                  onPress={() => {}}
                   size="large"
                 />
               </View>

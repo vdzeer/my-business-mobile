@@ -11,8 +11,9 @@ import {
   signUp,
   updateOwnBusiness,
 } from '../api';
-import { getMe } from './auth';
+import { authActions, getMe } from './auth';
 import { refreshTokenFn, setTokenInstance } from '../axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const initialState = {
   isLoading: false,
@@ -71,13 +72,21 @@ export const createBusiness = (data, onSuccess, onError) => async dispatch => {
     })
     .catch(async error => {
       if (error.code === 'INVALID_TOKEN') {
-        const result = await refreshTokenFn();
-        if (result) {
-          setTokenInstance(result);
+        try {
+          const result = await refreshTokenFn();
+          if (result) {
+            setTokenInstance(result);
 
-          createOwnBusiness(data).then(async res => {
-            dispatch(getMe('', onSuccess));
-          });
+            createOwnBusiness(data).then(async res => {
+              dispatch(getMe('', onSuccess));
+            });
+          }
+        } catch (error) {
+          if (error?.response?.status === 401) {
+            AsyncStorage.setItem('refresh', '');
+            AsyncStorage.setItem('token', '');
+            dispatch(authActions.logoutSuccess());
+          }
         }
       }
     });
@@ -98,7 +107,12 @@ export const addUser = (data, onSuccess, onError) => async dispatch => {
           dispatch(slice.actions.addWorker(response.data.data));
         });
       }
-      console.log('addUser', error.response.data);
+
+      if (error?.response?.status === 401) {
+        AsyncStorage.setItem('refresh', '');
+        AsyncStorage.setItem('token', '');
+        dispatch(authActions.logoutSuccess());
+      }
     });
 };
 
@@ -111,7 +125,11 @@ export const deleteUser = (data, onSuccess, onError) => async dispatch => {
       dispatch(slice.actions.removeWorkerById(data?.email));
     })
     .catch(async error => {
-      console.log('deleteUser', error.response.data);
+      if (error?.response?.status === 401) {
+        AsyncStorage.setItem('refresh', '');
+        AsyncStorage.setItem('token', '');
+        dispatch(authActions.logoutSuccess());
+      }
     });
 };
 
@@ -126,17 +144,25 @@ export const updateBusiness = (data, onSuccess, onError) => async dispatch => {
     .then(onSuccess)
     .catch(async error => {
       if (error.code === 'INVALID_TOKEN') {
-        const result = await refreshTokenFn();
-        if (result) {
-          setTokenInstance(result);
+        try {
+          const result = await refreshTokenFn();
+          if (result) {
+            setTokenInstance(result);
 
-          updateOwnBusiness(data)
-            .then(async res => {
-              const response = await res.json();
+            updateOwnBusiness(data)
+              .then(async res => {
+                const response = await res.json();
 
-              dispatch(slice.actions.updateCurrentBusiness(response.data));
-            })
-            .then(onSuccess);
+                dispatch(slice.actions.updateCurrentBusiness(response.data));
+              })
+              .then(onSuccess);
+          }
+        } catch (error) {
+          if (error?.response?.status === 401) {
+            AsyncStorage.setItem('refresh', '');
+            AsyncStorage.setItem('token', '');
+            dispatch(authActions.logoutSuccess());
+          }
         }
       }
     });
@@ -148,7 +174,13 @@ export const loginBusiness = (data, onSuccess, onError) => async dispatch => {
       dispatch(slice.actions.setCurrentBusiness(res.data.data));
     })
     .then(onSuccess)
-    .catch(error => console.log(error.response.data));
+    .catch(error => {
+      if (error?.response?.status === 401) {
+        AsyncStorage.setItem('refresh', '');
+        AsyncStorage.setItem('token', '');
+        dispatch(authActions.logoutSuccess());
+      }
+    });
 };
 
 export const checkValidPromocode =
@@ -160,7 +192,11 @@ export const checkValidPromocode =
         res.data.data === null ? onError() : onSuccess(res.data.data);
       })
       .catch(error => {
-        console.log(error.response.data);
+        if (error?.response?.status === 401) {
+          AsyncStorage.setItem('refresh', '');
+          AsyncStorage.setItem('token', '');
+          dispatch(authActions.logoutSuccess());
+        }
       });
   };
 export const deleteBusiness = (data, onSuccess, onError) => async dispatch => {
@@ -171,5 +207,11 @@ export const deleteBusiness = (data, onSuccess, onError) => async dispatch => {
       dispatch(getMe());
     })
     .then(onSuccess)
-    .catch(error => console.log(error));
+    .catch(error => {
+      if (error?.response?.status === 401) {
+        AsyncStorage.setItem('refresh', '');
+        AsyncStorage.setItem('token', '');
+        dispatch(authActions.logoutSuccess());
+      }
+    });
 };

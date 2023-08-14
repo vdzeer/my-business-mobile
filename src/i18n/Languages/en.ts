@@ -94,4 +94,9 @@ export default {
 
   free: 'Free',
   cancelSubs: 'Cancel Subscription',
+
+  analytic: 'Get analytic for range of incomes/consumptions by current week',
+  analyticInc: 'Total incomes',
+  analyticCon: 'Total consumptions',
+  noData: "You havenn't any data",
 };

@@ -52,6 +52,8 @@ const slice = createSlice({
   },
 });
 
+export const authActions = slice.actions;
+
 export default slice.reducer;
 
 export const login =
@@ -83,7 +85,13 @@ export const getMe =
         dispatch(slice.actions.updateProfile(res.data.data));
       })
       .then(onSuccess)
-      .catch(error => console.log(error.response.data));
+      .catch(error => {
+        if (error?.response?.status === 401) {
+          AsyncStorage.setItem('refresh', '');
+          AsyncStorage.setItem('token', '');
+          dispatch(slice.actions.logoutSuccess());
+        }
+      });
   };
 
 export const google =
@@ -118,14 +126,22 @@ export const updateUser =
       .then(onSuccess)
       .catch(async error => {
         if (error.code === 'INVALID_TOKEN') {
-          const result = await refreshTokenFn();
-          if (result) {
-            setTokenInstance(result);
+          try {
+            const result = await refreshTokenFn();
+            if (result) {
+              setTokenInstance(result);
 
-            updateMeUser(data).then(async res => {
-              const response = await res.json();
-              dispatch(slice.actions.updateProfile(response.data));
-            });
+              updateMeUser(data).then(async res => {
+                const response = await res.json();
+                dispatch(slice.actions.updateProfile(response.data));
+              });
+            }
+          } catch (error: any) {
+            if (error?.response?.status === 401) {
+              AsyncStorage.setItem('refresh', '');
+              AsyncStorage.setItem('token', '');
+              dispatch(slice.actions.logoutSuccess());
+            }
           }
         }
       });
@@ -167,7 +183,13 @@ export const updateSubscription =
         }
       })
       .then(onSuccess)
-      .catch(error => console.log(error));
+      .catch(error => {
+        if (error?.response?.status === 401) {
+          AsyncStorage.setItem('refresh', '');
+          AsyncStorage.setItem('token', '');
+          dispatch(slice.actions.logoutSuccess());
+        }
+      });
   };
 
 export const forgotPassword =

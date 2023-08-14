@@ -22,11 +22,11 @@ const linking = {
 };
 
 export const Application: FC = () => {
-  const { token } = useSelector((store: any) => store.auth);
+  const auth = useSelector((store: any) => store.auth);
 
   useEffect(() => {
-    token && setTokenInstance(token);
-  }, [token]);
+    auth?.token && setTokenInstance(auth?.token);
+  }, [auth]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -37,7 +37,7 @@ export const Application: FC = () => {
   return (
     <>
       <NavigationContainer linking={linking}>
-        {token ? <HomeRouter /> : <AuthRouter />}
+        {auth?.token ? <HomeRouter /> : <AuthRouter />}
       </NavigationContainer>
     </>
   );

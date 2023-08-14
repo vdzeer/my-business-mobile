@@ -39,6 +39,11 @@ export const signUp = data =>
 
 export const getMeUser = () => axiosInstance.get(`/user-api/user/me`);
 
+export const getAnalyticts = (date, businessId) =>
+  axiosInstance.get(
+    `/business-api/analytics/get-all?businessId=${businessId}&date=${date}`,
+  );
+
 export const updateMeUser = data => {
   return fetch(BASE_API_URL + `/user-api/user/update`, {
     method: 'PUT',

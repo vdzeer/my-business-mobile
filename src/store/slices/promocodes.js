@@ -6,6 +6,8 @@ import {
   updateBusinessPromocode,
 } from '../api';
 import { Alert } from 'react-native';
+import { authActions } from './auth';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const initialState = {
   isLoading: false,
@@ -59,7 +61,13 @@ export const getPromocodesList =
         dispatch(slice.actions.setCurrentPromocode(res.data.data));
       })
       .then(onSuccess)
-      .catch(error => console.log(error.response));
+      .catch(error => {
+        if (error?.response?.status === 401) {
+          AsyncStorage.setItem('refresh', '');
+          AsyncStorage.setItem('token', '');
+          dispatch(authActions.logoutSuccess());
+        }
+      });
   };
 
 export const createPromocode = (data, onSuccess, onError) => async dispatch => {
@@ -69,7 +77,13 @@ export const createPromocode = (data, onSuccess, onError) => async dispatch => {
       dispatch(slice.actions.addOnePromocode(res.data.data));
     })
     .then(onSuccess)
-    .catch(error => console.log(error));
+    .catch(error => {
+      if (error?.response?.status === 401) {
+        AsyncStorage.setItem('refresh', '');
+        AsyncStorage.setItem('token', '');
+        dispatch(authActions.logoutSuccess());
+      }
+    });
 };
 
 export const updatePromocode = (data, onSuccess, onError) => async dispatch => {
@@ -79,7 +93,13 @@ export const updatePromocode = (data, onSuccess, onError) => async dispatch => {
       dispatch(slice.actions.replaceOnePromocode(res.data.data));
     })
     .then(onSuccess)
-    .catch(error => console.log(error));
+    .catch(error => {
+      if (error?.response?.status === 401) {
+        AsyncStorage.setItem('refresh', '');
+        AsyncStorage.setItem('token', '');
+        dispatch(authActions.logoutSuccess());
+      }
+    });
 };
 
 export const deletePromocode = (data, onSuccess, onError) => async dispatch => {
@@ -89,5 +109,11 @@ export const deletePromocode = (data, onSuccess, onError) => async dispatch => {
       dispatch(slice.actions.deleteOnePromocode(data));
     })
     .then(onSuccess)
-    .catch(error => console.log(error));
+    .catch(error => {
+      if (error?.response?.status === 401) {
+        AsyncStorage.setItem('refresh', '');
+        AsyncStorage.setItem('token', '');
+        dispatch(authActions.logoutSuccess());
+      }
+    });
 };

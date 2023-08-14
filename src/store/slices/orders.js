@@ -5,6 +5,8 @@ import {
   getBusinessOrders,
 } from '../api';
 import { Alert } from 'react-native';
+import { authActions } from './auth';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const initialState = {
   isLoading: false,
@@ -97,7 +99,13 @@ export const getOrdersList = (data, onSuccess, onError) => async dispatch => {
       dispatch(slice.actions.setCurrentOrders(res.data.data));
     })
     .then(onSuccess)
-    .catch(error => console.log(error.response.data));
+    .catch(error => {
+      if (error?.response?.status === 401) {
+        AsyncStorage.setItem('refresh', '');
+        AsyncStorage.setItem('token', '');
+        dispatch(authActions.logoutSuccess());
+      }
+    });
 };
 
 export const createOrder = (data, onSuccess, onError) => async dispatch => {
@@ -107,7 +115,13 @@ export const createOrder = (data, onSuccess, onError) => async dispatch => {
       dispatch(slice.actions.clearBasket());
     })
     .then(onSuccess)
-    .catch(error => console.log(error));
+    .catch(error => {
+      if (error?.response?.status === 401) {
+        AsyncStorage.setItem('refresh', '');
+        AsyncStorage.setItem('token', '');
+        dispatch(authActions.logoutSuccess());
+      }
+    });
 };
 
 export const deleteOrder = (data, onSuccess, onError) => async dispatch => {
@@ -118,5 +132,11 @@ export const deleteOrder = (data, onSuccess, onError) => async dispatch => {
       // dispatch(slice.actions.addBusiness(res.data));
     })
     .then(onSuccess)
-    .catch(error => console.log(error));
+    .catch(error => {
+      if (error?.response?.status === 401) {
+        AsyncStorage.setItem('refresh', '');
+        AsyncStorage.setItem('token', '');
+        dispatch(authActions.logoutSuccess());
+      }
+    });
 };

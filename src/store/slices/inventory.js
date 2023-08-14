@@ -7,6 +7,8 @@ import {
 } from '../api';
 import { Alert } from 'react-native';
 import { refreshTokenFn, setTokenInstance } from '../axios';
+import { authActions } from './auth';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const initialState = {
   isLoading: false,
@@ -60,7 +62,13 @@ export const getInventoryList =
         dispatch(slice.actions.setCurrentInventory(res.data.data));
       })
       .then(onSuccess)
-      .catch(error => console.log(error));
+      .catch(error => {
+        if (error?.response?.status === 401) {
+          AsyncStorage.setItem('refresh', '');
+          AsyncStorage.setItem('token', '');
+          dispatch(authActions.logoutSuccess());
+        }
+      });
   };
 
 export const createInventory = (data, onSuccess, onError) => async dispatch => {
@@ -73,16 +81,24 @@ export const createInventory = (data, onSuccess, onError) => async dispatch => {
     .then(onSuccess)
     .catch(async error => {
       if (error.code === 'INVALID_TOKEN') {
-        const result = await refreshTokenFn();
-        if (result) {
-          setTokenInstance(result);
+        try {
+          const result = await refreshTokenFn();
+          if (result) {
+            setTokenInstance(result);
 
-          createBusinessInventory(data)
-            .then(async res => {
-              const response = await res.json();
-              dispatch(slice.actions.addOneInventory(response.data));
-            })
-            .then(onSuccess);
+            createBusinessInventory(data)
+              .then(async res => {
+                const response = await res.json();
+                dispatch(slice.actions.addOneInventory(response.data));
+              })
+              .then(onSuccess);
+          }
+        } catch (error) {
+          if (error?.response?.status === 401) {
+            AsyncStorage.setItem('refresh', '');
+            AsyncStorage.setItem('token', '');
+            dispatch(authActions.logoutSuccess());
+          }
         }
       }
     });
@@ -98,16 +114,24 @@ export const updateInventory = (data, onSuccess, onError) => async dispatch => {
     .then(onSuccess)
     .catch(async error => {
       if (error.code === 'INVALID_TOKEN') {
-        const result = await refreshTokenFn();
-        if (result) {
-          setTokenInstance(result);
+        try {
+          const result = await refreshTokenFn();
+          if (result) {
+            setTokenInstance(result);
 
-          updateBusinessInventory(data)
-            .then(async res => {
-              const response = await res.json();
-              dispatch(slice.actions.replaceOneInventory(response.data));
-            })
-            .then(onSuccess);
+            updateBusinessInventory(data)
+              .then(async res => {
+                const response = await res.json();
+                dispatch(slice.actions.replaceOneInventory(response.data));
+              })
+              .then(onSuccess);
+          }
+        } catch (error) {
+          if (error?.response?.status === 401) {
+            AsyncStorage.setItem('refresh', '');
+            AsyncStorage.setItem('token', '');
+            dispatch(authActions.logoutSuccess());
+          }
         }
       }
     });
@@ -120,5 +144,11 @@ export const deleteInventory = (data, onSuccess, onError) => async dispatch => {
       dispatch(slice.actions.deleteOneInventory(data));
     })
     .then(onSuccess)
-    .catch(error => console.log(error));
+    .catch(error => {
+      if (error?.response?.status === 401) {
+        AsyncStorage.setItem('refresh', '');
+        AsyncStorage.setItem('token', '');
+        dispatch(authActions.logoutSuccess());
+      }
+    });
 };

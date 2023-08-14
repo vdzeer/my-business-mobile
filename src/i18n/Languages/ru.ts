@@ -96,4 +96,9 @@ export default {
 
   free: 'Бесплатно',
   cancelSubs: 'Отменить Подписку',
+
+  analytic: 'Аналитика доходов/расходов по текущей неделе',
+  analyticInc: 'Общий доход',
+  analyticCon: 'Общий расход',
+  noData: 'Нет данных',
 };
