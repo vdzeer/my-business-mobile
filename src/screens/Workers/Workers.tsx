@@ -26,6 +26,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { addUser, deleteUser } from '../../store/slices/business';
 import { Platform } from 'react-native';
+import { emailReg } from '../../store/config';
 
 export const Workers: React.FC<WorkersProps> = () => {
   const navigation = useNavigation<any>();
@@ -36,6 +37,33 @@ export const Workers: React.FC<WorkersProps> = () => {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+
+  const [isValidForm, setIsValidForm] = useState({
+    name: true,
+    email: true,
+  });
+
+  const validateForm = (onSuccess: any) => {
+    let isValid = true;
+
+    if (name.length > 2) {
+      setIsValidForm(prev => ({ ...prev, name: true }));
+    } else {
+      isValid = false;
+      setIsValidForm(prev => ({ ...prev, name: false }));
+    }
+
+    if (emailReg.test(email)) {
+      setIsValidForm(prev => ({ ...prev, email: true }));
+    } else {
+      isValid = false;
+      setIsValidForm(prev => ({ ...prev, email: false }));
+    }
+
+    if (isValid) {
+      onSuccess();
+    }
+  };
 
   const { currentBusiness } = useSelector((store: any) => store.business);
   const { profile } = useSelector((store: any) => store.auth);
@@ -96,24 +124,35 @@ export const Workers: React.FC<WorkersProps> = () => {
         onDismiss={() => {
           setOpen(false);
         }}>
-        <Input placeholder={t('name')} inBottomSheet onChangeText={setName} />
+        <Input
+          placeholder={t('name')}
+          inBottomSheet
+          onChangeText={setName}
+          isValid={isValidForm.name}
+        />
         <Divider height={20} />
 
-        <Input placeholder={t('email')} inBottomSheet onChangeText={setEmail} />
+        <Input
+          placeholder={t('email')}
+          inBottomSheet
+          onChangeText={setEmail}
+          isValid={isValidForm.email}
+        />
         <Divider height={30} />
         <Button
           text={t('submit')}
           mode="large"
           onPress={() => {
-            name &&
-              email &&
+            validateForm(() =>
               dispatch(
                 addUser({
                   businessId: currentBusiness?._id,
                   name,
                   email,
                 }),
-              );
+              ),
+            );
+
             setOpen(false);
           }}
         />

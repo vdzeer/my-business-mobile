@@ -6,4 +6,6 @@ export interface InputProps extends Omit<TextInputProps, 'onChangeText'> {
   onChangeText?: (text: string) => void;
   onChange?: (text: string) => void;
   inBottomSheet?: boolean;
+  isValid?: boolean;
+  type?: string;
 }

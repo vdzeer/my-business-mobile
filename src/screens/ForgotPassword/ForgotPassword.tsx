@@ -15,6 +15,7 @@ import { useNavigation } from '@react-navigation/native';
 import { forgotPassword } from '../../store/slices/auth';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { emailReg } from '../../store/config';
 
 export const ForgotPassword: React.FC<ForgotPasswordProps> = () => {
   const navigation = useNavigation<any>();
@@ -23,6 +24,25 @@ export const ForgotPassword: React.FC<ForgotPasswordProps> = () => {
   const { t } = useTranslation();
 
   const [email, setEmail] = useState('');
+
+  const [isValidForm, setIsValidForm] = useState({
+    email: true,
+  });
+
+  const validateForm = (onSuccess: any) => {
+    let isValid = true;
+
+    if (emailReg.test(email)) {
+      setIsValidForm(prev => ({ ...prev, email: true }));
+    } else {
+      isValid = false;
+      setIsValidForm(prev => ({ ...prev, email: false }));
+    }
+
+    if (isValid) {
+      onSuccess();
+    }
+  };
 
   const onPressDismiss = () => {
     Keyboard.dismiss();
@@ -44,7 +64,8 @@ export const ForgotPassword: React.FC<ForgotPasswordProps> = () => {
             <Input
               placeholder={t('email')}
               value={email}
-              onChange={v => setEmail(v)}
+              onChange={setEmail}
+              isValid={isValidForm.email}
             />
             <Divider height={20} />
 
@@ -53,15 +74,17 @@ export const ForgotPassword: React.FC<ForgotPasswordProps> = () => {
                 <Button
                   text={t('restore')}
                   onPress={() => {
-                    dispatch(
-                      //@ts-ignore
-                      forgotPassword(
-                        {
-                          email,
-                        },
-                        () => {
-                          navigation.goBack();
-                        },
+                    validateForm(() =>
+                      dispatch(
+                        //@ts-ignore
+                        forgotPassword(
+                          {
+                            email,
+                          },
+                          () => {
+                            navigation.goBack();
+                          },
+                        ),
                       ),
                     );
                   }}
