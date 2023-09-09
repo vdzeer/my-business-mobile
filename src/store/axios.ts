@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { BASE_API_URL } from './config';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Toast from 'react-native-toast-message';
 
 const axiosInstance = axios.create({
   baseURL: BASE_API_URL,
@@ -45,6 +46,18 @@ axiosInstance.interceptors.response.use(
   response => response,
   async error => {
     const config = error?.config;
+
+    console.log('====================================');
+    console.log(error?.code);
+    console.log('====================================');
+
+    if (error?.response?.status !== 401) {
+      Toast.show({
+        type: 'error',
+        text1: 'Hello',
+        text2: 'This is some something 👋',
+      });
+    }
 
     if (error?.response?.status === 401 && !config?.sent) {
       config.sent = true;

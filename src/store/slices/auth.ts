@@ -73,7 +73,7 @@ export const login =
         );
       })
       .then(onSuccess)
-      .catch(error => console.log(error.response.data));
+      .catch(error => console.log(error.response));
   };
 
 export const getMe =
