@@ -28,6 +28,25 @@ export const ResetPassword: React.FC<ForgotPasswordProps> = ({
 
   const [password, setPassword] = useState('');
 
+  const [isValidForm, setIsValidForm] = useState({
+    password: true,
+  });
+
+  const validateForm = (onSuccess: any) => {
+    let isValid = true;
+
+    if (password.length > 6) {
+      setIsValidForm(prev => ({ ...prev, password: true }));
+    } else {
+      isValid = false;
+      setIsValidForm(prev => ({ ...prev, password: false }));
+    }
+
+    if (isValid) {
+      onSuccess();
+    }
+  };
+
   const onPressDismiss = () => {
     Keyboard.dismiss();
   };
@@ -42,7 +61,8 @@ export const ResetPassword: React.FC<ForgotPasswordProps> = ({
             placeholder={t('newPassword')}
             value={password}
             secureTextEntry
-            onChange={v => setPassword(v)}
+            onChange={setPassword}
+            isValid={isValidForm.password}
           />
           <Divider height={20} />
 
@@ -51,17 +71,19 @@ export const ResetPassword: React.FC<ForgotPasswordProps> = ({
               <Button
                 text={t('save')}
                 onPress={() => {
-                  dispatch(
-                    //@ts-ignore
-                    resetPassword(
-                      {
-                        newPassword: password,
-                        email,
-                        token,
-                      },
-                      () => {
-                        navigation.navigate('SignIn');
-                      },
+                  validateForm(() =>
+                    dispatch(
+                      //@ts-ignore
+                      resetPassword(
+                        {
+                          newPassword: password,
+                          email,
+                          token,
+                        },
+                        () => {
+                          navigation.navigate('SignIn');
+                        },
+                      ),
                     ),
                   );
                 }}

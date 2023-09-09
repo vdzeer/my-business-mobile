@@ -46,6 +46,24 @@ export const AccountSettings: React.FC<AccountSettingsProps> = () => {
 
   const [photo, setPhoto] = useState<any>('');
   const [imageUrl, setImageUrl] = useState<any>(profile?.image ?? '');
+  console.log(profile);
+  const [isValidForm, setIsValidForm] = useState({
+    name: true,
+  });
+
+  const validateForm = (onSuccess: any) => {
+    let isValid = true;
+
+    if (name.length > 3) {
+      setIsValidForm(prev => ({ ...prev, name: true }));
+    } else {
+      isValid = false;
+      setIsValidForm(prev => ({ ...prev, name: false }));
+    }
+    if (isValid) {
+      onSuccess();
+    }
+  };
 
   return (
     <SafeAreaView style={styles.area}>
@@ -60,7 +78,12 @@ export const AccountSettings: React.FC<AccountSettingsProps> = () => {
             <Divider height={40} />
             <ImageInput onSelect={setPhoto} imageUrl={imageUrl} />
             <Divider height={20} />
-            <Input placeholder={t('name')} value={name} onChange={setName} />
+            <Input
+              placeholder={t('name')}
+              value={name}
+              onChange={setName}
+              isValid={isValidForm.name}
+            />
             <Divider height={20} />
             <Input
               placeholder={t('email')}
@@ -69,8 +92,8 @@ export const AccountSettings: React.FC<AccountSettingsProps> = () => {
               editable={false}
             />
             <Divider height={20} />
-            <Input placeholder={t('password')} secureTextEntry />
-            <Divider height={40} />
+            {/* <Input placeholder={t('password')} secureTextEntry /> */}
+            {/* <Divider height={40} /> */}
             <LanguagePicker
               language={language}
               onChangeLanguage={(value: any) => setLanguage(value)}
@@ -111,10 +134,12 @@ export const AccountSettings: React.FC<AccountSettingsProps> = () => {
                     type: photo.mime ?? 'image/jpeg',
                     uri: photo.path,
                   } as any);
-                dispatch(
-                  updateUser(formData, () => {
-                    // navigation.navigate('NewOrder');
-                  }) as any,
+                validateForm(() =>
+                  dispatch(
+                    updateUser(formData, () => {
+                      // navigation.navigate('NewOrder');
+                    }) as any,
+                  ),
                 );
               }}
             />

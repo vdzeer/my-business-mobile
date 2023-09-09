@@ -19,6 +19,7 @@ import { google, login, register, apple } from '../../store/slices/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { appleAuth } from '@invertase/react-native-apple-authentication';
 import { useTranslation } from 'react-i18next';
+import { emailReg } from '../../store/config';
 
 export const SignIn: React.FC<SignInProps> = () => {
   const dispatch = useDispatch();
@@ -28,11 +29,33 @@ export const SignIn: React.FC<SignInProps> = () => {
   const [stage, setStage] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isValidForm, setIsValidForm] = useState({
+    email: true,
+    password: true,
+  });
+
+  const validateForm = (onSuccess: any) => {
+    let isValid = true;
+    if (emailReg.test(email)) {
+      setIsValidForm(prev => ({ ...prev, email: true }));
+    } else {
+      isValid = false;
+      setIsValidForm(prev => ({ ...prev, email: false }));
+    }
+    if (password.length > 6) {
+      setIsValidForm(prev => ({ ...prev, password: true }));
+    } else {
+      isValid = false;
+      setIsValidForm(prev => ({ ...prev, password: false }));
+    }
+    if (isValid) {
+      onSuccess();
+    }
+  };
 
   const onPressDismiss = () => {
     Keyboard.dismiss();
   };
-  const auth = useSelector((store: any) => store.auth);
   return (
     <KeyboardAware>
       <TouchableWithoutFeedback onPress={onPressDismiss}>
@@ -51,6 +74,7 @@ export const SignIn: React.FC<SignInProps> = () => {
             value={email}
             onChangeText={setEmail}
             keyboardType="email-address"
+            isValid={isValidForm.email}
           />
           <Divider height={20} />
 
@@ -58,7 +82,9 @@ export const SignIn: React.FC<SignInProps> = () => {
             placeholder={t('password')}
             value={password}
             onChangeText={setPassword}
+            isValid={isValidForm.password}
             secureTextEntry
+            type={'password'}
           />
           <Divider height={20} />
           <View style={styles.loginButtonsWrapper}>
@@ -66,22 +92,26 @@ export const SignIn: React.FC<SignInProps> = () => {
               <Button
                 text={stage ? t('signin') : t('signup')}
                 onPress={() => {
-                  stage
-                    ? dispatch(
-                        //@ts-ignore
-                        login({
-                          email,
-                          password,
-                        }),
-                      )
-                    : dispatch(
-                        //@ts-ignore
-                        register({
-                          email,
-                          password,
-                          role: 'creator',
-                        }),
-                      );
+                  validateForm(
+                    stage
+                      ? () =>
+                          dispatch(
+                            //@ts-ignore
+                            login({
+                              email,
+                              password,
+                            }),
+                          )
+                      : () =>
+                          dispatch(
+                            //@ts-ignore
+                            register({
+                              email,
+                              password,
+                              role: 'creator',
+                            }),
+                          ),
+                  );
                 }}
               />
             </View>

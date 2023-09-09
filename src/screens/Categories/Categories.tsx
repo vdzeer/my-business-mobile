@@ -42,6 +42,25 @@ export const Categories: React.FC<CategoriesProps> = () => {
 
   const [name, setName] = useState('');
 
+  const [isValidForm, setIsValidForm] = useState({
+    name: true,
+  });
+
+  const validateForm = (onSuccess: any) => {
+    let isValid = true;
+
+    if (name.length > 2 && name.length < 20) {
+      setIsValidForm(prev => ({ ...prev, name: true }));
+    } else {
+      isValid = false;
+      setIsValidForm(prev => ({ ...prev, name: false }));
+    }
+
+    if (isValid) {
+      onSuccess();
+    }
+  };
+
   const { categories } = useSelector((store: any) => store.products);
   const { currentBusiness } = useSelector((store: any) => store.business);
 
@@ -102,6 +121,7 @@ export const Categories: React.FC<CategoriesProps> = () => {
           value={name}
           onChange={setName}
           inBottomSheet
+          isValid={isValidForm.name}
         />
         <Divider height={20} />
 
@@ -114,21 +134,24 @@ export const Categories: React.FC<CategoriesProps> = () => {
 
               formData.append('name', name);
               formData.append('categoryId', item?._id);
-
-              dispatch(
-                updateCategory(formData, () => {
-                  setOpen(false);
-                }) as any,
+              validateForm(() =>
+                dispatch(
+                  updateCategory(formData, () => {
+                    setOpen(false);
+                  }) as any,
+                ),
               );
             } else {
               const formData = new FormData();
 
               formData.append('name', name);
               formData.append('businessId', currentBusiness?._id);
-              dispatch(
-                createCategory(formData, () => {
-                  setOpen(false);
-                }) as any,
+              validateForm(() =>
+                dispatch(
+                  createCategory(formData, () => {
+                    setOpen(false);
+                  }) as any,
+                ),
               );
             }
             setItem(null);

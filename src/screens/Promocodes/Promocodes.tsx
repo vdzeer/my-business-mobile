@@ -45,6 +45,41 @@ export const Promocodes: React.FC<PromocodesProps> = () => {
   const [percent, setPercent] = useState('');
   const [amount, setAmount] = useState('');
 
+  const [isValidForm, setIsValidForm] = useState({
+    code: true,
+    percent: true,
+    amount: true,
+  });
+
+  const validateForm = (onSuccess: any) => {
+    let isValid = true;
+
+    if (code.length > 2) {
+      setIsValidForm(prev => ({ ...prev, code: true }));
+    } else {
+      isValid = false;
+      setIsValidForm(prev => ({ ...prev, code: false }));
+    }
+
+    if (Number(percent) > 0) {
+      setIsValidForm(prev => ({ ...prev, percent: true }));
+    } else {
+      isValid = false;
+      setIsValidForm(prev => ({ ...prev, percent: false }));
+    }
+
+    if (Number(amount) > 0) {
+      setIsValidForm(prev => ({ ...prev, amount: true }));
+    } else {
+      isValid = false;
+      setIsValidForm(prev => ({ ...prev, amount: false }));
+    }
+
+    if (isValid) {
+      onSuccess();
+    }
+  };
+
   const { promocodes } = useSelector((store: any) => store.promocode);
   const { currentBusiness } = useSelector((store: any) => store.business);
 
@@ -109,6 +144,7 @@ export const Promocodes: React.FC<PromocodesProps> = () => {
           value={code}
           onChange={setCode}
           inBottomSheet
+          isValid={isValidForm.code}
         />
         <Divider height={20} />
 
@@ -117,6 +153,7 @@ export const Promocodes: React.FC<PromocodesProps> = () => {
           value={percent}
           onChange={setPercent}
           inBottomSheet
+          isValid={isValidForm.percent}
         />
         <Divider height={20} />
 
@@ -125,6 +162,7 @@ export const Promocodes: React.FC<PromocodesProps> = () => {
           value={amount}
           onChange={setAmount}
           inBottomSheet
+          isValid={isValidForm.amount}
         />
         <Divider height={30} />
         <Button
@@ -132,33 +170,37 @@ export const Promocodes: React.FC<PromocodesProps> = () => {
           mode="large"
           onPress={() => {
             if (edit) {
-              dispatch(
-                updatePromocode(
-                  {
-                    promocode: code,
-                    useAmount: amount,
-                    salePercent: percent,
-                    businessId: currentBusiness?._id,
-                    promocodeId: item?._id,
-                  },
-                  () => {
-                    setOpen(false);
-                  },
-                ) as any,
+              validateForm(() =>
+                dispatch(
+                  updatePromocode(
+                    {
+                      promocode: code,
+                      useAmount: amount,
+                      salePercent: percent,
+                      businessId: currentBusiness?._id,
+                      promocodeId: item?._id,
+                    },
+                    () => {
+                      setOpen(false);
+                    },
+                  ) as any,
+                ),
               );
             } else {
-              dispatch(
-                createPromocode(
-                  {
-                    promocode: code,
-                    useAmount: amount,
-                    salePercent: percent,
-                    businessId: currentBusiness?._id,
-                  },
-                  () => {
-                    setOpen(false);
-                  },
-                ) as any,
+              validateForm(() =>
+                dispatch(
+                  createPromocode(
+                    {
+                      promocode: code,
+                      useAmount: amount,
+                      salePercent: percent,
+                      businessId: currentBusiness?._id,
+                    },
+                    () => {
+                      setOpen(false);
+                    },
+                  ) as any,
+                ),
               );
             }
             setItem(null);

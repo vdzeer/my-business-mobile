@@ -52,6 +52,45 @@ export const CreateInventory: React.FC<CreateInventoryProps> = () => {
   );
   const [photo, setPhoto] = useState<any>('');
   const [imageUrl, setImageUrl] = useState<any>(params?.image ?? '');
+  const [isValidForm, setIsValidForm] = useState({
+    name: true,
+    lower: true,
+    amount: true,
+    photo: true,
+  });
+
+  const validateForm = (onSuccess: any) => {
+    let isValid = true;
+
+    if (name.length > 2 && name.length < 20) {
+      setIsValidForm(prev => ({ ...prev, name: true }));
+    } else {
+      isValid = false;
+      setIsValidForm(prev => ({ ...prev, name: false }));
+    }
+    if (Number(amount) > 0) {
+      setIsValidForm(prev => ({ ...prev, amount: true }));
+    } else {
+      isValid = false;
+      setIsValidForm(prev => ({ ...prev, amount: false }));
+    }
+    if (Number(lower) > 0) {
+      setIsValidForm(prev => ({ ...prev, lower: true }));
+    } else {
+      isValid = false;
+      setIsValidForm(prev => ({ ...prev, lower: false }));
+    }
+    if (photo?.filename) {
+      setIsValidForm(prev => ({ ...prev, photo: true }));
+    } else {
+      isValid = false;
+      setIsValidForm(prev => ({ ...prev, photo: false }));
+    }
+
+    if (isValid) {
+      onSuccess();
+    }
+  };
 
   return (
     <SafeAreaView style={styles.area}>
@@ -66,21 +105,32 @@ export const CreateInventory: React.FC<CreateInventoryProps> = () => {
             </Text>
             <Divider height={40} />
 
-            <ImageInput onSelect={setPhoto} imageUrl={imageUrl} />
+            <ImageInput
+              onSelect={setPhoto}
+              imageUrl={imageUrl}
+              isValid={isValidForm.photo}
+            />
             <Divider height={20} />
 
-            <Input placeholder={t('name')} onChange={setName} value={name} />
+            <Input
+              placeholder={t('name')}
+              onChange={setName}
+              value={name}
+              isValid={isValidForm.name}
+            />
             <Divider height={20} />
             <Input
               placeholder={t('amount')}
               onChange={setAmount}
               value={amount}
+              isValid={isValidForm.amount}
             />
             <Divider height={20} />
             <Input
               placeholder={t('lowerRange')}
               onChange={setLower}
               value={lower}
+              isValid={isValidForm.lower}
             />
             <Divider height={40} />
 
@@ -103,24 +153,28 @@ export const CreateInventory: React.FC<CreateInventoryProps> = () => {
                     uri: photo.path,
                   } as any);
                 if (params?.edit) {
-                  dispatch(
-                    updateInventory(
-                      formData,
-                      () => {
-                        navigation.navigate('Inventory');
-                      },
-                      () => {},
-                    ) as any,
+                  validateForm(() =>
+                    dispatch(
+                      updateInventory(
+                        formData,
+                        () => {
+                          navigation.navigate('Inventory');
+                        },
+                        () => {},
+                      ) as any,
+                    ),
                   );
                 } else {
-                  dispatch(
-                    createInventory(
-                      formData,
-                      () => {
-                        navigation.navigate('Inventory');
-                      },
-                      () => {},
-                    ) as any,
+                  validateForm(() =>
+                    dispatch(
+                      createInventory(
+                        formData,
+                        () => {
+                          navigation.navigate('Inventory');
+                        },
+                        () => {},
+                      ) as any,
+                    ),
                   );
                 }
               }}

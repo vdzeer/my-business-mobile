@@ -39,6 +39,39 @@ export const CreateBusiness: React.FC<CreateBusinessProps> = () => {
   const [password, setPassword] = useState('');
   const [photo, setPhoto] = useState<any>('');
 
+  const [isValidForm, setIsValidForm] = useState({
+    name: true,
+    password: true,
+    photo: true,
+  });
+
+  const validateForm = (onSuccess: any) => {
+    let isValid = true;
+
+    if (name.length > 2 && name.length < 20) {
+      setIsValidForm(prev => ({ ...prev, name: true }));
+    } else {
+      isValid = false;
+      setIsValidForm(prev => ({ ...prev, name: false }));
+    }
+    if (password.length > 6) {
+      setIsValidForm(prev => ({ ...prev, password: true }));
+    } else {
+      isValid = false;
+      setIsValidForm(prev => ({ ...prev, password: false }));
+    }
+    if (photo?.filename) {
+      setIsValidForm(prev => ({ ...prev, photo: true }));
+    } else {
+      isValid = false;
+      setIsValidForm(prev => ({ ...prev, photo: false }));
+    }
+
+    if (isValid) {
+      onSuccess();
+    }
+  };
+
   return (
     <SafeAreaView style={styles.area}>
       <KeyboardAware>
@@ -50,15 +83,20 @@ export const CreateBusiness: React.FC<CreateBusinessProps> = () => {
 
             <Divider height={80} />
 
-            <Input placeholder={t('name')} onChange={setName} />
+            <Input
+              placeholder={t('name')}
+              onChange={setName}
+              isValid={isValidForm.name}
+            />
             <Divider height={20} />
             <Input
               placeholder={t('password')}
               onChange={setPassword}
               secureTextEntry
+              isValid={isValidForm.password}
             />
             <Divider height={20} />
-            <ImageInput onSelect={setPhoto} />
+            <ImageInput onSelect={setPhoto} isValid={isValidForm.photo} />
 
             <Divider height={60} />
 
@@ -75,15 +113,16 @@ export const CreateBusiness: React.FC<CreateBusinessProps> = () => {
                     type: photo.mime ?? 'image/jpeg',
                     uri: photo.path,
                   } as any);
-
-                dispatch(
-                  createBusiness(
-                    formData,
-                    () => {
-                      navigation.navigate('BusinessList');
-                    },
-                    () => {},
-                  ) as any,
+                validateForm(() =>
+                  dispatch(
+                    createBusiness(
+                      formData,
+                      () => {
+                        navigation.navigate('BusinessList');
+                      },
+                      () => {},
+                    ) as any,
+                  ),
                 );
               }}
             />

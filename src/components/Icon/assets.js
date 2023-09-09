@@ -12,6 +12,8 @@ export { default as Delete } from '../../assets/icons/delete.svg';
 export { default as AddPhoto } from '../../assets/icons/addPhoto.svg';
 export { default as ArrowLeft } from '../../assets/icons/arrowLeft.svg';
 export { default as ArrowLeftBlack } from '../../assets/icons/arrowLeftBlack.svg';
+export { default as Eye } from '../../assets/icons/eye.svg';
+export { default as EyeClosed } from '../../assets/icons/eyeClosed.svg';
 
 export { default as Drawer } from '../../assets/icons/drawer.svg';
 

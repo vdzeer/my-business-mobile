@@ -55,6 +55,45 @@ export const CreateProduct: React.FC<CreateProductProps> = () => {
   const [photo, setPhoto] = useState<any>('');
   const [imageUrl, setImageUrl] = useState<any>(params?.image ?? '');
   const [inventory, setInventory] = useState<any>([]);
+  const [isValidForm, setIsValidForm] = useState({
+    name: true,
+    price: true,
+    selfPrice: true,
+    photo: true,
+  });
+
+  const validateForm = (onSuccess: any) => {
+    let isValid = true;
+
+    if (name.length > 2 && name.length < 20) {
+      setIsValidForm(prev => ({ ...prev, name: true }));
+    } else {
+      isValid = false;
+      setIsValidForm(prev => ({ ...prev, name: false }));
+    }
+    if (Number(price) > 0) {
+      setIsValidForm(prev => ({ ...prev, price: true }));
+    } else {
+      isValid = false;
+      setIsValidForm(prev => ({ ...prev, price: false }));
+    }
+    if (Number(self) > 0) {
+      setIsValidForm(prev => ({ ...prev, selfPrice: true }));
+    } else {
+      isValid = false;
+      setIsValidForm(prev => ({ ...prev, selfPrice: false }));
+    }
+    if (photo?.filename) {
+      setIsValidForm(prev => ({ ...prev, photo: true }));
+    } else {
+      isValid = false;
+      setIsValidForm(prev => ({ ...prev, photo: false }));
+    }
+
+    if (isValid) {
+      onSuccess();
+    }
+  };
 
   return (
     <SafeAreaView style={styles.area}>
@@ -63,17 +102,32 @@ export const CreateProduct: React.FC<CreateProductProps> = () => {
           <View style={styles.container}>
             <Header withGoBack />
             <Divider height={20} />
-            <ImageInput onSelect={setPhoto} imageUrl={imageUrl} />
+            <ImageInput
+              onSelect={setPhoto}
+              imageUrl={imageUrl}
+              isValid={isValidForm.photo}
+            />
             <Divider height={20} />
 
-            <Input placeholder={t('name')} value={name} onChange={setName} />
+            <Input
+              placeholder={t('name')}
+              value={name}
+              onChange={setName}
+              isValid={isValidForm.name}
+            />
             <Divider height={20} />
-            <Input placeholder={t('price')} value={price} onChange={setPrice} />
+            <Input
+              placeholder={t('price')}
+              value={price}
+              onChange={setPrice}
+              isValid={isValidForm.price}
+            />
             <Divider height={20} />
             <Input
               placeholder={t('selfPrice')}
               value={self}
               onChange={setSelf}
+              isValid={isValidForm.selfPrice}
             />
             <Divider height={20} />
             <Text style={styles.labelText}>
@@ -163,24 +217,28 @@ export const CreateProduct: React.FC<CreateProductProps> = () => {
                     uri: photo.path,
                   } as any);
                 if (params?.edit) {
-                  dispatch(
-                    updateProducts(
-                      formData,
-                      () => {
-                        navigation.navigate('Products');
-                      },
-                      () => {},
-                    ) as any,
+                  validateForm(() =>
+                    dispatch(
+                      updateProducts(
+                        formData,
+                        () => {
+                          navigation.navigate('Products');
+                        },
+                        () => {},
+                      ) as any,
+                    ),
                   );
                 } else {
-                  dispatch(
-                    createProduct(
-                      formData,
-                      () => {
-                        navigation.navigate('Products');
-                      },
-                      () => {},
-                    ) as any,
+                  validateForm(() =>
+                    dispatch(
+                      createProduct(
+                        formData,
+                        () => {
+                          navigation.navigate('Products');
+                        },
+                        () => {},
+                      ) as any,
+                    ),
                   );
                 }
               }}

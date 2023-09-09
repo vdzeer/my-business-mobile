@@ -43,6 +43,30 @@ export const BusinessSettings: React.FC<BusinessSettingsProps> = () => {
   const [currency, setCurrency] = useState<any>(
     currentBusiness?.currency ?? '',
   );
+  const [isValidForm, setIsValidForm] = useState({
+    name: true,
+    currency: true,
+  });
+
+  const validateForm = (onSuccess: any) => {
+    let isValid = true;
+
+    if (name.length > 3 && name.length < 20) {
+      setIsValidForm(prev => ({ ...prev, name: true }));
+    } else {
+      isValid = false;
+      setIsValidForm(prev => ({ ...prev, name: false }));
+    }
+    if (currency.length > 1 && name.length < 5) {
+      setIsValidForm(prev => ({ ...prev, currency: true }));
+    } else {
+      isValid = false;
+      setIsValidForm(prev => ({ ...prev, currency: false }));
+    }
+    if (isValid) {
+      onSuccess();
+    }
+  };
 
   const [photo, setPhoto] = useState<any>('');
   const [imageUrl, setImageUrl] = useState<any>(currentBusiness?.image ?? '');
@@ -62,13 +86,19 @@ export const BusinessSettings: React.FC<BusinessSettingsProps> = () => {
             <ImageInput onSelect={setPhoto} imageUrl={imageUrl} />
             <Divider height={20} />
 
-            <Input placeholder={t('name')} value={name} onChange={setName} />
+            <Input
+              placeholder={t('name')}
+              value={name}
+              onChange={setName}
+              isValid={isValidForm.name}
+            />
             <Divider height={20} />
 
             <Input
               placeholder={t('currency')}
               value={currency}
               onChange={setCurrency}
+              isValid={isValidForm.currency}
             />
 
             <Divider height={40} />
@@ -89,10 +119,12 @@ export const BusinessSettings: React.FC<BusinessSettingsProps> = () => {
                         type: photo.mime ?? 'image/jpeg',
                         uri: photo.path,
                       } as any);
-                    dispatch(
-                      updateBusiness(formData, () => {
-                        navigation.navigate('NewOrder');
-                      }),
+                    validateForm(() =>
+                      dispatch(
+                        updateBusiness(formData, () => {
+                          navigation.navigate('NewOrder');
+                        }),
+                      ),
                     );
                   }}
                 />

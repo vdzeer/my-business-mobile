@@ -36,6 +36,24 @@ export const BusinessList: React.FC<BusinessListProps> = () => {
   const [open, setOpen] = useState(false);
   const [password, setPassword] = useState('');
 
+  const [isValidForm, setIsValidForm] = useState({
+    password: true,
+  });
+
+  const validateForm = (onSuccess: any) => {
+    let isValid = true;
+
+    if (password.length > 6) {
+      setIsValidForm(prev => ({ ...prev, password: true }));
+    } else {
+      isValid = false;
+      setIsValidForm(prev => ({ ...prev, password: false }));
+    }
+    if (isValid) {
+      onSuccess();
+    }
+  };
+
   const [current, setCurrent] = useState<any>(null);
 
   const onPressDismiss = () => {
@@ -45,7 +63,7 @@ export const BusinessList: React.FC<BusinessListProps> = () => {
   const { profile, token } = useSelector((store: any) => store.auth);
   useEffect(() => {
     !profile?.businesses?.length && navigation.navigate('CreateBusiness');
-  }, [profile.businesses]);
+  }, [profile?.businesses]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -55,7 +73,7 @@ export const BusinessList: React.FC<BusinessListProps> = () => {
 
   useEffect(() => {
     profile?.language && i18next.changeLanguage(profile?.language);
-  }, [profile.language]);
+  }, [profile?.language]);
 
   const renderItem = ({ item }: any) => (
     <TouchableOpacity
@@ -77,7 +95,8 @@ export const BusinessList: React.FC<BusinessListProps> = () => {
           iconName="plus"
           onPress={() => {
             if (
-              profile?.businesses?.length < profile.subscription.businessLength
+              profile?.businesses?.length <
+              profile?.subscription?.businessLength
             ) {
               navigation.navigate('CreateBusiness');
             } else {
@@ -92,7 +111,7 @@ export const BusinessList: React.FC<BusinessListProps> = () => {
       <TouchableWithoutFeedback onPress={onPressDismiss}>
         <FlatList
           showsVerticalScrollIndicator={false}
-          data={profile.businesses ?? []}
+          data={profile?.businesses ?? []}
           renderItem={renderItem}
           style={styles.list}
         />
@@ -117,6 +136,7 @@ export const BusinessList: React.FC<BusinessListProps> = () => {
           onChange={setPassword}
           secureTextEntry
           inBottomSheet
+          isValid={isValidForm.password}
         />
 
         <Divider height={40} />
@@ -124,16 +144,18 @@ export const BusinessList: React.FC<BusinessListProps> = () => {
           text={t('openBusiness')}
           mode="large"
           onPress={() => {
-            dispatch(
-              loginBusiness(
-                {
-                  businessId: current?._id,
-                  password,
-                },
-                () => {
-                  setOpen(false);
-                  navigation.navigate('Business');
-                },
+            validateForm(() =>
+              dispatch(
+                loginBusiness(
+                  {
+                    businessId: current?._id,
+                    password,
+                  },
+                  () => {
+                    setOpen(false);
+                    navigation.navigate('Business');
+                  },
+                ),
               ),
             );
           }}

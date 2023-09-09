@@ -31,6 +31,7 @@ import {
 } from '../../store/slices/suppliers';
 
 import { useTranslation } from 'react-i18next';
+import { phoneReg } from '../../store/config';
 
 export const Suppliers: React.FC<SuppliersProps> = () => {
   const navigation = useNavigation<any>();
@@ -43,6 +44,33 @@ export const Suppliers: React.FC<SuppliersProps> = () => {
 
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
+
+  const [isValidForm, setIsValidForm] = useState({
+    name: true,
+    phone: true,
+  });
+
+  const validateForm = (onSuccess: any) => {
+    let isValid = true;
+
+    if (name.length > 2) {
+      setIsValidForm(prev => ({ ...prev, name: true }));
+    } else {
+      isValid = false;
+      setIsValidForm(prev => ({ ...prev, name: false }));
+    }
+
+    if (phoneReg.test(phone)) {
+      setIsValidForm(prev => ({ ...prev, phone: true }));
+    } else {
+      isValid = false;
+      setIsValidForm(prev => ({ ...prev, phone: false }));
+    }
+
+    if (isValid) {
+      onSuccess();
+    }
+  };
 
   const { suppliers } = useSelector((store: any) => store.suppliers);
   const { profile } = useSelector((store: any) => store.auth);
@@ -112,6 +140,7 @@ export const Suppliers: React.FC<SuppliersProps> = () => {
           value={name}
           onChange={setName}
           inBottomSheet
+          isValid={isValidForm.name}
         />
         <Divider height={20} />
 
@@ -120,6 +149,7 @@ export const Suppliers: React.FC<SuppliersProps> = () => {
           value={phone}
           onChange={setPhone}
           inBottomSheet
+          isValid={isValidForm.phone}
         />
         <Divider height={30} />
         <Button
@@ -127,30 +157,34 @@ export const Suppliers: React.FC<SuppliersProps> = () => {
           mode="large"
           onPress={() => {
             if (edit) {
-              dispatch(
-                updateSupplier(
-                  {
-                    name,
-                    contact: phone,
-                    supplierId: item?._id,
-                  },
-                  () => {
-                    setOpen(false);
-                  },
-                ) as any,
+              validateForm(() =>
+                dispatch(
+                  updateSupplier(
+                    {
+                      name,
+                      contact: phone,
+                      supplierId: item?._id,
+                    },
+                    () => {
+                      setOpen(false);
+                    },
+                  ) as any,
+                ),
               );
             } else {
-              dispatch(
-                createSupplier(
-                  {
-                    name,
-                    contact: phone,
-                    businessId: currentBusiness?._id,
-                  },
-                  () => {
-                    setOpen(false);
-                  },
-                ) as any,
+              validateForm(() =>
+                dispatch(
+                  createSupplier(
+                    {
+                      name,
+                      contact: phone,
+                      businessId: currentBusiness?._id,
+                    },
+                    () => {
+                      setOpen(false);
+                    },
+                  ) as any,
+                ),
               );
             }
             setItem(null);

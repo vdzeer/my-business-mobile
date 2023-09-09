@@ -20,6 +20,7 @@ import { useTranslation } from 'react-i18next';
 
 export const ImageInput: React.FC<ImageInputProps> = ({
   onSelect,
+  isValid,
   imageUrl,
 }) => {
   const { t } = useTranslation();
@@ -42,11 +43,16 @@ export const ImageInput: React.FC<ImageInputProps> = ({
       });
     }, 500);
   };
-
   return (
     <>
       <TouchableOpacity
-        style={styles.touchableWrapper}
+        style={[
+          styles.touchableWrapper,
+          {
+            borderColor: !isValid || !!imageUrl ? 'red' : 'white',
+            borderWidth: !isValid || !!imageUrl ? 1 : 0,
+          },
+        ]}
         onPress={() => {
           onSelectPhoto();
         }}>
@@ -90,6 +96,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     width: '100%',
-    height: 40,
+    height: 60,
+    padding: 20,
+    borderRadius: 10,
   },
 });
