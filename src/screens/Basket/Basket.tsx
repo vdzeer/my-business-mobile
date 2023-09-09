@@ -30,6 +30,9 @@ import {
 } from '../../store/slices/orders';
 import { useTranslation } from 'react-i18next';
 import { checkValidPromocode } from '../../store/slices/business';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import { TOASTS } from '../../i18n/toasts';
+import i18n from '../../i18n';
 
 export const Basket: React.FC<BasketProps> = () => {
   const navigation = useNavigation<any>();
@@ -167,16 +170,27 @@ export const Basket: React.FC<BasketProps> = () => {
               dispatch(
                 createOrder(
                   {
-                    businessId: currentBusiness?._id,
+                    businessId: currentBusiness?.id,
                     payType: payBy,
-                    products: basket.flatMap(({ _id, total }: any) =>
-                      Array.from({ length: total }, () => String(_id)),
+                    products: basket.flatMap(({ id, total }: any) =>
+                      Array.from({ length: total }, () => String(id)),
                     ),
-                    promocodeId: promoResponse?._id ?? '',
+                    promocodeId: promoResponse?.id ?? '',
                   },
                   () => {
-                    dispatch(getOrdersList(currentBusiness?._id) as any);
+                    Toast.show({
+                      text1: TOASTS[i18n.language].SUCCESS_CREATE_ORDER,
+                    });
+
+                    dispatch(getOrdersList(currentBusiness?.id) as any);
                     navigation.goBack();
+                  },
+                  (error: string) => {
+                    Toast.show({
+                      text1: TOASTS[i18n.language].ERROR,
+                      text2: TOASTS[i18n.language][error] ?? 'Unexpected error',
+                      type: 'error',
+                    });
                   },
                 ) as any,
               );
@@ -200,15 +214,22 @@ export const Basket: React.FC<BasketProps> = () => {
             dispatch(
               checkValidPromocode(
                 {
-                  businessId: currentBusiness._id,
+                  businessId: currentBusiness.id,
                   promocodeName: promo,
                 },
                 (res: any) => {
+                  Toast.show({
+                    text1: TOASTS[i18n.language].VALID_PROMOCODE,
+                  });
                   setOpen(false);
                   setPromoResponse(res);
                 },
-                (error: any) => {
-                  //TOAST
+                (error: string) => {
+                  Toast.show({
+                    text1: TOASTS[i18n.language].ERROR,
+                    text2: TOASTS[i18n.language][error] ?? 'Unexpected error',
+                    type: 'error',
+                  });
                 },
               ) as any,
             );

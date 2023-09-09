@@ -30,6 +30,9 @@ import {
 } from '../../store/slices/inventory';
 
 import { useTranslation } from 'react-i18next';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import { TOASTS } from '../../i18n/toasts';
+import i18n from '../../i18n';
 
 export const CreateInventory: React.FC<CreateInventoryProps> = () => {
   const navigation = useNavigation<any>();
@@ -142,9 +145,9 @@ export const CreateInventory: React.FC<CreateInventoryProps> = () => {
                 formData.append('name', name);
                 formData.append('lowerRange', lower);
                 formData.append('amount', amount);
-                formData.append('businessId', currentBusiness?._id);
+                formData.append('businessId', currentBusiness?.id);
 
-                params?._id && formData.append('inventoryId', params?._id);
+                params?.id && formData.append('inventoryId', params?.id);
 
                 photo.path &&
                   formData.append('image', {
@@ -158,9 +161,21 @@ export const CreateInventory: React.FC<CreateInventoryProps> = () => {
                       updateInventory(
                         formData,
                         () => {
+                          Toast.show({
+                            text1:
+                              TOASTS[i18n.language].SUCCESS_UPDATE_INVENTORY,
+                          });
                           navigation.navigate('Inventory');
                         },
-                        () => {},
+                        (error: string) => {
+                          Toast.show({
+                            text1: TOASTS[i18n.language].ERROR,
+                            text2:
+                              TOASTS[i18n.language][error] ??
+                              'Unexpected error',
+                            type: 'error',
+                          });
+                        },
                       ) as any,
                     ),
                   );
@@ -170,9 +185,21 @@ export const CreateInventory: React.FC<CreateInventoryProps> = () => {
                       createInventory(
                         formData,
                         () => {
+                          Toast.show({
+                            text1:
+                              TOASTS[i18n.language].SUCCESS_CREATE_INVENTORY,
+                          });
                           navigation.navigate('Inventory');
                         },
-                        () => {},
+                        (error: string) => {
+                          Toast.show({
+                            text1: TOASTS[i18n.language].ERROR,
+                            text2:
+                              TOASTS[i18n.language][error] ??
+                              'Unexpected error',
+                            type: 'error',
+                          });
+                        },
                       ) as any,
                     ),
                   );

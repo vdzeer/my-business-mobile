@@ -32,6 +32,9 @@ import {
 
 import { useTranslation } from 'react-i18next';
 import { phoneReg } from '../../store/config';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import { TOASTS } from '../../i18n/toasts';
+import i18n from '../../i18n';
 
 export const Suppliers: React.FC<SuppliersProps> = () => {
   const navigation = useNavigation<any>();
@@ -115,7 +118,24 @@ export const Suppliers: React.FC<SuppliersProps> = () => {
               name={item.name}
               phone={item.contact}
               onDelete={() => {
-                dispatch(deleteSupplier(item?._id) as any);
+                dispatch(
+                  deleteSupplier(
+                    item?.id,
+                    () => {
+                      Toast.show({
+                        text1: TOASTS[i18n.language].SUCCESS_DELETE_SUPPLIER,
+                      });
+                    },
+                    (error: string) => {
+                      Toast.show({
+                        text1: TOASTS[i18n.language].ERROR,
+                        text2:
+                          TOASTS[i18n.language][error] ?? 'Unexpected error',
+                        type: 'error',
+                      });
+                    },
+                  ) as any,
+                );
               }}
               onEdit={() => {
                 setItem(item);
@@ -163,10 +183,21 @@ export const Suppliers: React.FC<SuppliersProps> = () => {
                     {
                       name,
                       contact: phone,
-                      supplierId: item?._id,
+                      supplierId: item?.id,
                     },
                     () => {
+                      Toast.show({
+                        text1: TOASTS[i18n.language].SUCCESS_UPDATE_SUPPLIER,
+                      });
                       setOpen(false);
+                    },
+                    (error: string) => {
+                      Toast.show({
+                        text1: TOASTS[i18n.language].ERROR,
+                        text2:
+                          TOASTS[i18n.language][error] ?? 'Unexpected error',
+                        type: 'error',
+                      });
                     },
                   ) as any,
                 ),
@@ -178,10 +209,21 @@ export const Suppliers: React.FC<SuppliersProps> = () => {
                     {
                       name,
                       contact: phone,
-                      businessId: currentBusiness?._id,
+                      businessId: currentBusiness?.id,
                     },
                     () => {
+                      Toast.show({
+                        text1: TOASTS[i18n.language].SUCCESS_CREATE_SUPPLIER,
+                      });
                       setOpen(false);
+                    },
+                    (error: string) => {
+                      Toast.show({
+                        text1: TOASTS[i18n.language].ERROR,
+                        text2:
+                          TOASTS[i18n.language][error] ?? 'Unexpected error',
+                        type: 'error',
+                      });
                     },
                   ) as any,
                 ),

@@ -28,6 +28,9 @@ import { updateUser } from '../../store/slices/auth';
 import { useTranslation } from 'react-i18next';
 import i18next from 'i18next';
 import { Platform } from 'react-native';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import { TOASTS } from '../../i18n/toasts';
+import i18n from '../../i18n';
 
 export const AccountSettings: React.FC<AccountSettingsProps> = () => {
   const navigation = useNavigation<any>();
@@ -136,9 +139,25 @@ export const AccountSettings: React.FC<AccountSettingsProps> = () => {
                   } as any);
                 validateForm(() =>
                   dispatch(
-                    updateUser(formData, () => {
-                      // navigation.navigate('NewOrder');
-                    }) as any,
+                    updateUser(
+                      formData,
+
+                      () => {
+                        Toast.show({
+                          text1: TOASTS[i18n.language].SUCCESS_UPDATE_USER,
+                          text2:
+                            TOASTS[i18n.language][error] ?? 'Unexpected error',
+                        });
+                      },
+                      (error: string) => {
+                        Toast.show({
+                          text1: TOASTS[i18n.language].ERROR,
+                          text2:
+                            TOASTS[i18n.language][error] ?? 'Unexpected error',
+                          type: 'error',
+                        });
+                      },
+                    ) as any,
                   ),
                 );
               }}

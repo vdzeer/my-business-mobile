@@ -45,15 +45,15 @@ export const NewOrder: React.FC<NewOrderProps> = () => {
   const { categories } = useSelector((store: any) => store.products);
 
   const [productList, setProductList] = useState<any>(null);
-  const [category, setCategory] = useState<any>({ _id: '' });
+  const [category, setCategory] = useState<any>({ id: '' });
 
   useEffect(() => {
-    dispatch(getInventoryList(currentBusiness?._id) as any);
-    dispatch(getProductsList(currentBusiness?._id) as any);
-    dispatch(getSuppliersList(currentBusiness?._id) as any);
-    dispatch(getPromocodesList(currentBusiness?._id) as any);
-    dispatch(getOrdersList(currentBusiness?._id) as any);
-    dispatch(getCategoriesList(currentBusiness?._id) as any);
+    dispatch(getInventoryList(currentBusiness?.id) as any);
+    dispatch(getProductsList(currentBusiness?.id) as any);
+    dispatch(getSuppliersList(currentBusiness?.id) as any);
+    dispatch(getPromocodesList(currentBusiness?.id) as any);
+    dispatch(getOrdersList(currentBusiness?.id) as any);
+    dispatch(getCategoriesList(currentBusiness?.id) as any);
   }, []);
 
   useEffect(() => {
@@ -61,9 +61,9 @@ export const NewOrder: React.FC<NewOrderProps> = () => {
   }, [products]);
 
   useEffect(() => {
-    if (category?._id) {
+    if (category?.id) {
       setProductList(
-        products.filter((item: any) => item?.categoryId === category?._id),
+        products.filter((item: any) => item?.categoryId === category?.id),
       );
     } else {
       setProductList(products);
@@ -82,25 +82,25 @@ export const NewOrder: React.FC<NewOrderProps> = () => {
           <ScrollView horizontal contentContainerStyle={styles.categoryScroll}>
             {!!categories?.length &&
               categories.map((el: any) => (
-                <Fragment key={el._id}>
+                <Fragment key={el.id}>
                   <TouchableOpacity
                     onPress={() => {
-                      el._id === category?._id
-                        ? setCategory({ _id: '' })
+                      el.id === category?.id
+                        ? setCategory({ id: '' })
                         : setCategory(el);
                     }}
                     style={[
                       styles.categoryItem,
                       {
                         backgroundColor:
-                          el._id === category?._id ? '#384494' : '#D9F0FF',
+                          el.id === category?.id ? '#384494' : '#D9F0FF',
                       },
                     ]}>
                     <Text
                       style={[
                         styles.categoryText,
                         {
-                          color: el._id === category?._id ? 'white' : 'black',
+                          color: el.id === category?.id ? 'white' : 'black',
                         },
                       ]}>
                       {el?.name}

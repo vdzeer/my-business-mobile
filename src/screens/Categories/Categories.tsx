@@ -30,6 +30,9 @@ import {
   updateCategory,
 } from '../../store/slices/products';
 import { useTranslation } from 'react-i18next';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import { TOASTS } from '../../i18n/toasts';
+import i18n from '../../i18n';
 
 export const Categories: React.FC<CategoriesProps> = () => {
   const navigation = useNavigation<any>();
@@ -97,7 +100,24 @@ export const Categories: React.FC<CategoriesProps> = () => {
               name={item?.name}
               phone={''}
               onDelete={() => {
-                dispatch(deleteCategory(item?._id) as any);
+                dispatch(
+                  deleteCategory(
+                    item?.id,
+                    () => {
+                      Toast.show({
+                        text1: TOASTS[i18n.language].SUCCESS_DELETE_CATEGORY,
+                      });
+                    },
+                    (error: string) => {
+                      Toast.show({
+                        text1: TOASTS[i18n.language].ERROR,
+                        text2:
+                          TOASTS[i18n.language][error] ?? 'Unexpected error',
+                        type: 'error',
+                      });
+                    },
+                  ) as any,
+                );
               }}
               onEdit={() => {
                 setItem(item);
@@ -133,24 +153,52 @@ export const Categories: React.FC<CategoriesProps> = () => {
               const formData = new FormData();
 
               formData.append('name', name);
-              formData.append('categoryId', item?._id);
+              formData.append('categoryId', item?.id);
               validateForm(() =>
                 dispatch(
-                  updateCategory(formData, () => {
-                    setOpen(false);
-                  }) as any,
+                  updateCategory(
+                    formData,
+                    () => {
+                      Toast.show({
+                        text1: TOASTS[i18n.language].SUCCESS_UPDATE_CATEGORY,
+                      });
+                      setOpen(false);
+                    },
+                    (error: string) => {
+                      Toast.show({
+                        text1: TOASTS[i18n.language].ERROR,
+                        text2:
+                          TOASTS[i18n.language][error] ?? 'Unexpected error',
+                        type: 'error',
+                      });
+                    },
+                  ) as any,
                 ),
               );
             } else {
               const formData = new FormData();
 
               formData.append('name', name);
-              formData.append('businessId', currentBusiness?._id);
+              formData.append('businessId', currentBusiness?.id);
               validateForm(() =>
                 dispatch(
-                  createCategory(formData, () => {
-                    setOpen(false);
-                  }) as any,
+                  createCategory(
+                    formData,
+                    () => {
+                      Toast.show({
+                        text1: TOASTS[i18n.language].SUCCESS_CREATE_CATEGORY,
+                      });
+                      setOpen(false);
+                    },
+                    (error: string) => {
+                      Toast.show({
+                        text1: TOASTS[i18n.language].ERROR,
+                        text2:
+                          TOASTS[i18n.language][error] ?? 'Unexpected error',
+                        type: 'error',
+                      });
+                    },
+                  ) as any,
                 ),
               );
             }

@@ -33,6 +33,9 @@ import {
 import { useTranslation } from 'react-i18next';
 import { updateSubscription } from '../../store/slices/auth';
 import { useDispatch, useSelector } from 'react-redux';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import { TOASTS } from '../../i18n/toasts';
+import i18n from '../../i18n';
 
 const ids = {
   'mybusinessplus.lite': '64c38bc1939ea5354c0d8fde',
@@ -57,7 +60,7 @@ export const Subscriptions: React.FC<SubscriptionsProps> = () => {
 
   const currentSubscription =
     // @ts-ignore
-    skus?.[profile?.subscription?._id] ?? 'mybusinessplus.lite';
+    skus?.[profile?.subscription?.id] ?? 'mybusinessplus.lite';
 
   const onPressDismiss = () => {
     Keyboard.dismiss();
@@ -82,12 +85,36 @@ export const Subscriptions: React.FC<SubscriptionsProps> = () => {
     try {
       if (sku === 'mybusinessplus.lite') {
         // @ts-ignore
-        dispatch(updateSubscription(ids[sku]));
+        dispatch(
+          updateSubscription(
+            ids[sku],
+            () => {},
+            (error: string) => {
+              Toast.show({
+                text1: TOASTS[i18n.language].ERROR,
+                text2: TOASTS[i18n.language][error] ?? 'Unexpected error',
+                type: 'error',
+              });
+            },
+          ) as any,
+        );
       }
       await requestSubscription({ sku }).then(v => {
         if (v?.transactionReceipt) {
           // @ts-ignore
-          dispatch(updateSubscription(ids[v.productId]));
+          dispatch(
+            updateSubscription(
+              ids[v.productId],
+              () => {},
+              (error: string) => {
+                Toast.show({
+                  text1: TOASTS[i18n.language].ERROR,
+                  text2: TOASTS[i18n.language][error] ?? 'Unexpected error',
+                  type: 'error',
+                });
+              },
+            ) as any,
+          );
         }
       });
     } catch (err) {}
@@ -252,7 +279,21 @@ export const Subscriptions: React.FC<SubscriptionsProps> = () => {
                     'https://apps.apple.com/account/subscriptions',
                   ).then(() => {
                     // @ts-ignore
-                    dispatch(updateSubscription('64c38bc1939ea5354c0d8fde'));
+                    dispatch(
+                      updateSubscription(
+                        '64c38bc1939ea5354c0d8fde',
+                        () => {},
+                        (error: string) => {
+                          Toast.show({
+                            text1: TOASTS[i18n.language].ERROR,
+                            text2:
+                              TOASTS[i18n.language][error] ??
+                              'Unexpected error',
+                            type: 'error',
+                          });
+                        },
+                      ) as any,
+                    );
                   });
                 }}
                 mode="large"

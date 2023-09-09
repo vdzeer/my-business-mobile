@@ -27,6 +27,9 @@ import { getMe, logout } from '../../store/slices/auth';
 import axiosInstance from '../../store/axios';
 import { useTranslation } from 'react-i18next';
 import i18next from 'i18next';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import { TOASTS } from '../../i18n/toasts';
+import i18n from '../../i18n';
 
 export const BusinessList: React.FC<BusinessListProps> = () => {
   const navigation = useNavigation<any>();
@@ -67,7 +70,17 @@ export const BusinessList: React.FC<BusinessListProps> = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      dispatch(getMe());
+      dispatch(
+        getMe(),
+        () => {},
+        (error: string) => {
+          Toast.show({
+            text1: TOASTS[i18n.language].ERROR,
+            text2: TOASTS[i18n.language][error] ?? 'Unexpected error',
+            type: 'error',
+          });
+        },
+      );
     }, 1000);
   }, [token]);
 
@@ -148,12 +161,19 @@ export const BusinessList: React.FC<BusinessListProps> = () => {
               dispatch(
                 loginBusiness(
                   {
-                    businessId: current?._id,
+                    businessId: current?.id,
                     password,
                   },
                   () => {
                     setOpen(false);
                     navigation.navigate('Business');
+                  },
+                  (error: string) => {
+                    Toast.show({
+                      text1: TOASTS[i18n.language].ERROR,
+                      text2: TOASTS[i18n.language][error] ?? 'Unexpected error',
+                      type: 'error',
+                    });
                   },
                 ),
               ),

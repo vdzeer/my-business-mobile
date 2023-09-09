@@ -27,6 +27,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addUser, deleteUser } from '../../store/slices/business';
 import { Platform } from 'react-native';
 import { emailReg } from '../../store/config';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import { TOASTS } from '../../i18n/toasts';
+import i18n from '../../i18n';
 
 export const Workers: React.FC<WorkersProps> = () => {
   const navigation = useNavigation<any>();
@@ -107,10 +110,25 @@ export const Workers: React.FC<WorkersProps> = () => {
               email={item.email}
               onDelete={() => {
                 dispatch(
-                  deleteUser({
-                    businessId: currentBusiness?._id,
-                    email: item.email,
-                  }),
+                  deleteUser(
+                    {
+                      businessId: currentBusiness?.id,
+                      email: item.email,
+                    },
+                    () => {
+                      Toast.show({
+                        text1: TOASTS[i18n.language].SUCCESS_DELETE_USER,
+                      });
+                    },
+                    (error: string) => {
+                      Toast.show({
+                        text1: TOASTS[i18n.language].ERROR,
+                        text2:
+                          TOASTS[i18n.language][error] ?? 'Unexpected error',
+                        type: 'error',
+                      });
+                    },
+                  ) as any,
                 );
               }}
             />
@@ -145,11 +163,25 @@ export const Workers: React.FC<WorkersProps> = () => {
           onPress={() => {
             validateForm(() =>
               dispatch(
-                addUser({
-                  businessId: currentBusiness?._id,
-                  name,
-                  email,
-                }),
+                addUser(
+                  {
+                    businessId: currentBusiness?.id,
+                    name,
+                    email,
+                  },
+                  () => {
+                    Toast.show({
+                      text1: TOASTS[i18n.language].SUCCESS_CREATE_USER,
+                    });
+                  },
+                  (error: string) => {
+                    Toast.show({
+                      text1: TOASTS[i18n.language].ERROR,
+                      text2: TOASTS[i18n.language][error] ?? 'Unexpected error',
+                      type: 'error',
+                    });
+                  },
+                ),
               ),
             );
 

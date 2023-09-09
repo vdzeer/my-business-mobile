@@ -16,6 +16,9 @@ import { forgotPassword } from '../../store/slices/auth';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { emailReg } from '../../store/config';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import { TOASTS } from '../../i18n/toasts';
+import i18n from '../../i18n';
 
 export const ForgotPassword: React.FC<ForgotPasswordProps> = () => {
   const navigation = useNavigation<any>();
@@ -82,7 +85,20 @@ export const ForgotPassword: React.FC<ForgotPasswordProps> = () => {
                             email,
                           },
                           () => {
+                            Toast.show({
+                              text1:
+                                TOASTS[i18n.language].SUCCESS_FORGOT_PASSWORD,
+                            });
                             navigation.goBack();
+                          },
+                          (error: string) => {
+                            Toast.show({
+                              text1: TOASTS[i18n.language].ERROR,
+                              text2:
+                                TOASTS[i18n.language][error] ??
+                                'Unexpected error',
+                              type: 'error',
+                            });
                           },
                         ),
                       ),

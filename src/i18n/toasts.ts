@@ -1,5 +1,6 @@
 export const TOASTS = {
   en: {
+    ERROR: 'Error',
     USER_IS_ALREADY_REGISTERED: 'User already registered',
     INCORRECT_TOKEN: 'Incorrect token',
     USER_ALREADY_IN_BUSINESS: 'User already in this business',
@@ -24,6 +25,9 @@ export const TOASTS = {
     SUCCESS_ADD_USER: 'User added successfully',
     SUCCESS_DELETE_USER: 'User deleted successfully',
     SUCCESS_UPDATE_BUSINESS: 'Business updated successfully',
+    SUCCESS_UPDATE_USER: 'User updated successfully',
+    SUCCESS_CREATE_USER: 'User created successfully',
+
     SUCCESS_DELETE_BUSINESS: 'Business deleted successfully',
     SUCCESS_CREATE_INVENTORY: 'Inventory item created successfully',
     SUCCESS_UPDATE_INVENTORY: 'Inventory item updated successfully',
@@ -42,8 +46,11 @@ export const TOASTS = {
     SUCCESS_CREATE_SUPPLIER: 'Supplier created successfully',
     SUCCESS_UPDATE_SUPPLIER: 'Supplier updated successfully',
     SUCCESS_DELETE_SUPPLIER: 'Supplier deleted successfully',
+    VALID_PROMOCODE: 'Promocode is valid',
   },
   ru: {
+    ERROR: 'Ошибка',
+
     USER_IS_ALREADY_REGISTERED: 'Пользователь уже зарегистрирован',
     INCORRECT_TOKEN: 'Неверный токен',
     USER_ALREADY_IN_BUSINESS: 'Пользователь уже в этом бизнесе',
@@ -68,6 +75,9 @@ export const TOASTS = {
     SUCCESS_ADD_USER: 'Пользователь успешно добавлен',
     SUCCESS_DELETE_USER: 'Пользователь успешно удален',
     SUCCESS_UPDATE_BUSINESS: 'Бизнес успешно обновлен',
+    SUCCESS_UPDATE_USER: 'Пользователь успешно обновлен',
+    SUCCESS_CREATE_USER: 'Пользователь успешно создан',
+
     SUCCESS_DELETE_BUSINESS: 'Бизнес успешно удален',
     SUCCESS_CREATE_INVENTORY: 'Позиция инвентаря успешно создана',
     SUCCESS_UPDATE_INVENTORY: 'Позиция инвентаря успешно обновлена',
@@ -86,8 +96,11 @@ export const TOASTS = {
     SUCCESS_CREATE_SUPPLIER: 'Поставщик успешно создан',
     SUCCESS_UPDATE_SUPPLIER: 'Поставщик успешно обновлен',
     SUCCESS_DELETE_SUPPLIER: 'Поставщик успешно удален',
+    VALID_PROMOCODE: 'Промокод валиден',
   },
   uk: {
+    ERROR: 'Помилка',
+
     USER_IS_ALREADY_REGISTERED: 'Користувач вже зареєстрований',
     INCORRECT_TOKEN: 'Невірний токен',
     USER_ALREADY_IN_BUSINESS: 'Користувач вже в цьому бізнесі',
@@ -112,6 +125,9 @@ export const TOASTS = {
     SUCCESS_ADD_USER: 'Користувача успішно додано',
     SUCCESS_DELETE_USER: 'Користувача успішно видалено',
     SUCCESS_UPDATE_BUSINESS: 'Бізнес успішно оновлено',
+    SUCCESS_UPDATE_USER: 'Користувача успішно оновлено',
+    SUCCESS_CREATE_USER: 'Користувача успішно створено',
+
     SUCCESS_DELETE_BUSINESS: 'Бізнес успішно видалено',
     SUCCESS_CREATE_INVENTORY: 'Позицію інвентарю успішно створено',
     SUCCESS_UPDATE_INVENTORY: 'Позицію інвентарю успішно оновлено',
@@ -130,5 +146,6 @@ export const TOASTS = {
     SUCCESS_CREATE_SUPPLIER: 'Постачальника успішно створено',
     SUCCESS_UPDATE_SUPPLIER: 'Постачальника успішно оновлено',
     SUCCESS_DELETE_SUPPLIER: 'Постачальника успішно видалено',
+    VALID_PROMOCODE: 'Промокод валідний',
   },
 };

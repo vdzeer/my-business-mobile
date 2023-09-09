@@ -25,6 +25,9 @@ import { useDispatch } from 'react-redux';
 import { createBusiness } from '../../store/slices/business';
 
 import { useTranslation } from 'react-i18next';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import { TOASTS } from '../../i18n/toasts';
+import i18n from '../../i18n';
 
 export const CreateBusiness: React.FC<CreateBusinessProps> = () => {
   const dispatch = useDispatch();
@@ -118,9 +121,19 @@ export const CreateBusiness: React.FC<CreateBusinessProps> = () => {
                     createBusiness(
                       formData,
                       () => {
+                        Toast.show({
+                          text1: TOASTS[i18n.language].SUCCESS_BUSINESS_CREATE,
+                        });
                         navigation.navigate('BusinessList');
                       },
-                      () => {},
+                      (error: string) => {
+                        Toast.show({
+                          text1: TOASTS[i18n.language].ERROR,
+                          text2:
+                            TOASTS[i18n.language][error] ?? 'Unexpected error',
+                          type: 'error',
+                        });
+                      },
                     ) as any,
                   ),
                 );

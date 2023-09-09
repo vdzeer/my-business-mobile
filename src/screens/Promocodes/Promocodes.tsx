@@ -31,6 +31,9 @@ import {
   updatePromocode,
 } from '../../store/slices/promocodes';
 import { useTranslation } from 'react-i18next';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import { TOASTS } from '../../i18n/toasts';
+import i18n from '../../i18n';
 
 export const Promocodes: React.FC<PromocodesProps> = () => {
   const navigation = useNavigation<any>();
@@ -118,7 +121,24 @@ export const Promocodes: React.FC<PromocodesProps> = () => {
               name={item.promocode}
               phone={item.salePercent + '%'}
               onDelete={() => {
-                dispatch(deletePromocode(item?._id) as any);
+                dispatch(
+                  deletePromocode(
+                    item?.id,
+                    () => {
+                      Toast.show({
+                        text1: TOASTS[i18n.language].SUCCESS_DELETE_PROMOCODE,
+                      });
+                    },
+                    (error: string) => {
+                      Toast.show({
+                        text1: TOASTS[i18n.language].ERROR,
+                        text2:
+                          TOASTS[i18n.language][error] ?? 'Unexpected error',
+                        type: 'error',
+                      });
+                    },
+                  ) as any,
+                );
               }}
               onEdit={() => {
                 setItem(item);
@@ -177,11 +197,22 @@ export const Promocodes: React.FC<PromocodesProps> = () => {
                       promocode: code,
                       useAmount: amount,
                       salePercent: percent,
-                      businessId: currentBusiness?._id,
-                      promocodeId: item?._id,
+                      businessId: currentBusiness?.id,
+                      promocodeId: item?.id,
                     },
                     () => {
+                      Toast.show({
+                        text1: TOASTS[i18n.language].SUCCESS_UPDATE_PROMOCODE,
+                      });
                       setOpen(false);
+                    },
+                    (error: string) => {
+                      Toast.show({
+                        text1: TOASTS[i18n.language].ERROR,
+                        text2:
+                          TOASTS[i18n.language][error] ?? 'Unexpected error',
+                        type: 'error',
+                      });
                     },
                   ) as any,
                 ),
@@ -194,10 +225,21 @@ export const Promocodes: React.FC<PromocodesProps> = () => {
                       promocode: code,
                       useAmount: amount,
                       salePercent: percent,
-                      businessId: currentBusiness?._id,
+                      businessId: currentBusiness?.id,
                     },
                     () => {
+                      Toast.show({
+                        text1: TOASTS[i18n.language].SUCCESS_CREATE_PROMOCODE,
+                      });
                       setOpen(false);
+                    },
+                    (error: string) => {
+                      Toast.show({
+                        text1: TOASTS[i18n.language].ERROR,
+                        text2:
+                          TOASTS[i18n.language][error] ?? 'Unexpected error',
+                        type: 'error',
+                      });
                     },
                   ) as any,
                 ),

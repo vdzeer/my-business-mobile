@@ -40,40 +40,40 @@ const slice = createSlice({
       state.isLoading = false;
       state.orders = [
         ...state.orders.map(item =>
-          item._id === action.payload._id ? action.payload : item,
+          item.id === action.payload.id ? action.payload : item,
         ),
       ];
     },
     addItemToBasket: (state, action) => {
       const newItem = action.payload;
       const updatedBasket = state.currentBasket.map(item =>
-        item._id === newItem._id
+        item.id === newItem.id
           ? { ...item, total: Number(item.total) + 1 }
           : item,
       );
 
       state.isLoading = false;
-      state.currentBasket = updatedBasket.some(item => item._id === newItem._id)
+      state.currentBasket = updatedBasket.some(item => item.id === newItem.id)
         ? updatedBasket
         : [...state.currentBasket, newItem];
     },
     removeItemFromBasket: (state, action) => {
       const itemToRemove = action.payload;
       const existingItem = state.currentBasket.find(
-        item => item._id === itemToRemove._id,
+        item => item.id === itemToRemove.id,
       );
 
       if (existingItem) {
         if (existingItem.total > 1) {
           const updatedBasket = state.currentBasket.map(item =>
-            item._id === itemToRemove._id
+            item.id === itemToRemove.id
               ? { ...item, total: item.total - 1 }
               : item,
           );
           state.currentBasket = updatedBasket;
         } else {
           state.currentBasket = state.currentBasket.filter(
-            item => item._id !== itemToRemove._id,
+            item => item.id !== itemToRemove.id,
           );
         }
       }
@@ -100,6 +100,8 @@ export const getOrdersList = (data, onSuccess, onError) => async dispatch => {
     })
     .then(onSuccess)
     .catch(error => {
+      onError(error?.response?.data?.code);
+      console.log(error.response.data);
       if (error?.response?.status === 401) {
         AsyncStorage.setItem('refresh', '');
         AsyncStorage.setItem('token', '');
@@ -116,6 +118,8 @@ export const createOrder = (data, onSuccess, onError) => async dispatch => {
     })
     .then(onSuccess)
     .catch(error => {
+      onError(error?.response?.data?.code);
+      console.log(error.response.data);
       if (error?.response?.status === 401) {
         AsyncStorage.setItem('refresh', '');
         AsyncStorage.setItem('token', '');
@@ -133,6 +137,8 @@ export const deleteOrder = (data, onSuccess, onError) => async dispatch => {
     })
     .then(onSuccess)
     .catch(error => {
+      onError(error?.response?.data?.code);
+      console.log(error.response.data);
       if (error?.response?.status === 401) {
         AsyncStorage.setItem('refresh', '');
         AsyncStorage.setItem('token', '');

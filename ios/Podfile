@@ -9,6 +9,8 @@ target 'MyBusinessPlus' do
 
   # Flags change depending on the env values.
   flags = get_default_flags()
+  pod 'react-native-splash-screen', :path => '../node_modules/react-native-splash-screen'
+
 
   use_react_native!(
     :path => config[:reactNativePath],

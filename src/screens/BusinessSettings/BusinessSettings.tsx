@@ -27,6 +27,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { deleteBusiness, updateBusiness } from '../../store/slices/business';
 
 import { useTranslation } from 'react-i18next';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import { TOASTS } from '../../i18n/toasts';
+import i18n from '../../i18n';
 
 export const BusinessSettings: React.FC<BusinessSettingsProps> = () => {
   const navigation = useNavigation<any>();
@@ -112,7 +115,7 @@ export const BusinessSettings: React.FC<BusinessSettingsProps> = () => {
                     formData.append('name', name);
                     formData.append('currency', currency);
 
-                    formData.append('businessId', currentBusiness?._id);
+                    formData.append('businessId', currentBusiness?.id);
                     photo.path &&
                       formData.append('image', {
                         name: photo.filename,
@@ -121,9 +124,26 @@ export const BusinessSettings: React.FC<BusinessSettingsProps> = () => {
                       } as any);
                     validateForm(() =>
                       dispatch(
-                        updateBusiness(formData, () => {
-                          navigation.navigate('NewOrder');
-                        }),
+                        updateBusiness(
+                          formData,
+                          () => {
+                            Toast.show({
+                              text1:
+                                TOASTS[i18n.language].SUCCESS_UPDATE_BUSINESS,
+                            });
+                            navigation.navigate('NewOrder');
+                          },
+
+                          (error: string) => {
+                            Toast.show({
+                              text1: TOASTS[i18n.language].ERROR,
+                              text2:
+                                TOASTS[i18n.language][error] ??
+                                'Unexpected error',
+                              type: 'error',
+                            });
+                          },
+                        ),
                       ),
                     );
                   }}
@@ -134,9 +154,23 @@ export const BusinessSettings: React.FC<BusinessSettingsProps> = () => {
                 iconName="delete"
                 onPress={() => {
                   dispatch(
-                    deleteBusiness(currentBusiness?._id, () => {
-                      navigation.navigate('BusinessList');
-                    }),
+                    deleteBusiness(
+                      currentBusiness?.id,
+                      () => {
+                        Toast.show({
+                          text1: TOASTS[i18n.language].SUCCESS_DELETE_BUSINESS,
+                        });
+                        navigation.navigate('BusinessList');
+                      },
+                      (error: string) => {
+                        Toast.show({
+                          text1: TOASTS[i18n.language].ERROR,
+                          text2:
+                            TOASTS[i18n.language][error] ?? 'Unexpected error',
+                          type: 'error',
+                        });
+                      },
+                    ),
                   );
                 }}
                 size="large"

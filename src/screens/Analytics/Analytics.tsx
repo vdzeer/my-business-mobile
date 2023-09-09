@@ -49,7 +49,7 @@ export const Analytics: React.FC<AnalyticsProps> = () => {
   ];
 
   useEffect(() => {
-    getAnalyticts(date, currentBusiness?._id ?? '').then(data => {
+    getAnalyticts(date, currentBusiness?.id ?? '').then(data => {
       const parsedData = Object.entries(data.data.data);
 
       const newData = parsedData.map(el => ({

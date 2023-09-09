@@ -73,7 +73,10 @@ export const login =
         );
       })
       .then(onSuccess)
-      .catch(error => console.log(error.response));
+      .catch(error => {
+        onError(error?.response?.data?.code);
+        console.log(error.response.data.code);
+      });
   };
 
 export const getMe =
@@ -86,6 +89,9 @@ export const getMe =
       })
       .then(onSuccess)
       .catch(error => {
+        onError(error?.response?.data?.code);
+        console.log(error.response.data);
+
         if (error?.response?.status === 401) {
           AsyncStorage.setItem('refresh', '');
           AsyncStorage.setItem('token', '');
@@ -111,7 +117,10 @@ export const google =
         );
       })
       .then(onSuccess)
-      .catch(error => console.log(error.response.data));
+      .catch(error => {
+        onError(error?.response?.data?.code);
+        console.log(error.response.data);
+      });
   };
 
 export const updateUser =
@@ -125,6 +134,7 @@ export const updateUser =
       })
       .then(onSuccess)
       .catch(async error => {
+    
         if (error.code === 'INVALID_TOKEN') {
           try {
             const result = await refreshTokenFn();
@@ -137,6 +147,8 @@ export const updateUser =
               });
             }
           } catch (error: any) {
+              onError(error?.response?.data?.code);
+              console.log(error.response.data);
             if (error?.response?.status === 401) {
               AsyncStorage.setItem('refresh', '');
               AsyncStorage.setItem('token', '');
@@ -164,7 +176,10 @@ export const apple =
         );
       })
       .then(onSuccess)
-      .catch(error => console.log(error));
+      .catch(error => {
+        onError(error?.response?.data?.code);
+        console.log(error.response.data);
+      });
   };
 
 export const updateSubscription =
@@ -179,11 +194,16 @@ export const updateSubscription =
               dispatch(slice.actions.updateProfile(res.data.data));
             })
             .then(onSuccess)
-            .catch(error => console.log(error.response.data));
+            .catch(error => {
+              onError(error?.response?.data?.code);
+              console.log(error.response.data);
+            });
         }
       })
       .then(onSuccess)
       .catch(error => {
+        onError(error?.response?.data?.code);
+        console.log(error.response.data);
         if (error?.response?.status === 401) {
           AsyncStorage.setItem('refresh', '');
           AsyncStorage.setItem('token', '');
@@ -198,7 +218,10 @@ export const forgotPassword =
 
     forgot(data)
       .then(onSuccess)
-      .catch(error => console.log(error.response.data));
+      .catch(error => {
+        onError(error?.response?.data?.code);
+        console.log(error.response.data);
+      });
   };
 
 export const resetPassword =
@@ -207,7 +230,10 @@ export const resetPassword =
 
     resetPasswordApi(data)
       .then(onSuccess)
-      .catch(error => console.log(error.response.data));
+      .catch(error => {
+        onError(error?.response?.data?.code);
+        console.log(error.response.data);
+      });
   };
 
 export const register =
@@ -223,7 +249,10 @@ export const register =
         );
       })
       .then(onSuccess)
-      .catch(error => console.log(error));
+      .catch(error => {
+        onError(error?.response?.data?.code);
+        console.log(error);
+      });
   };
 
 export const logout = () => async (dispatch: any) => {

@@ -37,14 +37,14 @@ const slice = createSlice({
       state.isLoading = false;
       state.promocodes = [
         ...state.promocodes.map(item =>
-          item._id === action.payload._id ? action.payload : item,
+          item.id === action.payload.id ? action.payload : item,
         ),
       ];
     },
     deleteOnePromocode(state, action) {
       state.isLoading = false;
       state.promocodes = state.promocodes.filter(
-        item => item._id !== action.payload,
+        item => item.id !== action.payload,
       );
     },
   },
@@ -62,6 +62,8 @@ export const getPromocodesList =
       })
       .then(onSuccess)
       .catch(error => {
+        onError(error?.response?.data?.code);
+        console.log(error.response.data);
         if (error?.response?.status === 401) {
           AsyncStorage.setItem('refresh', '');
           AsyncStorage.setItem('token', '');
@@ -78,6 +80,8 @@ export const createPromocode = (data, onSuccess, onError) => async dispatch => {
     })
     .then(onSuccess)
     .catch(error => {
+      onError(error?.response?.data?.code);
+      console.log(error.response.data);
       if (error?.response?.status === 401) {
         AsyncStorage.setItem('refresh', '');
         AsyncStorage.setItem('token', '');
@@ -94,6 +98,8 @@ export const updatePromocode = (data, onSuccess, onError) => async dispatch => {
     })
     .then(onSuccess)
     .catch(error => {
+      onError(error?.response?.data?.code);
+      console.log(error.response.data);
       if (error?.response?.status === 401) {
         AsyncStorage.setItem('refresh', '');
         AsyncStorage.setItem('token', '');
@@ -110,6 +116,8 @@ export const deletePromocode = (data, onSuccess, onError) => async dispatch => {
     })
     .then(onSuccess)
     .catch(error => {
+      onError(error?.response?.data?.code);
+      console.log(error.response.data);
       if (error?.response?.status === 401) {
         AsyncStorage.setItem('refresh', '');
         AsyncStorage.setItem('token', '');

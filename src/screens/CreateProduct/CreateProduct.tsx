@@ -30,6 +30,9 @@ import {
   updateProducts,
 } from '../../store/slices/products';
 import { useTranslation } from 'react-i18next';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import { TOASTS } from '../../i18n/toasts';
+import i18n from '../../i18n';
 
 export const CreateProduct: React.FC<CreateProductProps> = () => {
   const navigation = useNavigation<any>();
@@ -50,7 +53,7 @@ export const CreateProduct: React.FC<CreateProductProps> = () => {
     params?.selfPrice ? params?.selfPrice + '' : '',
   );
   const [category, setCategory] = useState<any>({
-    _id: params?.categoryId ?? '',
+    id: params?.categoryId ?? '',
   });
   const [photo, setPhoto] = useState<any>('');
   const [imageUrl, setImageUrl] = useState<any>(params?.image ?? '');
@@ -152,7 +155,7 @@ export const CreateProduct: React.FC<CreateProductProps> = () => {
                 horizontal
                 contentContainerStyle={styles.categoryScroll}>
                 {categories.map((el: any) => (
-                  <Fragment key={el._id}>
+                  <Fragment key={el.id}>
                     <TouchableOpacity
                       onPress={() => {
                         setCategory(el);
@@ -161,14 +164,14 @@ export const CreateProduct: React.FC<CreateProductProps> = () => {
                         styles.categoryItem,
                         {
                           backgroundColor:
-                            el._id === category?._id ? '#384494' : '#D9F0FF',
+                            el.id === category?.id ? '#384494' : '#D9F0FF',
                         },
                       ]}>
                       <Text
                         style={[
                           styles.categoryText,
                           {
-                            color: el._id === category?._id ? 'white' : 'black',
+                            color: el.id === category?.id ? 'white' : 'black',
                           },
                         ]}>
                         {el?.name}
@@ -196,19 +199,19 @@ export const CreateProduct: React.FC<CreateProductProps> = () => {
                 formData.append('name', name);
                 formData.append('price', price);
                 formData.append('selfPrice', self);
-                formData.append('businessId', currentBusiness?._id);
+                formData.append('businessId', currentBusiness?.id);
                 if (inventory.length) {
-                  const resultArray = inventory.flatMap(({ _id, total }: any) =>
-                    Array.from({ length: total }, () => String(_id)),
+                  const resultArray = inventory.flatMap(({ id, total }: any) =>
+                    Array.from({ length: total }, () => String(id)),
                   );
                   resultArray.forEach((el: any, index: number) => {
                     formData.append(`inventories[${index}]`, el);
                   });
                 }
 
-                category?._id && formData.append('categoryId', category?._id);
+                category?.id && formData.append('categoryId', category?.id);
 
-                params?._id && formData.append('productId', params?._id);
+                params?.id && formData.append('productId', params?.id);
 
                 photo.path &&
                   formData.append('image', {
@@ -222,9 +225,20 @@ export const CreateProduct: React.FC<CreateProductProps> = () => {
                       updateProducts(
                         formData,
                         () => {
+                          Toast.show({
+                            text1: TOASTS[i18n.language].SUCCESS_UPDATE_PRODUCT,
+                          });
                           navigation.navigate('Products');
                         },
-                        () => {},
+                        (error: string) => {
+                          Toast.show({
+                            text1: TOASTS[i18n.language].ERROR,
+                            text2:
+                              TOASTS[i18n.language][error] ??
+                              'Unexpected error',
+                            type: 'error',
+                          });
+                        },
                       ) as any,
                     ),
                   );
@@ -234,9 +248,20 @@ export const CreateProduct: React.FC<CreateProductProps> = () => {
                       createProduct(
                         formData,
                         () => {
+                          Toast.show({
+                            text1: TOASTS[i18n.language].SUCCESS_UPDATE_PRODUCT,
+                          });
                           navigation.navigate('Products');
                         },
-                        () => {},
+                        (error: string) => {
+                          Toast.show({
+                            text1: TOASTS[i18n.language].ERROR,
+                            text2:
+                              TOASTS[i18n.language][error] ??
+                              'Unexpected error',
+                            type: 'error',
+                          });
+                        },
                       ) as any,
                     ),
                   );

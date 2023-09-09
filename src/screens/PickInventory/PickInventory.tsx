@@ -66,14 +66,14 @@ export const PickInventory: React.FC<PickInventoryProps> = () => {
               onAdd={() => {
                 setInventoryListParams((prev: any) => {
                   const existingItem = prev.find(
-                    (el: any) => el._id === item._id,
+                    (el: any) => el.id === item.id,
                   );
 
                   if (!existingItem) {
                     return [...prev, { ...item, total: 1 }];
                   } else {
                     return prev.map((el: any) =>
-                      el._id === item._id
+                      el.id === item.id
                         ? { ...el, total: Number(el.total) + 1 }
                         : el,
                     );
@@ -81,14 +81,14 @@ export const PickInventory: React.FC<PickInventoryProps> = () => {
                 }) as any;
               }}
               total={
-                inventoryListParams?.find((el: any) => el._id === item._id)
+                inventoryListParams?.find((el: any) => el.id === item.id)
                   ?.total ?? 0
               }
               onRemove={() => {
                 setInventoryListParams((prev: any) =>
                   prev
                     .map((el: any) =>
-                      el._id === item._id
+                      el.id === item.id
                         ? el.total > 1
                           ? { ...el, total: el.total - 1 }
                           : null
