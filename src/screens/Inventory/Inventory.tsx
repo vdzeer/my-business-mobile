@@ -39,6 +39,7 @@ export const Inventory: React.FC<InventoryProps> = () => {
 
   const { inventory } = useSelector((store: any) => store.inventory);
   const { profile } = useSelector((store: any) => store.auth);
+  const { currentBusiness } = useSelector((store: any) => store.business);
 
   const [inventoryList, setInventroyList] = useState<any>(null);
   useEffect(() => {
@@ -93,6 +94,7 @@ export const Inventory: React.FC<InventoryProps> = () => {
                         type: 'error',
                       });
                     },
+                    currentBusiness?.id
                   ) as any,
                 );
               }}

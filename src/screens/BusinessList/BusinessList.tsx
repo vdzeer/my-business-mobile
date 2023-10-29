@@ -46,7 +46,7 @@ export const BusinessList: React.FC<BusinessListProps> = () => {
   const validateForm = (onSuccess: any) => {
     let isValid = true;
 
-    if (password.length > 6) {
+    if (password.length >= 6) {
       setIsValidForm(prev => ({ ...prev, password: true }));
     } else {
       isValid = false;
@@ -98,26 +98,21 @@ export const BusinessList: React.FC<BusinessListProps> = () => {
       <Text style={styles.listText}>{item.name}</Text>
     </TouchableOpacity>
   );
-  // console.log(profile.subscription.businessLength);
 
   return (
     <SafeAreaView style={styles.area}>
       <View style={styles.headerWrapper}>
         <Text style={styles.titleText}>{t('myBusiness')}</Text>
-        <ActionButton
-          iconName="plus"
-          onPress={() => {
-            if (
-              profile?.businesses?.length <
-              profile?.subscription?.businessLength
-            ) {
+        {profile?.businesses?.length <
+          profile?.subscription?.businessLength && (
+          <ActionButton
+            iconName="plus"
+            onPress={() => {
               navigation.navigate('CreateBusiness');
-            } else {
-              //TOAST
-            }
-          }}
-          size="large"
-        />
+            }}
+            size="large"
+          />
+        )}
       </View>
       <Divider height={20} />
 
@@ -157,7 +152,7 @@ export const BusinessList: React.FC<BusinessListProps> = () => {
           text={t('openBusiness')}
           mode="large"
           onPress={() => {
-            validateForm(() =>
+            validateForm(() => {
               dispatch(
                 loginBusiness(
                   {
@@ -176,8 +171,8 @@ export const BusinessList: React.FC<BusinessListProps> = () => {
                     });
                   },
                 ),
-              ),
-            );
+              );
+            });
           }}
         />
       </BottomSheet>

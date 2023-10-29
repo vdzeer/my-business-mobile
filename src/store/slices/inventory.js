@@ -144,20 +144,21 @@ export const updateInventory = (data, onSuccess, onError) => async dispatch => {
     });
 };
 
-export const deleteInventory = (data, onSuccess, onError) => async dispatch => {
-  dispatch(slice.actions.setLoading());
-  deleteBusinessInventory(data)
-    .then(res => {
-      dispatch(slice.actions.deleteOneInventory(data));
-    })
-    .then(onSuccess)
-    .catch(error => {
-      onError(error?.response?.data?.code);
-      console.log(error.response.data);
-      if (error?.response?.status === 401) {
-        AsyncStorage.setItem('refresh', '');
-        AsyncStorage.setItem('token', '');
-        dispatch(authActions.logoutSuccess());
-      }
-    });
-};
+export const deleteInventory =
+  (data, onSuccess, onError, businessId) => async dispatch => {
+    dispatch(slice.actions.setLoading());
+    deleteBusinessInventory(data, businessId)
+      .then(res => {
+        dispatch(slice.actions.deleteOneInventory(data));
+      })
+      .then(onSuccess)
+      .catch(error => {
+        onError(error?.response?.data?.code);
+        console.log(error.response.data);
+        if (error?.response?.status === 401) {
+          AsyncStorage.setItem('refresh', '');
+          AsyncStorage.setItem('token', '');
+          dispatch(authActions.logoutSuccess());
+        }
+      });
+  };

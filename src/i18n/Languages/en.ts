@@ -29,8 +29,8 @@ export default {
   amount: 'Amount',
   lowerRange: 'Lower range',
   forgot: 'Forgot password?',
-  restore: 'Forgot password?',
-  back: 'Forgot password?',
+  restore: 'Restore',
+  back: 'Back',
   checkout: 'Checkout',
 
   next: 'Next',

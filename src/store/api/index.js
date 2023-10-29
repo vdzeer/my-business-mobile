@@ -125,9 +125,9 @@ export const updateBusinessInventory = data => {
   });
 };
 
-export const deleteBusinessInventory = data => {
+export const deleteBusinessInventory = (data, businessId) => {
   return axiosInstance.delete(`/business-api/inventory/delete`, {
-    data: { inventoryId: data },
+    data: { inventoryId: data, businessId },
   });
 };
 
@@ -161,9 +161,9 @@ export const updateBusinessProduct = data => {
   });
 };
 
-export const deleteBusinessProduct = data => {
+export const deleteBusinessProduct = (data, businessId) => {
   return axiosInstance.delete(`/business-api/product/delete`, {
-    data: { productId: data },
+    data: { productId: data, businessId },
   });
 };
 
@@ -189,9 +189,9 @@ export const updateBusinessCategory = data => {
   });
 };
 
-export const deleteBusinessCategory = data => {
+export const deleteBusinessCategory = (data, businessId) => {
   return axiosInstance.delete(`/business-api/category/delete`, {
-    data: { categoryId: data },
+    data: { categoryId: data, businessId },
   });
 };
 
@@ -207,9 +207,9 @@ export const updateBusinessSupplier = data => {
   return axiosInstance.put(`/business-api/supplier/update`, data);
 };
 
-export const deleteBusinessSupplier = data => {
+export const deleteBusinessSupplier = (data, businessId) => {
   return axiosInstance.delete(`/business-api/supplier/delete`, {
-    data: { supplierId: data },
+    data: { supplierId: data, businessId },
   });
 };
 
@@ -225,9 +225,9 @@ export const createBusinessOrder = data => {
   return axiosInstance.post(`/business-api/order/create`, data);
 };
 
-export const deleteBusinessOrder = data => {
+export const deleteBusinessOrder = (data, businessId) => {
   return axiosInstance.delete(`/business-api/order/delete`, {
-    data: { supplierId: data },
+    data: { supplierId: data, businessId },
   });
 };
 
@@ -243,8 +243,8 @@ export const updateBusinessPromocode = data => {
   return axiosInstance.put(`/business-api/promocode/update`, data);
 };
 
-export const deleteBusinessPromocode = data => {
+export const deleteBusinessPromocode = (data, businessId) => {
   return axiosInstance.delete(`/business-api/promocode/delete`, {
-    data: { supplierId: data },
+    data: { supplierId: data, businessId },
   });
 };

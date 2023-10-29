@@ -22,7 +22,7 @@ export const refreshTokenFn = async () => {
 
   try {
     const response = await axios.post(
-      'http://185.36.188.161:3000/user-api/auth/refresh',
+      'http://185.36.188.161:5000/user-api/auth/refresh',
       {
         token: token,
       },

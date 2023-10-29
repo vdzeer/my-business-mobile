@@ -128,21 +128,22 @@ export const createOrder = (data, onSuccess, onError) => async dispatch => {
     });
 };
 
-export const deleteOrder = (data, onSuccess, onError) => async dispatch => {
-  dispatch(slice.actions.setLoading());
-  deleteBusinessOrder(data)
-    .then(res => {
-      console.log(res);
-      // dispatch(slice.actions.addBusiness(res.data));
-    })
-    .then(onSuccess)
-    .catch(error => {
-      onError(error?.response?.data?.code);
-      console.log(error.response.data);
-      if (error?.response?.status === 401) {
-        AsyncStorage.setItem('refresh', '');
-        AsyncStorage.setItem('token', '');
-        dispatch(authActions.logoutSuccess());
-      }
-    });
-};
+export const deleteOrder =
+  (data, onSuccess, onError, businessId) => async dispatch => {
+    dispatch(slice.actions.setLoading());
+    deleteBusinessOrder(data, businessId)
+      .then(res => {
+        console.log(res);
+        // dispatch(slice.actions.addBusiness(res.data));
+      })
+      .then(onSuccess)
+      .catch(error => {
+        onError(error?.response?.data?.code);
+        console.log(error.response.data);
+        if (error?.response?.status === 401) {
+          AsyncStorage.setItem('refresh', '');
+          AsyncStorage.setItem('token', '');
+          dispatch(authActions.logoutSuccess());
+        }
+      });
+  };

@@ -108,20 +108,21 @@ export const updateSupplier = (data, onSuccess, onError) => async dispatch => {
     });
 };
 
-export const deleteSupplier = (data, onSuccess, onError) => async dispatch => {
-  dispatch(slice.actions.setLoading());
-  deleteBusinessSupplier(data)
-    .then(res => {
-      dispatch(slice.actions.deleteOneSupplier(data));
-    })
-    .then(onSuccess)
-    .catch(error => {
-      onError(error?.response?.data?.code);
-      console.log(error.response.data);
-      if (error?.response?.status === 401) {
-        AsyncStorage.setItem('refresh', '');
-        AsyncStorage.setItem('token', '');
-        dispatch(authActions.logoutSuccess());
-      }
-    });
-};
+export const deleteSupplier =
+  (data, onSuccess, onError, businessId) => async dispatch => {
+    dispatch(slice.actions.setLoading());
+    deleteBusinessSupplier(data, businessId)
+      .then(res => {
+        dispatch(slice.actions.deleteOneSupplier(data));
+      })
+      .then(onSuccess)
+      .catch(error => {
+        onError(error?.response?.data?.code);
+        console.log(error.response.data);
+        if (error?.response?.status === 401) {
+          AsyncStorage.setItem('refresh', '');
+          AsyncStorage.setItem('token', '');
+          dispatch(authActions.logoutSuccess());
+        }
+      });
+  };

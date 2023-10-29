@@ -116,6 +116,7 @@ export const Categories: React.FC<CategoriesProps> = () => {
                         type: 'error',
                       });
                     },
+                    currentBusiness?.id,
                   ) as any,
                 );
               }}
@@ -154,6 +155,8 @@ export const Categories: React.FC<CategoriesProps> = () => {
 
               formData.append('name', name);
               formData.append('categoryId', item?.id);
+              formData.append('businessId', currentBusiness?.id);
+
               validateForm(() =>
                 dispatch(
                   updateCategory(

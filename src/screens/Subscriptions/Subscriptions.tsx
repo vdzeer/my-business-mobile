@@ -38,10 +38,10 @@ import { TOASTS } from '../../i18n/toasts';
 import i18n from '../../i18n';
 
 const ids = {
-  'mybusinessplus.lite': '64c38bc1939ea5354c0d8fde',
-  'mybusinessplus.base': '64c38c23efc5ea36020b3664',
-  'mybusinessplus.pro': '64c38c5f6ac05d364624f96a',
-  'mybusinessplus.full': '64c38c7f6b09f43683d2b752',
+  'mybusinessplus.lite': '1',
+  'mybusinessplus.base': '2',
+  'mybusinessplus.pro': '3',
+  'mybusinessplus.full': '4',
 };
 
 const skus = {

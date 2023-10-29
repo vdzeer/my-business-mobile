@@ -134,6 +134,7 @@ export const Suppliers: React.FC<SuppliersProps> = () => {
                         type: 'error',
                       });
                     },
+                    currentBusiness?.id,
                   ) as any,
                 );
               }}
@@ -184,6 +185,7 @@ export const Suppliers: React.FC<SuppliersProps> = () => {
                       name,
                       contact: phone,
                       supplierId: item?.id,
+                      businessId: currentBusiness?.id,
                     },
                     () => {
                       Toast.show({

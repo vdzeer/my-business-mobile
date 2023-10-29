@@ -137,6 +137,7 @@ export const Promocodes: React.FC<PromocodesProps> = () => {
                         type: 'error',
                       });
                     },
+                    currentBusiness?.id,
                   ) as any,
                 );
               }}

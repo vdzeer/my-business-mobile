@@ -35,6 +35,7 @@ export const Products: React.FC<ProductsProps> = () => {
 
   const { products } = useSelector((store: any) => store.products);
   const { profile } = useSelector((store: any) => store.auth);
+  const { currentBusiness } = useSelector((store: any) => store.business);
 
   const [productList, setProductList] = useState<any>(null);
   const { t } = useTranslation();
@@ -93,6 +94,7 @@ export const Products: React.FC<ProductsProps> = () => {
                         type: 'error',
                       });
                     },
+                    currentBusiness?.id,
                   ) as any,
                 );
               }}

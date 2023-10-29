@@ -65,6 +65,8 @@ export const login =
         AsyncStorage.setItem('refresh', res.data.refreshToken);
         AsyncStorage.setItem('token', res.data.accessToken);
 
+        console.log(res.data.data.subscription);
+
         dispatch(
           slice.actions.loginSuccess({
             user: res.data.data,
@@ -85,6 +87,9 @@ export const getMe =
 
     getMeUser()
       .then(res => {
+        console.log('====================================');
+        console.log(res.data.data);
+        console.log('====================================');
         dispatch(slice.actions.updateProfile(res.data.data));
       })
       .then(onSuccess)
@@ -134,7 +139,6 @@ export const updateUser =
       })
       .then(onSuccess)
       .catch(async error => {
-    
         if (error.code === 'INVALID_TOKEN') {
           try {
             const result = await refreshTokenFn();
@@ -147,8 +151,8 @@ export const updateUser =
               });
             }
           } catch (error: any) {
-              onError(error?.response?.data?.code);
-              console.log(error.response.data);
+            onError(error?.response?.data?.code);
+            console.log(error.response.data);
             if (error?.response?.status === 401) {
               AsyncStorage.setItem('refresh', '');
               AsyncStorage.setItem('token', '');

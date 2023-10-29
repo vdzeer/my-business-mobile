@@ -169,23 +169,24 @@ export const updateCategory = (data, onSuccess, onError) => async dispatch => {
     });
 };
 
-export const deleteCategory = (data, onSuccess, onError) => async dispatch => {
-  dispatch(slice.actions.setLoading());
-  deleteBusinessCategory(data)
-    .then(res => {
-      dispatch(slice.actions.deleteOneCategory(data));
-    })
-    .then(onSuccess)
-    .catch(error => {
-      onError(error?.response?.data?.code);
-      console.log(error.response.data);
-      if (error?.response?.status === 401) {
-        AsyncStorage.setItem('refresh', '');
-        AsyncStorage.setItem('token', '');
-        dispatch(authActions.logoutSuccess());
-      }
-    });
-};
+export const deleteCategory =
+  (data, onSuccess, onError, businessId) => async dispatch => {
+    dispatch(slice.actions.setLoading());
+    deleteBusinessCategory(data, businessId)
+      .then(res => {
+        dispatch(slice.actions.deleteOneCategory(data));
+      })
+      .then(onSuccess)
+      .catch(error => {
+        onError(error?.response?.data?.code);
+        console.log(error.response.data);
+        if (error?.response?.status === 401) {
+          AsyncStorage.setItem('refresh', '');
+          AsyncStorage.setItem('token', '');
+          dispatch(authActions.logoutSuccess());
+        }
+      });
+  };
 
 export const getProductsList = (data, onSuccess, onError) => async dispatch => {
   dispatch(slice.actions.setLoading());
@@ -280,20 +281,21 @@ export const updateProducts = (data, onSuccess, onError) => async dispatch => {
     });
 };
 
-export const deleteProduct = (data, onSuccess, onError) => async dispatch => {
-  dispatch(slice.actions.setLoading());
-  deleteBusinessProduct(data)
-    .then(res => {
-      dispatch(slice.actions.deleteOneProduct(data));
-    })
-    .then(onSuccess)
-    .catch(error => {
-      onError(error?.response?.data?.code);
-      console.log(error.response.data);
-      if (error?.response?.status === 401) {
-        AsyncStorage.setItem('refresh', '');
-        AsyncStorage.setItem('token', '');
-        dispatch(authActions.logoutSuccess());
-      }
-    });
-};
+export const deleteProduct =
+  (data, onSuccess, onError, businessId) => async dispatch => {
+    dispatch(slice.actions.setLoading());
+    deleteBusinessProduct(data, businessId)
+      .then(res => {
+        dispatch(slice.actions.deleteOneProduct(data));
+      })
+      .then(onSuccess)
+      .catch(error => {
+        onError(error?.response?.data?.code);
+        console.log(error.response.data);
+        if (error?.response?.status === 401) {
+          AsyncStorage.setItem('refresh', '');
+          AsyncStorage.setItem('token', '');
+          dispatch(authActions.logoutSuccess());
+        }
+      });
+  };

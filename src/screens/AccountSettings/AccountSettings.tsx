@@ -49,7 +49,6 @@ export const AccountSettings: React.FC<AccountSettingsProps> = () => {
 
   const [photo, setPhoto] = useState<any>('');
   const [imageUrl, setImageUrl] = useState<any>(profile?.image ?? '');
-  console.log(profile);
   const [isValidForm, setIsValidForm] = useState({
     name: true,
   });

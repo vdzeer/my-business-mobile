@@ -80,7 +80,6 @@ export const Analytics: React.FC<AnalyticsProps> = () => {
     ],
   };
 
-  console.log(self, total.datasets);
 
   return (
     <SafeAreaView style={styles.area}>

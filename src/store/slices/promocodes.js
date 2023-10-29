@@ -108,20 +108,21 @@ export const updatePromocode = (data, onSuccess, onError) => async dispatch => {
     });
 };
 
-export const deletePromocode = (data, onSuccess, onError) => async dispatch => {
-  dispatch(slice.actions.setLoading());
-  deleteBusinessPromocode(data)
-    .then(res => {
-      dispatch(slice.actions.deleteOnePromocode(data));
-    })
-    .then(onSuccess)
-    .catch(error => {
-      onError(error?.response?.data?.code);
-      console.log(error.response.data);
-      if (error?.response?.status === 401) {
-        AsyncStorage.setItem('refresh', '');
-        AsyncStorage.setItem('token', '');
-        dispatch(authActions.logoutSuccess());
-      }
-    });
-};
+export const deletePromocode =
+  (data, onSuccess, onError, businessId) => async dispatch => {
+    dispatch(slice.actions.setLoading());
+    deleteBusinessPromocode(data, businessId)
+      .then(res => {
+        dispatch(slice.actions.deleteOnePromocode(data));
+      })
+      .then(onSuccess)
+      .catch(error => {
+        onError(error?.response?.data?.code);
+        console.log(error.response.data);
+        if (error?.response?.status === 401) {
+          AsyncStorage.setItem('refresh', '');
+          AsyncStorage.setItem('token', '');
+          dispatch(authActions.logoutSuccess());
+        }
+      });
+  };
