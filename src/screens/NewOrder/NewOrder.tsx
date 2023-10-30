@@ -128,14 +128,16 @@ export const NewOrder: React.FC<NewOrderProps> = () => {
           style={styles.list}
           contentContainerStyle={styles.listContent}
         />
-        <View style={styles.buttonWrapper}>
-          <Button
-            text={t('checkout') + ` (${currentBasket.length})`}
-            onPress={() => {
-              navigation.navigate('Basket');
-            }}
-          />
-        </View>
+        {!!currentBasket.length && (
+          <View style={styles.buttonWrapper}>
+            <Button
+              text={t('checkout') + ` (${currentBasket.length})`}
+              onPress={() => {
+                navigation.navigate('Basket');
+              }}
+            />
+          </View>
+        )}
       </View>
     </SafeAreaView>
   );

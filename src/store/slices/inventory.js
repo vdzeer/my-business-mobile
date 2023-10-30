@@ -64,7 +64,6 @@ export const getInventoryList =
       .then(onSuccess)
       .catch(error => {
         onError(error?.response?.data?.code);
-        console.log(error.response.data);
 
         if (error?.response?.status === 401) {
           AsyncStorage.setItem('refresh', '');
@@ -98,7 +97,7 @@ export const createInventory = (data, onSuccess, onError) => async dispatch => {
           }
         } catch (error) {
           onError(error?.response?.data?.code);
-          console.log(error.response.data);
+
           if (error?.response?.status === 401) {
             AsyncStorage.setItem('refresh', '');
             AsyncStorage.setItem('token', '');
@@ -133,7 +132,7 @@ export const updateInventory = (data, onSuccess, onError) => async dispatch => {
           }
         } catch (error) {
           onError(error?.response?.data?.code);
-          console.log(error.response.data);
+
           if (error?.response?.status === 401) {
             AsyncStorage.setItem('refresh', '');
             AsyncStorage.setItem('token', '');
@@ -154,7 +153,7 @@ export const deleteInventory =
       .then(onSuccess)
       .catch(error => {
         onError(error?.response?.data?.code);
-        console.log(error.response.data);
+
         if (error?.response?.status === 401) {
           AsyncStorage.setItem('refresh', '');
           AsyncStorage.setItem('token', '');

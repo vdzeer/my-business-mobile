@@ -104,7 +104,7 @@ export const BusinessList: React.FC<BusinessListProps> = () => {
       <View style={styles.headerWrapper}>
         <Text style={styles.titleText}>{t('myBusiness')}</Text>
         {profile?.businesses?.length <
-          profile?.subscription?.businessLength && (
+          profile?.subscription?.business_length && (
           <ActionButton
             iconName="plus"
             onPress={() => {

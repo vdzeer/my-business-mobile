@@ -89,7 +89,7 @@ export const Workers: React.FC<WorkersProps> = () => {
             onPress={() => {
               if (
                 currentBusiness?.workers?.length <
-                profile.subscription.usersLength
+                profile.subscription.users_length
               ) {
                 setOpen(true);
               } else {

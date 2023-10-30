@@ -11,7 +11,12 @@ import { OrderHistoryProps } from './types';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
 
-export const OrderHistoryCard = ({ name, date, price }: OrderHistoryProps) => {
+export const OrderHistoryCard = ({
+  name,
+  date,
+  price,
+  products,
+}: OrderHistoryProps) => {
   const { currentBusiness } = useSelector((store: any) => store.business);
 
   return (
@@ -23,6 +28,12 @@ export const OrderHistoryCard = ({ name, date, price }: OrderHistoryProps) => {
         <Text style={styles.cardDesc}>
           {moment(date).format('YYYY/MM/DD hh:mm')}
         </Text>
+
+        <Text style={styles.cardText}>-----------</Text>
+
+        {products.map(el => (
+          <Text>{el.name}</Text>
+        ))}
       </View>
       <View style={styles.contentWrapper2}>
         <Text style={styles.priceText}>
@@ -72,7 +83,7 @@ const styles = StyleSheet.create({
   },
 
   cardWrapper: {
-    height: 80,
+    minHeight: 80,
     backgroundColor: '#D9F0FF',
     borderRadius: 10,
     paddingHorizontal: 20,
@@ -81,5 +92,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
     marginBottom: 10,
+    paddingVertical: 10,
   },
 });

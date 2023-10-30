@@ -65,8 +65,6 @@ export const login =
         AsyncStorage.setItem('refresh', res.data.refreshToken);
         AsyncStorage.setItem('token', res.data.accessToken);
 
-        console.log(res.data.data.subscription);
-
         dispatch(
           slice.actions.loginSuccess({
             user: res.data.data,
@@ -77,7 +75,6 @@ export const login =
       .then(onSuccess)
       .catch(error => {
         onError(error?.response?.data?.code);
-        console.log(error.response.data.code);
       });
   };
 
@@ -87,15 +84,11 @@ export const getMe =
 
     getMeUser()
       .then(res => {
-        console.log('====================================');
-        console.log(res.data.data);
-        console.log('====================================');
         dispatch(slice.actions.updateProfile(res.data.data));
       })
       .then(onSuccess)
       .catch(error => {
         onError(error?.response?.data?.code);
-        console.log(error.response.data);
 
         if (error?.response?.status === 401) {
           AsyncStorage.setItem('refresh', '');
@@ -124,7 +117,6 @@ export const google =
       .then(onSuccess)
       .catch(error => {
         onError(error?.response?.data?.code);
-        console.log(error.response.data);
       });
   };
 
@@ -136,8 +128,8 @@ export const updateUser =
       .then(async res => {
         const response = await res.json();
         dispatch(slice.actions.updateProfile(response.data));
+        onSuccess();
       })
-      .then(onSuccess)
       .catch(async error => {
         if (error.code === 'INVALID_TOKEN') {
           try {
@@ -152,7 +144,6 @@ export const updateUser =
             }
           } catch (error: any) {
             onError(error?.response?.data?.code);
-            console.log(error.response.data);
             if (error?.response?.status === 401) {
               AsyncStorage.setItem('refresh', '');
               AsyncStorage.setItem('token', '');
@@ -182,7 +173,6 @@ export const apple =
       .then(onSuccess)
       .catch(error => {
         onError(error?.response?.data?.code);
-        console.log(error.response.data);
       });
   };
 
@@ -200,14 +190,13 @@ export const updateSubscription =
             .then(onSuccess)
             .catch(error => {
               onError(error?.response?.data?.code);
-              console.log(error.response.data);
             });
         }
       })
       .then(onSuccess)
       .catch(error => {
         onError(error?.response?.data?.code);
-        console.log(error.response.data);
+
         if (error?.response?.status === 401) {
           AsyncStorage.setItem('refresh', '');
           AsyncStorage.setItem('token', '');
@@ -224,7 +213,6 @@ export const forgotPassword =
       .then(onSuccess)
       .catch(error => {
         onError(error?.response?.data?.code);
-        console.log(error.response.data);
       });
   };
 
@@ -236,7 +224,6 @@ export const resetPassword =
       .then(onSuccess)
       .catch(error => {
         onError(error?.response?.data?.code);
-        console.log(error.response.data);
       });
   };
 
@@ -255,7 +242,6 @@ export const register =
       .then(onSuccess)
       .catch(error => {
         onError(error?.response?.data?.code);
-        console.log(error);
       });
   };
 

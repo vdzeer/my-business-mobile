@@ -54,10 +54,11 @@ export const OrderHistory: React.FC<OrderHistoryProps> = () => {
           renderItem={({ item }) => (
             <OrderHistoryCard
               name={
-                item.payType.slice(0, 1).toUpperCase() + item.payType.slice(1)
+                item.pay_type.slice(0, 1).toUpperCase() + item.pay_type.slice(1)
               }
+              products={item.products}
               date={item.date}
-              price={item?.totalPrice}
+              price={item?.total_price}
             />
           )}
           style={styles.list}

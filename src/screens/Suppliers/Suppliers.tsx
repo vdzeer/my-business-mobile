@@ -96,7 +96,7 @@ export const Suppliers: React.FC<SuppliersProps> = () => {
           <ActionButton
             iconName="plus"
             onPress={() => {
-              if (suppliers?.length < profile.subscription.suppliersLength) {
+              if (suppliers?.length < profile.subscription.suppliers_length) {
                 setOpen(true);
                 setEdit(false);
                 setName('');

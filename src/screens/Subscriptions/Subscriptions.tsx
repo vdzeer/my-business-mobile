@@ -45,10 +45,10 @@ const ids = {
 };
 
 const skus = {
-  '64c38bc1939ea5354c0d8fde': 'mybusinessplus.lite',
-  '64c38c23efc5ea36020b3664': 'mybusinessplus.base',
-  '64c38c5f6ac05d364624f96a': 'mybusinessplus.pro',
-  '64c38c7f6b09f43683d2b752': 'mybusinessplus.full',
+  '1': 'mybusinessplus.lite',
+  '2': 'mybusinessplus.base',
+  '3': 'mybusinessplus.pro',
+  '4': 'mybusinessplus.full',
 };
 
 export const Subscriptions: React.FC<SubscriptionsProps> = () => {

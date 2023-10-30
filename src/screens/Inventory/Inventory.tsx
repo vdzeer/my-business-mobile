@@ -45,6 +45,7 @@ export const Inventory: React.FC<InventoryProps> = () => {
   useEffect(() => {
     setInventroyList(inventory);
   }, [inventory]);
+
   return (
     <SafeAreaView style={styles.area}>
       <View style={styles.container}>
@@ -55,7 +56,7 @@ export const Inventory: React.FC<InventoryProps> = () => {
           <ActionButton
             iconName="plus"
             onPress={() => {
-              if (inventory?.length < profile.subscription.inventoriesLength) {
+              if (inventory?.length < profile.subscription.inventories_length) {
                 navigation.navigate('CreateInventory');
               } else {
                 //TOAST
@@ -74,6 +75,7 @@ export const Inventory: React.FC<InventoryProps> = () => {
               title={item.name}
               image={item?.image ?? ''}
               price={item?.amount}
+              showCurrency={false}
               onEdit={() => {
                 navigation.navigate('CreateInventory', { ...item, edit: true });
               }}
@@ -94,7 +96,7 @@ export const Inventory: React.FC<InventoryProps> = () => {
                         type: 'error',
                       });
                     },
-                    currentBusiness?.id
+                    currentBusiness?.id,
                   ) as any,
                 );
               }}

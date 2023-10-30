@@ -43,14 +43,15 @@ export const ImageInput: React.FC<ImageInputProps> = ({
       });
     }, 500);
   };
+
   return (
     <>
       <TouchableOpacity
         style={[
           styles.touchableWrapper,
           {
-            borderColor: !isValid || !!imageUrl ? 'red' : 'white',
-            borderWidth: !isValid || !!imageUrl ? 1 : 0,
+            borderColor: !isValid || !imageUrl ? 'red' : 'white',
+            borderWidth: !isValid || !imageUrl ? 1 : 0,
           },
         ]}
         onPress={() => {

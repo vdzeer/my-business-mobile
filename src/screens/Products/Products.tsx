@@ -54,7 +54,7 @@ export const Products: React.FC<ProductsProps> = () => {
           <ActionButton
             iconName="plus"
             onPress={() => {
-              if (products?.length < profile.subscription.productLength) {
+              if (products?.length < profile.subscription.product_length) {
                 navigation.navigate('CreateProduct');
               } else {
                 //TOAST

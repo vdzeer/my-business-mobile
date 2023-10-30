@@ -173,30 +173,26 @@ export const SignIn: React.FC<SignInProps> = () => {
 
                 GoogleSignin.hasPlayServices().then(hasPlayService => {
                   if (hasPlayService) {
-                    GoogleSignin.signIn()
-                      .then(userInfo => {
-                        dispatch(
-                          //@ts-ignore
-                          google(
-                            {
-                              code: userInfo.idToken,
-                            },
-                            () => {},
-                            (error: string) => {
-                              Toast.show({
-                                text1: TOASTS[i18n.language].ERROR,
-                                text2:
-                                  TOASTS[i18n.language][error] ??
-                                  'Unexpected error',
-                                type: 'error',
-                              });
-                            },
-                          ),
-                        );
-                      })
-                      .catch(e => {
-                        console.log('ERROR IS: ' + JSON.stringify(e));
-                      });
+                    GoogleSignin.signIn().then(userInfo => {
+                      dispatch(
+                        //@ts-ignore
+                        google(
+                          {
+                            code: userInfo.idToken,
+                          },
+                          () => {},
+                          (error: string) => {
+                            Toast.show({
+                              text1: TOASTS[i18n.language].ERROR,
+                              text2:
+                                TOASTS[i18n.language][error] ??
+                                'Unexpected error',
+                              type: 'error',
+                            });
+                          },
+                        ),
+                      );
+                    });
                   }
                 });
               }}

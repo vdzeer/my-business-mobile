@@ -91,7 +91,7 @@ export const getCategoriesList =
       .then(onSuccess)
       .catch(error => {
         onError(error?.response?.data?.code);
-        console.log(error.response.data);
+
         if (error?.response?.status === 401) {
           AsyncStorage.setItem('refresh', '');
           AsyncStorage.setItem('token', '');
@@ -123,7 +123,7 @@ export const createCategory = (data, onSuccess, onError) => async dispatch => {
           }
         } catch (error) {
           onError(error?.response?.data?.code);
-          console.log(error.response.data);
+
           if (error?.response?.status === 401) {
             AsyncStorage.setItem('refresh', '');
             AsyncStorage.setItem('token', '');
@@ -158,7 +158,7 @@ export const updateCategory = (data, onSuccess, onError) => async dispatch => {
           }
         } catch (error) {
           onError(error?.response?.data?.code);
-          console.log(error.response.data);
+
           if (error?.response?.status === 401) {
             AsyncStorage.setItem('refresh', '');
             AsyncStorage.setItem('token', '');
@@ -179,7 +179,7 @@ export const deleteCategory =
       .then(onSuccess)
       .catch(error => {
         onError(error?.response?.data?.code);
-        console.log(error.response.data);
+
         if (error?.response?.status === 401) {
           AsyncStorage.setItem('refresh', '');
           AsyncStorage.setItem('token', '');
@@ -193,13 +193,12 @@ export const getProductsList = (data, onSuccess, onError) => async dispatch => {
 
   getBusinessProduct(data)
     .then(res => {
-      console.log(res.data.data);
       dispatch(slice.actions.setCurrentProducts(res.data.data));
     })
     .then(onSuccess)
     .catch(error => {
       onError(error?.response?.data?.code);
-      console.log(error.response.data);
+
       if (error?.response?.status === 401) {
         AsyncStorage.setItem('refresh', '');
         AsyncStorage.setItem('token', '');
@@ -232,7 +231,7 @@ export const createProduct = (data, onSuccess, onError) => async dispatch => {
           }
         } catch (error) {
           onError(error?.response?.data?.code);
-          console.log(error.response.data);
+
           if (error?.response?.status === 401) {
             AsyncStorage.setItem('refresh', '');
             AsyncStorage.setItem('token', '');
@@ -252,7 +251,6 @@ export const updateProducts = (data, onSuccess, onError) => async dispatch => {
     })
     .then(onSuccess)
     .catch(async error => {
-      console.log(error);
       if (error.code === 'INVALID_TOKEN') {
         try {
           const result = await refreshTokenFn();
@@ -268,10 +266,10 @@ export const updateProducts = (data, onSuccess, onError) => async dispatch => {
           }
         } catch (error) {
           onError(error?.response?.data?.code);
-          console.log(error.response.data);
+
           if (error?.response?.status === 401) {
             onError(error?.response?.data?.code);
-            console.log(error.response.data);
+
             AsyncStorage.setItem('refresh', '');
             AsyncStorage.setItem('token', '');
             dispatch(authActions.logoutSuccess());
@@ -291,7 +289,7 @@ export const deleteProduct =
       .then(onSuccess)
       .catch(error => {
         onError(error?.response?.data?.code);
-        console.log(error.response.data);
+
         if (error?.response?.status === 401) {
           AsyncStorage.setItem('refresh', '');
           AsyncStorage.setItem('token', '');

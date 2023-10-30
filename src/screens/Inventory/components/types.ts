@@ -3,6 +3,6 @@ export type ProductCardProps = {
   image: string;
   price: string;
   onEdit: () => void;
-
+  showCurrency?: boolean;
   onDelete: () => void;
 };

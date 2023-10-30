@@ -119,7 +119,7 @@ export const Promocodes: React.FC<PromocodesProps> = () => {
           renderItem={({ item }) => (
             <PromocodeCard
               name={item.promocode}
-              phone={item.salePercent + '%'}
+              phone={item.sale_percent + '%'}
               onDelete={() => {
                 dispatch(
                   deletePromocode(
@@ -145,8 +145,8 @@ export const Promocodes: React.FC<PromocodesProps> = () => {
                 setItem(item);
                 setEdit(true);
                 setCode(item.promocode);
-                setPercent(item.salePercent + '');
-                setAmount(item.useAmount + '');
+                setPercent(item.sale_percent + '');
+                setAmount(item.use_amount + '');
                 setOpen(true);
               }}
             />

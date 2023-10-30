@@ -19,6 +19,7 @@ export const ProductCard = ({
   image,
   onEdit,
   onDelete,
+  showCurrency = true,
 }: ProductCardProps) => {
   const { currentBusiness } = useSelector((store: any) => store.business);
 
@@ -41,7 +42,7 @@ export const ProductCard = ({
       </View>
       <View style={styles.contentWrapper2}>
         <Text style={styles.cardText}>
-          {`${price} ${currentBusiness?.currency ?? ''}`}
+          {`${price} ${showCurrency ? currentBusiness?.currency ?? '' : ''}`}
         </Text>
         <Divider width={20} />
 

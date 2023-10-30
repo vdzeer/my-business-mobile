@@ -51,10 +51,10 @@ export const CreateInventory: React.FC<CreateInventoryProps> = () => {
     params?.amount ? params?.amount + '' : '',
   );
   const [lower, setLower] = useState(
-    params?.lowerRange ? params?.lowerRange + '' : '',
+    params?.lower_range ? params?.lower_range + '' : '',
   );
-  const [photo, setPhoto] = useState<any>('');
-  const [imageUrl, setImageUrl] = useState<any>(params?.image ?? '');
+  const [photo, setPhoto] = useState<any>(params?.image ?? '');
+
   const [isValidForm, setIsValidForm] = useState({
     name: true,
     lower: true,
@@ -83,7 +83,7 @@ export const CreateInventory: React.FC<CreateInventoryProps> = () => {
       isValid = false;
       setIsValidForm(prev => ({ ...prev, lower: false }));
     }
-    if (photo?.filename) {
+    if (photo?.filename || photo !== '' || typeof photo === 'string') {
       setIsValidForm(prev => ({ ...prev, photo: true }));
     } else {
       isValid = false;
@@ -110,7 +110,7 @@ export const CreateInventory: React.FC<CreateInventoryProps> = () => {
 
             <ImageInput
               onSelect={setPhoto}
-              imageUrl={imageUrl}
+              imageUrl={photo}
               isValid={isValidForm.photo}
             />
             <Divider height={20} />
@@ -149,7 +149,8 @@ export const CreateInventory: React.FC<CreateInventoryProps> = () => {
 
                 params?.id && formData.append('inventoryId', params?.id);
 
-                photo.path &&
+                typeof photo !== 'string' &&
+                  photo?.path &&
                   formData.append('image', {
                     name: photo.filename,
                     type: photo.mime ?? 'image/jpeg',

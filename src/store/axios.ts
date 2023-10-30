@@ -47,10 +47,6 @@ axiosInstance.interceptors.response.use(
   async error => {
     const config = error?.config;
 
-    console.log('====================================');
-    console.log(error?.code);
-    console.log('====================================');
-
     if (error?.response?.status !== 401) {
       Toast.show({
         type: 'error',

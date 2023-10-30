@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import {
   Dimensions,
   FlatList,
   Keyboard,
   Platform,
   SafeAreaView,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -39,13 +40,13 @@ export const Analytics: React.FC<AnalyticsProps> = () => {
   const [date, setDate] = useState(new Date().toISOString());
 
   const dates = [
-    { eng: 'SU', ru: 'ВС', uk: 'НД' },
-    { eng: 'MO', ru: 'ПН', uk: 'ПН' },
-    { eng: 'TU', ru: 'ВТ', uk: 'ВТ' },
-    { eng: 'WE', ru: 'СР', uk: 'СР' },
-    { eng: 'TH', ru: 'ЧТ', uk: 'ЧТ' },
-    { eng: 'FR', ru: 'ПТ', uk: 'ПТ' },
-    { eng: 'SA', ru: 'СБ', uk: 'СБ' },
+    { en: 'SU', ru: 'ВС', uk: 'НД' },
+    { en: 'MO', ru: 'ПН', uk: 'ПН' },
+    { en: 'TU', ru: 'ВТ', uk: 'ВТ' },
+    { en: 'WE', ru: 'СР', uk: 'СР' },
+    { en: 'TH', ru: 'ЧТ', uk: 'ЧТ' },
+    { en: 'FR', ru: 'ПТ', uk: 'ПТ' },
+    { en: 'SA', ru: 'СБ', uk: 'СБ' },
   ];
 
   useEffect(() => {
@@ -80,7 +81,6 @@ export const Analytics: React.FC<AnalyticsProps> = () => {
     ],
   };
 
-
   return (
     <SafeAreaView style={styles.area}>
       <View style={styles.container}>
@@ -113,6 +113,7 @@ export const Analytics: React.FC<AnalyticsProps> = () => {
               marginVertical: 8,
               borderRadius: 16,
             }}
+            fromZero
           />
         ) : (
           <Text style={styles.noText}>{t('noData')}</Text>
@@ -143,6 +144,7 @@ export const Analytics: React.FC<AnalyticsProps> = () => {
               marginVertical: 8,
               borderRadius: 16,
             }}
+            fromZero
           />
         ) : (
           <Text style={styles.noText}>{t('noData')}</Text>

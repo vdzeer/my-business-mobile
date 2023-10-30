@@ -104,10 +104,10 @@ export const Basket: React.FC<BasketProps> = () => {
             <Text style={styles.text}>{t('price')}</Text>
             <Text style={styles.text}>
               {`${
-                promoResponse?.salePercent
+                promoResponse?.sale_percent
                   ? calculateDiscountedPrice(
                       countTotalPrice(basket),
-                      promoResponse?.salePercent,
+                      promoResponse?.sale_percent,
                     )
                   : countTotalPrice(basket)
               }${currentBusiness?.currency ?? ''}`}
@@ -152,8 +152,8 @@ export const Basket: React.FC<BasketProps> = () => {
           <Divider height={20} />
           <Button
             text={`${t('checkPromo')}${
-              promoResponse?.salePercent
-                ? ' (' + promoResponse?.salePercent + '%)'
+              promoResponse?.sale_percent
+                ? ' (' + promoResponse?.sale_percent + '%)'
                 : ''
             }
               `}
@@ -175,7 +175,7 @@ export const Basket: React.FC<BasketProps> = () => {
                     products: basket.flatMap(({ id, total }: any) =>
                       Array.from({ length: total }, () => String(id)),
                     ),
-                    promocodeId: promoResponse?.id ?? '',
+                    promocodeId: promoResponse?.id ?? null,
                   },
                   () => {
                     Toast.show({

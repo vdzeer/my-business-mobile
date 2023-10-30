@@ -101,7 +101,7 @@ export const getOrdersList = (data, onSuccess, onError) => async dispatch => {
     .then(onSuccess)
     .catch(error => {
       onError(error?.response?.data?.code);
-      console.log(error.response.data);
+
       if (error?.response?.status === 401) {
         AsyncStorage.setItem('refresh', '');
         AsyncStorage.setItem('token', '');
@@ -119,7 +119,7 @@ export const createOrder = (data, onSuccess, onError) => async dispatch => {
     .then(onSuccess)
     .catch(error => {
       onError(error?.response?.data?.code);
-      console.log(error.response.data);
+
       if (error?.response?.status === 401) {
         AsyncStorage.setItem('refresh', '');
         AsyncStorage.setItem('token', '');
@@ -133,13 +133,12 @@ export const deleteOrder =
     dispatch(slice.actions.setLoading());
     deleteBusinessOrder(data, businessId)
       .then(res => {
-        console.log(res);
         // dispatch(slice.actions.addBusiness(res.data));
       })
       .then(onSuccess)
       .catch(error => {
         onError(error?.response?.data?.code);
-        console.log(error.response.data);
+
         if (error?.response?.status === 401) {
           AsyncStorage.setItem('refresh', '');
           AsyncStorage.setItem('token', '');

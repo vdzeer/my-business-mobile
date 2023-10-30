@@ -60,7 +60,7 @@ export const BusinessSettings: React.FC<BusinessSettingsProps> = () => {
       isValid = false;
       setIsValidForm(prev => ({ ...prev, name: false }));
     }
-    if (currency.length > 1 && name.length < 5) {
+    if (currency.length >= 1 && currency.length <= 5) {
       setIsValidForm(prev => ({ ...prev, currency: true }));
     } else {
       isValid = false;
@@ -71,8 +71,7 @@ export const BusinessSettings: React.FC<BusinessSettingsProps> = () => {
     }
   };
 
-  const [photo, setPhoto] = useState<any>('');
-  const [imageUrl, setImageUrl] = useState<any>(currentBusiness?.image ?? '');
+  const [photo, setPhoto] = useState<any>(currentBusiness?.image ?? '');
 
   return (
     <SafeAreaView style={styles.area}>
@@ -86,7 +85,7 @@ export const BusinessSettings: React.FC<BusinessSettingsProps> = () => {
             <Text style={styles.descText}>{t('businessDesc')}</Text>
             <Divider height={40} />
 
-            <ImageInput onSelect={setPhoto} imageUrl={imageUrl} />
+            <ImageInput onSelect={setPhoto} imageUrl={photo} isValid />
             <Divider height={20} />
 
             <Input
@@ -116,7 +115,8 @@ export const BusinessSettings: React.FC<BusinessSettingsProps> = () => {
                     formData.append('currency', currency);
 
                     formData.append('businessId', currentBusiness?.id);
-                    photo.path &&
+                    typeof photo !== 'string' &&
+                      photo.path &&
                       formData.append('image', {
                         name: photo.filename,
                         type: photo.mime ?? 'image/jpeg',

@@ -47,8 +47,7 @@ export const AccountSettings: React.FC<AccountSettingsProps> = () => {
   const [email, setEmail] = useState(profile?.email ?? '');
   const [language, setLanguage] = useState(profile?.language ?? '');
 
-  const [photo, setPhoto] = useState<any>('');
-  const [imageUrl, setImageUrl] = useState<any>(profile?.image ?? '');
+  const [photo, setPhoto] = useState<any>(profile?.image ?? '');
   const [isValidForm, setIsValidForm] = useState({
     name: true,
   });
@@ -78,7 +77,7 @@ export const AccountSettings: React.FC<AccountSettingsProps> = () => {
             <Divider height={30} />
             <Text style={styles.descText}>{t('accountDetails')}</Text>
             <Divider height={40} />
-            <ImageInput onSelect={setPhoto} imageUrl={imageUrl} />
+            <ImageInput onSelect={setPhoto} imageUrl={photo} isValid />
             <Divider height={20} />
             <Input
               placeholder={t('name')}
@@ -91,6 +90,7 @@ export const AccountSettings: React.FC<AccountSettingsProps> = () => {
               placeholder={t('email')}
               value={email}
               onChange={setEmail}
+              isValid
               editable={false}
             />
             <Divider height={20} />
@@ -106,7 +106,7 @@ export const AccountSettings: React.FC<AccountSettingsProps> = () => {
             <Divider height={10} />
             <View style={styles.payContent}>
               <Text style={styles.subName}>
-                {profile?.subscription?.subscriptionName ?? t('emptySub')}
+                {profile?.subscription?.subscription_name ?? t('emptySub')}
               </Text>
               <View style={styles.payContent}>
                 <ActionButton
@@ -140,12 +140,9 @@ export const AccountSettings: React.FC<AccountSettingsProps> = () => {
                   dispatch(
                     updateUser(
                       formData,
-
                       () => {
                         Toast.show({
                           text1: TOASTS[i18n.language].SUCCESS_UPDATE_USER,
-                          text2:
-                            TOASTS[i18n.language][error] ?? 'Unexpected error',
                         });
                       },
                       (error: string) => {
