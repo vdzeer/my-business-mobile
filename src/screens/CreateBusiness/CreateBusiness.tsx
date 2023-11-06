@@ -57,18 +57,18 @@ export const CreateBusiness: React.FC<CreateBusinessProps> = () => {
       isValid = false;
       setIsValidForm(prev => ({ ...prev, name: false }));
     }
-    if (password.length > 6) {
+    if (password.length >= 6) {
       setIsValidForm(prev => ({ ...prev, password: true }));
     } else {
       isValid = false;
       setIsValidForm(prev => ({ ...prev, password: false }));
     }
-    if (photo?.filename) {
-      setIsValidForm(prev => ({ ...prev, photo: true }));
-    } else {
-      isValid = false;
-      setIsValidForm(prev => ({ ...prev, photo: false }));
-    }
+    // if (photo?.filename) {
+    //   setIsValidForm(prev => ({ ...prev, photo: true }));
+    // } else {
+    //   isValid = false;
+    //   setIsValidForm(prev => ({ ...prev, photo: false }));
+    // }
 
     if (isValid) {
       onSuccess();
@@ -99,7 +99,7 @@ export const CreateBusiness: React.FC<CreateBusinessProps> = () => {
               isValid={isValidForm.password}
             />
             <Divider height={20} />
-            <ImageInput onSelect={setPhoto} isValid={isValidForm.photo} />
+            <ImageInput onSelect={setPhoto} isValid={true} />
 
             <Divider height={60} />
 

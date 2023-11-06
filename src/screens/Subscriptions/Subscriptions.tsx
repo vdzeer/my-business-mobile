@@ -140,6 +140,8 @@ export const Subscriptions: React.FC<SubscriptionsProps> = () => {
 
           <Text style={styles.descText}>{t('subscriptionsDesc')}</Text>
 
+          <Divider height={20} />
+
           <Divider height={40} />
 
           {!!subscriptions?.length && (
@@ -267,6 +269,52 @@ export const Subscriptions: React.FC<SubscriptionsProps> = () => {
                   )}`}</Text>
                   <Text style={styles.subDesc}>{`* 50 ${t('worker')}`}</Text>
                 </TouchableOpacity>
+
+                <Divider height={30} />
+
+                <Text style={styles.descText}>
+                  A $4.99 monthly purchase will be applied to your iTunes
+                  account on confirmation. {'\n\n'}Subscriptions will
+                  automatically renew unless canceled within 24-hours before the
+                  end of the current period. You can cancel anytime with your
+                  iTunes account settings. Any unused portion of a free trial
+                  will be forfeited if you purchase a subscription. For more
+                  information, see our{' '}
+                  <TouchableOpacity
+                    style={{ marginTop: -3 }}
+                    onPress={() => {
+                      Linking.openURL(
+                        'https://www.app-privacy-policy.com/live.php?token=diJumxgVagMmo3x53qNoPu2KBFyLiElJ',
+                      );
+                    }}>
+                    <Text
+                      style={{
+                        color: '#6F73D2',
+                        fontWeight: '600',
+                        margin: 0,
+                      }}>
+                      Terms of Service
+                    </Text>
+                  </TouchableOpacity>{' '}
+                  and{' '}
+                  <TouchableOpacity
+                    style={{ marginTop: -3 }}
+                    onPress={() => {
+                      Linking.openURL(
+                        'https://www.freeprivacypolicy.com/live/74f4997d-922b-49a9-8645-d84db8836d48',
+                      );
+                    }}>
+                    <Text
+                      style={{
+                        color: '#6F73D2',
+                        fontWeight: '600',
+                        margin: 0,
+                      }}>
+                      Privacy Policy
+                    </Text>
+                  </TouchableOpacity>
+                  .
+                </Text>
               </ScrollView>
 
               <Divider height={30} />
